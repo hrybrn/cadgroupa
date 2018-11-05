@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  frontend:
+    docker:
+      - image: node:8-alpine
+    steps:
+      - checkout
+      - run: 
+          command: |
+            npm install
+            npm --prefix frontend test
+  backend:
+    docker:
+      - image: python:3-alpine
+    steps:
+      - checkout
+      - run:
+          command: |
+            python -m pip install flask pytest
+            cd backend
+            pytest
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - frontend
+      - backend
