@@ -5,18 +5,25 @@ jobs:
       - image: node:8-alpine
     steps:
       - checkout
-      - run: 
+      - run:
+          name: install dependencies
           command: |
+            npm install -g react-scripts
             npm install
-            npm --prefix frontend test
+      - run:
+          name: run tests
+          command: npm --prefix frontend test
   backend:
     docker:
       - image: python:3-alpine
     steps:
       - checkout
       - run:
+          name: install dependencies
+          command: python -m pip install flask pytest
+      - run:
+          name: run tests
           command: |
-            python -m pip install flask pytest
             cd backend
             pytest
 
@@ -26,4 +33,3 @@ workflows:
     jobs:
       - frontend
       - backend
-      
