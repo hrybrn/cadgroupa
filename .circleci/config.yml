@@ -11,6 +11,18 @@ jobs:
       - run:
           name: run tests
           command: npm --prefix frontend test
+      - run:
+          name: build
+          command: npm --prefix frontend run-script build
+      - run:
+          name: install persist_to_workspace dependencies
+          command: apk add --update ca-certificates openssl && update-ca-certificates
+      - persist_to_workspace:
+          root: .
+          paths:
+            - frontend/build
+            - backend
+
   backend:
     docker:
       - image: python:3-alpine
@@ -24,10 +36,32 @@ jobs:
           command: |
             cd backend
             pytest
-
+  deploy:
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: deploy to gcloud
+          command: |
+            cd backend
+            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+            gcloud --quiet app deploy app.yaml
 workflows:
   version: 2
-  test:
+  build_deploy:
     jobs:
       - frontend
       - backend
+      - deploy:
+          requires:
+            - frontend
+            - backend
+          filters:
+            branches:
+              only:
+                - circleci
+                - master
