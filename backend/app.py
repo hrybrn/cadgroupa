@@ -37,7 +37,7 @@ def make_session(token=None, state=None, scope=None):
         token_updater=token_updater)
 
 
-@app.route('/')
+@app.route('/login')
 def index():
     scope = request.args.get(
         'scope',
