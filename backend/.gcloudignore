@@ -17,10 +17,3 @@
 __pycache__/
 # Ignored by the build system
 /setup.cfg
-
-../frontend/node_modules/
-../frontend/public/
-../frontend/src
-../frontend/package.json
-../frontend/package_lock.json
-../frontend/README.md

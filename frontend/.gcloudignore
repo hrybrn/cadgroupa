@@ -1,0 +1,9 @@
+node_modules/
+public/
+src
+package.json
+package_lock.json
+README.md
+.gitignore
+.eslintrc.json
+.gcloudignore
