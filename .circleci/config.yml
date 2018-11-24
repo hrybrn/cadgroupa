@@ -30,7 +30,7 @@ jobs:
       - checkout
       - run:
           name: install dependencies
-          command: 
+          command: |
             cd backend
             python -m pip install -r requirements.txt
       - run:
