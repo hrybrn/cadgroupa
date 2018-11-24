@@ -21,6 +21,7 @@ jobs:
           root: .
           paths:
             - frontend/build
+            - frontend/app.yaml
             - backend
 
   backend:
@@ -64,3 +65,4 @@ workflows:
             branches:
               only:
                 - master
+                - circleci
