@@ -1,13 +1,2 @@
 runtime: python37
-
-handlers:
-- url: /
-  static_files: ../frontend/build/index.html
-  upload: ../frontend/build/index.html
-
-- url: /api/(.*)
-  script: auto
-
-- url: /(.*)
-  static_files: ../frontend/build/\1
-  upload: ../frontend/build/(.*)
+service: api
