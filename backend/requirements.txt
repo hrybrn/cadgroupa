@@ -5,3 +5,4 @@ graphqlclient
 pytest
 discord.py
 requests-oauthlib
+
