@@ -22,10 +22,3 @@ def test_login():
     r = client.get('/login')
     assert 'Redirecting...' in r.data.decode('utf-8')
 
-def test_index():
-    main.app.testing = True
-    client = main.app.test_client()
-
-    r = client.get('/api/')
-    assert r.status_code == 200
-    assert 'Hello World' in r.data.decode('utf-8')
