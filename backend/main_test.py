@@ -15,6 +15,13 @@
 import main
 
 
+def test_login():
+    main.app.testing = True
+    client = main.app.test_client()
+
+    r = client.get('/login')
+    assert 'Redirecting...' in r.data.decode('utf-8')
+
 def test_index():
     main.app.testing = True
     client = main.app.test_client()
