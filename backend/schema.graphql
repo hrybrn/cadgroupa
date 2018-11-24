@@ -1,0 +1,7 @@
+schema {
+  query: RootQuery
+}
+
+type RootQuery {
+  helloworld(name: String): String!
+}
