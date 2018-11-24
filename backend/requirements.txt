@@ -3,3 +3,5 @@ flask_graphql==2.0.0
 graphene
 graphqlclient
 pytest
+discord.py
+requests-oauthlib
