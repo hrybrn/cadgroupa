@@ -20,7 +20,8 @@ if [ ! -f $REQUIREMENTS ]; then
     exit 1
 fi
 pip install -r $REQUIREMENTS
-brew install gcloud
+brew cask install google-cloud-sdk
+gcloud init
 gcloud components install cloud-datastore-emulator
 gcloud auth application-default login
 echo "Done!";
