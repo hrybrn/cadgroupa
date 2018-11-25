@@ -3,5 +3,9 @@ schema {
 }
 
 type RootQuery {
-  helloworld(name: String): String!
+  helloworld: HelloWorld
+}
+
+type HelloWorld {
+  hi(name: String): String!
 }
