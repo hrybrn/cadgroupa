@@ -32,7 +32,7 @@ jobs:
       - run:
           name: install gcc
           command: |
-            apk add gcc
+            apk add build-base
       - run:
           name: install dependencies
           command: |
