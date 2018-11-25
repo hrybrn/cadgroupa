@@ -1,10 +1,6 @@
-
 \.DS_Store
-
 \.vscode/settings\.json
-
 backend/__pycache__/
-
 .vscode
 venv/
 **/*.pyc
