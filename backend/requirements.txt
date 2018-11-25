@@ -5,4 +5,4 @@ graphqlclient
 pytest
 discord.py
 requests-oauthlib
-
+google-cloud-datastore
