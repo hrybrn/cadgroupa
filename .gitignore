@@ -8,3 +8,4 @@ backend/__pycache__/
 .vscode
 venv/
 **/*.pyc
+apple.py
