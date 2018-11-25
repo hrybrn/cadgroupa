@@ -1,7 +1,16 @@
-import graphene
+from graphql_tools import build_executable_schema
+from resolvers import helloworld
 
-class Query(graphene.ObjectType):
-    helloworld = graphene.String(argument=graphene.String(default_value="Kill ourselves"))
-    resolve_helloworld = lambda self, info, argument: "Hello world! Let's " + argument
+with open('schema.graphql', 'r') as schema_file:
+    source_schema = schema_file.read()
 
-schema = graphene.Schema(query=Query)
+
+resolvers = {
+    'RootQuery': {
+        'helloworld': lambda value, info, **args: 'HelloWorld'
+    },
+    'HelloWorld': {
+        'hi': helloworld
+    }
+}
+schema = build_executable_schema(source_schema, resolvers)
