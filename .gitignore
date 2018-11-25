@@ -9,3 +9,4 @@ backend/__pycache__/
 venv/
 **/*.pyc
 apple.py
+set_vars.cmd
