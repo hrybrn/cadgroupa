@@ -16,7 +16,7 @@ def entityTest(value, info, **args):
 		'category': 'Personal',
 		'done': False,
 		'priority': 4,
-		'description': 'Learn Cloud Datastore'
+		'description': args['name']
 	})
 	client.put(task)
 	return json.dumps(client.get(key))
