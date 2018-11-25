@@ -7,9 +7,8 @@ helloworld = lambda value, info, **args: 'Hello ' + args['name'] + '! Let\'s kil
 # print(os.environ['DATASTORE_HOST'])
 # print(os.environ['DATASTORE_EMULATOR_HOST'])
 
-client = datastore.Client()
-
 def entityTest(value, info, **args):
+	client = datastore.Client()
 	key = client.key('Test', args['name'])
 	task = datastore.Entity(key)
 	task.update({
