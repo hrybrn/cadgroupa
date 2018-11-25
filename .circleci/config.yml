@@ -30,6 +30,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: install gcc
+          command: |
+            apk add gcc
+      - run:
           name: install dependencies
           command: |
             cd backend
