@@ -20,5 +20,10 @@ if [ ! -f $REQUIREMENTS ]; then
     exit 1
 fi
 pip install -r $REQUIREMENTS
+brew cask install google-cloud-sdk
+gcloud init
+gcloud components install beta
+gcloud components install cloud-datastore-emulator
+gcloud auth application-default login
 echo "Done!";
 echo "Run `flask run` in the backend directory to get started working locally."
