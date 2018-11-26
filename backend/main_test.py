@@ -1,6 +1,5 @@
 import main
 import json
-from graphqlclient import GraphQLClient
 
 def test_index():
     print("Passing");
