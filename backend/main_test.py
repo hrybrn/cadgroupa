@@ -1,15 +1,15 @@
-import main
-import json
-from graphqlclient import GraphQLClient
+from schema import schema
+from graphql import graphql 
 
-def test_index():
-    print("Passing");
-    #main.app.testing = True
-    #client = GraphQLClient('http://127.0.0.1:5000/graphql')
-    #result = client.execute('''
-    #{
-    #    helloworld
-    #}
-    #json_arr = json.loads(result);
-    ##''')
-    #assert "Hello world! Let's Kill ourselves" in (json_arr['data']['helloworld'])
+def test_helloworld():  
+	query = '{ discord { helloworld }}'
+	expected = { "discord": { "helloworld": "Hello world! Let's kill ourselves" }}
+	result = graphql(schema, query)
+	assert (not result.errors) and (result.data == expected)
+
+def test_helloworld_named():  
+	query = '{ discord { helloworld (name: "test") }}'
+	expected = { "discord": { "helloworld": "Hello test! Let's kill ourselves" }}
+	result = graphql(schema, query)
+	assert (not result.errors) and (result.data == expected)
+	
