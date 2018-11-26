@@ -4,6 +4,7 @@ schema {
 
 type RootQuery {
   helloworld: HelloWorld
+  entitytest(name: String!): String
 }
 
 type HelloWorld {

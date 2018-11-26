@@ -1,11 +1,8 @@
-
 \.DS_Store
-
 \.vscode/settings\.json
-
 backend/__pycache__/
-
 .vscode
 venv/
 **/*.pyc
 apple.py
+set_vars.cmd
