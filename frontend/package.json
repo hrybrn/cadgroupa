@@ -5,6 +5,7 @@
   "dependencies": {
     "ajv": "^6.5.5",
     "apollo-boost": "^0.1.21",
+    "eslint": "^5.9.0",
     "eslint-plugin-jest": "^22.0.0",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
