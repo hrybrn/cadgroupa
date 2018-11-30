@@ -6,15 +6,15 @@ import LeftPanel from '../LeftPanel/LeftPanel';
 import RightPanel from '../RightPanel/RightPanel';
 
 class App extends Component {
-	render() {		
-		return (
-			<div className="App">
-				<Navigation />
-				<LeftPanel />
-				<RightPanel />
-			</div>
-		);
-	}
+    render() {		
+        return (
+            <div className="App">
+                <Navigation />
+                <LeftPanel />
+                <RightPanel />
+            </div>
+        );
+    }
 }
 
 export default App;
