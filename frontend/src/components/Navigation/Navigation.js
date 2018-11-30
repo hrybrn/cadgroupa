@@ -50,6 +50,7 @@ class Navigation extends Component {
                             color="inherit"
                             aria-label="Menu"
                             onClick={this.toggleDrawer}
+                            className='drawerButton'
                         >
                             <MenuIcon />
                         </IconButton>
@@ -64,6 +65,7 @@ class Navigation extends Component {
                                 aria-haspopup="true"
                                 onClick={this.handleMenu}
                                 color="inherit"
+                                className='accountButton'
                             >
                                 <Person />
                             </IconButton>
