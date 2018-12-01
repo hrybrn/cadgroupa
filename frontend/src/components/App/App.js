@@ -9,7 +9,7 @@ import RightPanel from '../RightPanel/RightPanel';
 class App extends Component {
     theme = createMuiTheme({
         palette: {
-            type: 'light',
+            type: 'dark',
         },
         typography: {
             useNextVariants: true,
