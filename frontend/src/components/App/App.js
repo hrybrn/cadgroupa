@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
 import Navigation from '../Navigation/Navigation';
-import LeftPanel from '../LeftPanel/LeftPanel';
 import RightPanel from '../RightPanel/RightPanel';
 
 class App extends Component {
-	render() {		
-		return (
-			<div className="App">
-				<Navigation />
-				<LeftPanel />
-				<RightPanel />
-			</div>
-		);
-	}
+    theme = createMuiTheme({
+        palette: {
+            type: 'dark',
+        },
+        typography: {
+            useNextVariants: true,
+        },
+    });
+
+    render() {		
+        return (
+            <MuiThemeProvider theme={this.theme}>
+                <Navigation />
+                <RightPanel />
+            </MuiThemeProvider>
+        );
+    }
 }
 
 export default App;
