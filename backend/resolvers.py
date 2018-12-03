@@ -2,7 +2,9 @@ from google.cloud import datastore
 import os
 import json
 
-helloworld = lambda value, info, **args: 'Hello ' + args['name'] + '! Let\'s kill ourselves' if 'name' in args else 'Hello world! Let\'s kill ourselves'
+helloWorld = lambda value, info, **args: 'Hello ' + args['name'] + '! Let\'s kill ourselves' if 'name' in args else 'Hello world! Let\'s kill ourselves'
+goodbyeWorld = lambda value, info, **args: 'Goodbye ' + args['username'] + '! Let\'s kill ourselves' if 'username' in args else 'Goodbye world! Let\'s kill ourselves'
+
 
 # print(os.environ['DATASTORE_HOST'])
 # print(os.environ['DATASTORE_EMULATOR_HOST'])
