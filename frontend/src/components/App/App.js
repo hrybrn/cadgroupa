@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import './App.css';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import Navigation from '../Navigation/Navigation';
-import RightPanel from '../RightPanel/RightPanel';
+import Navigation from 'components/Navigation/Navigation';
+import RightPanel from 'components/RightPanel/RightPanel';
 
 class App extends Component {
     theme = createMuiTheme({
