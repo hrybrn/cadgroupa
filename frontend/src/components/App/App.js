@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-
+import { Route } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+import Login from 'components/Auth/Login';
 import Navigation from 'components/Navigation/Navigation';
 import RightPanel from 'components/RightPanel/RightPanel';
 
@@ -18,8 +19,9 @@ class App extends Component {
     render() {		
         return (
             <MuiThemeProvider theme={this.theme}>
-                <Navigation />
-                <RightPanel />
+                <Navigation/>
+                <RightPanel/>
+                <Route exact path="/" component={Login}/>
             </MuiThemeProvider>
         );
     }
