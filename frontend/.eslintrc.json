@@ -8,6 +8,7 @@
         "eslint:recommended",
         "plugin:react/recommended"
     ],
+    
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -15,6 +16,7 @@
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
+    "parser": "babel-eslint",
     "plugins": [
         "react",
         "jest"
@@ -22,7 +24,7 @@
     "rules": {
         "indent": [
             "error",
-            "tab"
+            4
         ],
         "linebreak-style": [
             "error",
@@ -37,5 +39,10 @@
             "always"
         ],
         "react/prop-types": 0
+    },
+    "settings": {
+        "react": {
+            "version": "16.6.3"
+        }
     }
 }
