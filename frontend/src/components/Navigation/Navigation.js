@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-
+import { Link } from 'react-router-dom';
 import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/MenuSharp';
 import Person from '@material-ui/icons/PersonOutlineSharp';
@@ -20,6 +20,42 @@ const styles = theme => ({
     toolbar: theme.mixins.toolbar,
 });
 
+const NavBarIcon = () => {
+    const loggedin = false;
+    if(loggedin) {
+        return ( 
+            <div className = 'accountMenu' >
+                <div className='accountMenu' >
+                    <IconButton
+                        aria-owns={ this.state.accountMenuOpen ? 'menu-appbar' : undefined }
+                        aria-haspopup='true'
+                        onClick={this.handleMenu.bind(this)}
+                        color='inherit'
+                        className='accountButton'>
+                        <Person />
+                    </IconButton>
+                    <Menu
+                        id='menu-appbar'
+                        anchorEl={Boolean(this.state.anchorEl)}
+                        open={this.state.accountMenuOpen}
+                        onClose={this.handleClose.bind(this)}>
+                        <MenuItem onClick={this.showModal.bind(this, 'account')}>Account</MenuItem>
+                        <MenuItem onClick={this.showModal.bind(this, 'logout')}>Logout</MenuItem>
+                    </Menu>
+                </div>
+            </div>
+        );
+    } else {
+        return (
+            <Link to="/login">
+                <Button>
+                    Log in
+                </Button>
+            </Link>
+        );
+    }
+};
+
 class Navigation extends Component {
     state = {
         anchorEl: null,
@@ -32,8 +68,7 @@ class Navigation extends Component {
 
     render() {
         const { logo, navigation, toolbar } = this.props.classes;
-        const { anchorEl, drawerOpen } = this.state;
-        const accountMenuOpen = Boolean(anchorEl);
+        const { drawerOpen } = this.state;
 
         const modal = this.renderModal();
         return (
@@ -52,27 +87,8 @@ class Navigation extends Component {
                             src={matchmakr}
                             className={logo}
                             alt='matchma.kr logo'
-                        />
-                        <div className='accountMenu' >
-                            <IconButton
-                                aria-owns={ accountMenuOpen ? 'menu-appbar' : undefined }
-                                aria-haspopup='true'
-                                onClick={this.handleMenu.bind(this)}
-                                color='inherit'
-                                className='accountButton'
-                            >
-                                <Person />
-                            </IconButton>
-                            <Menu
-                                id='menu-appbar'
-                                anchorEl={anchorEl}
-                                open={accountMenuOpen}
-                                onClose={this.handleClose.bind(this)}
-                            >
-                                <MenuItem onClick={this.showModal.bind(this, 'account')}>Account</MenuItem>
-                                <MenuItem onClick={this.showModal.bind(this, 'logout')}>Logout</MenuItem>
-                            </Menu>
-                        </div>
+                        /> 
+                        <NavBarIcon/>
                     </Toolbar>
                 </AppBar>
                 <Drawer
