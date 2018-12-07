@@ -2,12 +2,13 @@ import React, { Component, Fragment } from 'react';
 
 import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/MenuSharp';
-import Person from '@material-ui/icons/PersonOutlineSharp';
+import Person from '@material-ui/icons/Person';
 
 import LeftPanel from 'components/LeftPanel/LeftPanel';
 import Modal from 'components/Modal/Modal';
 
 import matchmakr from 'assets/matchmakr.png';
+import FriendPanel from '../FriendPanel/FriendPanel';
 
 const styles = theme => ({
     logo: {
@@ -15,16 +16,24 @@ const styles = theme => ({
         margin: '0 auto',
     },
     navigation: {
-        zIndex: theme.zIndex.drawer + 1
+        zIndex: theme.zIndex.drawer + 1,
+        'text-align': 'center',
     },
     toolbar: theme.mixins.toolbar,
 });
 
 class Navigation extends Component {
     state = {
+        //menu anchor element
         anchorEl: null,
-        drawerOpen: false,
+        //drawers shown
+        drawers: {
+            left: false,
+            right: true,
+        },
+        //open modal
         modal: '',
+        //field contents
         fields: {
             email: '',
         },
@@ -32,7 +41,7 @@ class Navigation extends Component {
 
     render() {
         const { logo, navigation, toolbar } = this.props.classes;
-        const { anchorEl, drawerOpen } = this.state;
+        const { anchorEl, drawers } = this.state;
         const accountMenuOpen = Boolean(anchorEl);
 
         const modal = this.renderModal();
@@ -77,11 +86,19 @@ class Navigation extends Component {
                 </AppBar>
                 <Drawer
                     anchor='left'
-                    open={drawerOpen}
+                    open={drawers.left}
                     variant='persistent'
                 >
                     <div className={toolbar} />
                     <LeftPanel />
+                </Drawer>
+                <Drawer
+                    anchor='right'
+                    open={drawers.right}
+                    variant='permanent'
+                >
+                    <div className={toolbar} />
+                    <FriendPanel />
                 </Drawer>
                 {modal}
             </Fragment>
