@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo';
 
 import { GridList, GridListTile, ListSubheader, withStyles } from '@material-ui/core';
 
-import FriendTile from './FriendTile';
+import CardTile from 'components/CardTile/CardTile';
 
 const styles = () => ({
     gridList: {
@@ -41,7 +41,7 @@ class FriendPanel extends Component {
             );
         } else {
             return data.friends.map(friend =>
-                <FriendTile
+                <CardTile
                     key={friend.id}
                     activated={this.activated}
                     deactivated={this.deactivated}
