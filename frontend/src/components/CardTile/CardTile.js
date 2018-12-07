@@ -34,14 +34,14 @@ const styles = () => ({
     }
 });
 
-class FriendTile extends Component {
+class CardTile extends Component {
     state = {
-        inviteSent: false
+        active: false
     };
 
     render() {
         const { classes, id, icon, name } = this.props;
-        const addIconClass = this.state.inviteSent ? classes.spin : classes.icon;
+        const addIconClass = this.state.active ? classes.spin : classes.icon;
         return (
             <Card key={id} className={classes.card}>
                 <CardActionArea className={classes.tile} onClick={this.toggleActivated.bind(this)}>
@@ -64,10 +64,10 @@ class FriendTile extends Component {
 
     toggleActivated() {
         this.setState(prev => {
-            prev.inviteSent ? this.props.deactivated() : this.props.activated();
-            return { inviteSent: !prev.inviteSent };
+            prev.active ? this.props.deactivated() : this.props.activated();
+            return { active: !prev.active };
         });
     }
 }
 
-export default withStyles(styles)(FriendTile);
+export default withStyles(styles)(CardTile);
