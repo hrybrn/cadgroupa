@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/MenuSharp';
 import Person from '@material-ui/icons/Person';
+import { mapStatesToProps } from 'react-fluxible';
+import { updateStore } from 'fluxible-js';
+
 
 import LeftPanel from 'components/LeftPanel/LeftPanel';
 import Modal from 'components/Modal/Modal';
@@ -10,53 +12,20 @@ import Modal from 'components/Modal/Modal';
 import matchmakr from 'assets/matchmakr.png';
 import FriendPanel from '../FriendPanel/FriendPanel';
 
+import { Link } from 'react-router-dom';
+
 const styles = theme => ({
     logo: {
         height: theme.mixins.toolbar.minHeight,
         margin: '0 auto',
     },
+
     navigation: {
         zIndex: theme.zIndex.drawer + 1,
         'text-align': 'center',
     },
     toolbar: theme.mixins.toolbar,
 });
-
-const NavBarIcon = () => {
-    const loggedin = false;
-    if(loggedin) {
-        return ( 
-            <div className = 'accountMenu' >
-                <div className='accountMenu' >
-                    <IconButton
-                        aria-owns={ this.state.accountMenuOpen ? 'menu-appbar' : undefined }
-                        aria-haspopup='true'
-                        onClick={this.handleMenu.bind(this)}
-                        color='inherit'
-                        className='accountButton'>
-                        <Person />
-                    </IconButton>
-                    <Menu
-                        id='menu-appbar'
-                        anchorEl={Boolean(this.state.anchorEl)}
-                        open={this.state.accountMenuOpen}
-                        onClose={this.handleClose.bind(this)}>
-                        <MenuItem onClick={this.showModal.bind(this, 'account')}>Account</MenuItem>
-                        <MenuItem onClick={this.showModal.bind(this, 'logout')}>Logout</MenuItem>
-                    </Menu>
-                </div>
-            </div>
-        );
-    } else {
-        return (
-            <Link to="/login">
-                <Button>
-                    Log in
-                </Button>
-            </Link>
-        );
-    }
-};
 
 class Navigation extends Component {
     state = {
@@ -73,6 +42,10 @@ class Navigation extends Component {
         fields: {
             email: '',
         },
+        user: {
+            token: '',
+            loggedin: 0
+        }
     };
 
     render() {
@@ -94,11 +67,37 @@ class Navigation extends Component {
                             <MenuIcon />
                         </IconButton>
                         <img
+                            href='/'
                             src={matchmakr}
                             className={logo}
                             alt='matchma.kr logo'
-                        /> 
-                        <NavBarIcon/>
+                        />
+                        {this.props.user.loggedin == 1 ? 
+                            (
+                                <div className='accountMenu' >
+                                    <IconButton
+                                        aria-owns={ accountMenuOpen ? 'menu-appbar' : undefined }
+                                        aria-haspopup='true'
+                                        onClick={this.handleMenu.bind(this)}
+                                        color='inherit'
+                                        className='accountButton'
+                                    >
+                                        <Person />
+                                    </IconButton>
+                                    <Menu
+                                        id='menu-appbar'
+                                        anchorEl={anchorEl}
+                                        open={accountMenuOpen}
+                                        onClose={this.handleClose.bind(this)}
+                                    >
+                                        <MenuItem onClick={this.showModal.bind(this, 'account')}>Account</MenuItem>
+                                        <MenuItem onClick={this.showModal.bind(this, 'logout')}>Logout</MenuItem>
+                                    </Menu>
+                                </div>
+                            ) : 
+                            (
+                                <Link to='/login'><Button color="inherit">Login</Button></Link>
+                            )}
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -191,8 +190,12 @@ class Navigation extends Component {
 
     logout() {
         this.showModal('');
-        // eslint-disable-next-line no-console
-        console.log('logout');
+        updateStore({
+            user: {
+                loggedin: 0,
+                token: ''
+            }
+        });
     }
 
     updateField(field, { target: { value }}) {
@@ -206,4 +209,8 @@ class Navigation extends Component {
     }
 }
 
-export default withStyles(styles)(Navigation);
+export default mapStatesToProps(withStyles(styles)(Navigation), state => {
+    return {
+        user: state.user
+    };
+});

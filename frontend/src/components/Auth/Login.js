@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
-import { AuthContext } from 'components/Context/AuthContext';
+import { Redirect } from 'react-router-dom';
+import { mapStatesToProps } from 'react-fluxible';
 class Login extends Component{
     render() {
-        return (
-            <AuthContext.Consumer>
-                {(context) => (
-                    <div>
-                        <h1>Token: {context.state.Token}</h1>
-                        <h1>Token 2: {context.token}</h1>
-                    </div>
-                )}
-            </AuthContext.Consumer>
-        );
+        return this.props.user.loggedin == 1 ? 
+            ( <Redirect to='/'/>) : 
+            window.location='https://discordapp.com/api/oauth2/authorize?client_id=519526061864779808&redirect_uri=http%3A%2F%2F127.0.0.1%3A3000%2Fauth&response_type=code&scope=identify%20email%20connections';
     }
 }
-
-export default Login;
+export default mapStatesToProps(Login, state => {
+    return {
+        user: state.user
+    };
+});
