@@ -22,6 +22,7 @@
         "jest"
     ],
     "rules": {
+        "no-console": "off",
         "indent": [
             "error",
             4
@@ -38,6 +39,7 @@
             "error",
             "always"
         ],
+        
         "react/prop-types": 0
     },
     "settings": {
