@@ -3,6 +3,7 @@ import { mapStatesToProps } from 'react-fluxible';
 import { CircularProgress } from '@material-ui/core';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import { Redirect } from 'react-router-dom';
 
 
 export const GET_USERNAME = gql`
@@ -27,13 +28,15 @@ class User extends Component {
         return (
             <div>
                 <h1>This is a filler for Harry being an idiot</h1>
-                {(this.usernameData(this.props.data))}
+                {this.props.user.loggedin == 1 ? (this.usernameData(this.props.data)) :
+                    (<Redirect to='/login'/>)
+                }
             </div>
         );
     }
 
     usernameData(data) {
-        if (data.loading) {
+        if (data.loading || data.discord === undefined) {
             return (<div><CircularProgress/></div>);
         } else {return (<div><h1>Welcome, {data.discord.getusername}</h1></div>);}
     }
