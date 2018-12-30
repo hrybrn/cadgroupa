@@ -6,13 +6,11 @@ import { updateStore } from 'fluxible-js';
 import { DISCORD_CLIENT, DISCORD_SECRET } from 'components/Auth/api_config_discord';
 
 class Auth extends Component{
-
     state = {
         qsparsed : qs.parse(this.props.location.search, { ignoreQueryPrefix: true }),
         loading : true,
         redirect : false
     }
-
     constructor(props){
         super(props);
         if(!this.state.qsparsed.code) {
@@ -27,7 +25,10 @@ class Auth extends Component{
             return str.join('&');
         };
         fetch('https://discordapp.com/api/oauth2/token?grant_type=authorization_code&'+serialize({
-            // Note the reference to the config folder. Git ignores our keys, but @Elliot and I'll send you the file.
+            // The cadgroupa/frontend/src/components/Auth/api_config_discord.js 
+            // file is pinned in the https://cadgroupa.slack.com/ server
+            // in the #general channel
+
             client_id: DISCORD_CLIENT,
             client_secret: DISCORD_SECRET,
             code: this.state.qsparsed.code,
@@ -53,7 +54,6 @@ class Auth extends Component{
         // eslint-disable-next-line no-console
         }).catch( error => { console.log(error); });
     }
-
     render() {
         return (this.state.redirect) ? <Redirect to='/'/> : (
             <div style={{display: 'flex', justifyContent: 'center', paddingTop: '20%'}}>
@@ -62,5 +62,4 @@ class Auth extends Component{
         );
     }
 }
-
 export default Auth;
