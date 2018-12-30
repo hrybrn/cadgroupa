@@ -9,7 +9,7 @@ from graphql import (
 	GraphQLArgument,
 	GraphQLList
 )
-from resolvers import helloWorld, entityTest, goodbyeWorld
+from resolvers import username, helloWorld, entityTest, goodbyeWorld
 
 
 # Super useful 
@@ -24,25 +24,16 @@ queryschema = GraphQLObjectType(
 		lambda: {
 			"discord": GraphQLField(
 				type=GraphQLObjectType(
-					name="nestedhelloworld",
+					name="user",
 					fields={
-						"helloworld" : GraphQLField(
+						"getusername" : GraphQLField(
 							type= GraphQLString,
 							args={
-								'name' : GraphQLArgument(
+								'token' : GraphQLArgument(
 									type=GraphQLString
 								)
 							},
-							resolver=helloWorld
-						),
-						"goodbyeworld" : GraphQLField(
-							type=GraphQLString,
-							args={
-								'username': GraphQLArgument(
-									type=GraphQLString
-								)
-							},
-							resolver=goodbyeWorld
+							resolver=username
 						)
 					}
 				),
