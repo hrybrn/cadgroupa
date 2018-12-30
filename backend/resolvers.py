@@ -21,3 +21,6 @@ def entityTest(value, info, **args):
 	})
 	client.put(task)
 	return json.dumps(client.get(key))
+
+def username(value, info, **args):
+    return "Elliot Alexander"
