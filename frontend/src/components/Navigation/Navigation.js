@@ -96,7 +96,11 @@ class Navigation extends Component {
                                 </div>
                             ) : 
                             (
-                                <Link to='/login'><Button color="inherit">Login</Button></Link>
+                                <Link to='/login' style={{ color: '#FFF' }}>
+                                    <Button style={{ color: '#FFF' }}>
+                                        Login
+                                    </Button>
+                                </Link>
                             )}
                     </Toolbar>
                 </AppBar>
