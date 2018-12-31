@@ -7,9 +7,9 @@ import { Redirect } from 'react-router-dom';
 
 
 export const GET_USERNAME = gql`
-    query {
+    query Getusername($token: String!) {
         discord {
-            getusername(token: "Example Token")
+            getusername(token: $token)
         }
     }
 `;
@@ -29,12 +29,14 @@ class User extends Component {
     usernameData(data) {
         if (data.loading || data.discord === undefined) {
             return (<div><CircularProgress/></div>);
-        } else {return (<div><h1>Welcome, {data.discord.getusername}</h1><h1>Current Token{this.props.user.token}</h1></div>);}
+        } else {return (<div><h1>Welcome, {data.discord.getusername}</h1></div>);}
     }
 }
 
-export default graphql(GET_USERNAME)(mapStatesToProps(User, state => {
+export default mapStatesToProps(graphql(GET_USERNAME,{
+    options: (props) => ({ variables: { token: props.user.token } })
+})(User), state => {
     return {
         user: state.user
     };
-}));
+});
