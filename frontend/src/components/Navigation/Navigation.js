@@ -211,7 +211,7 @@ class Navigation extends Component {
                     label='Email Address'
                     type='email'
                     fullWidth
-                    value={data.discord.email === undefined ? JSON.parse(data.discord.getuser).email : 'No email set'}
+                    value={this.props.user.loggedin ? JSON.parse(data.discord.getuser).email : 'Not found'}
                     key='email'
                     onChange={this.updateField.bind(this, 'email')}
                 />
