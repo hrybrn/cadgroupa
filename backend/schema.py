@@ -9,12 +9,11 @@ from graphql import (
 	GraphQLArgument,
 	GraphQLList
 )
-from resolvers import username, helloWorld, entityTest, goodbyeWorld
+from resolvers import username, helloWorld, entityTest
 
 
 # Super useful 
 # - https://github.com/graphql-python/graphql-core/blob/master/tests/starwars/starwars_schema.py
-# Note custom type definitions	
 # You can do some cool things with type + interface definitions + superclassing, but I'll keep this simple until we need
 # If anyone is curious then the file linked above is a good exmaple.
 
