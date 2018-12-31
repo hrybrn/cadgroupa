@@ -15,15 +15,6 @@ export const GET_USERNAME = gql`
 `;
 
 class User extends Component {
-
-    state = {
-        username: 0,
-        user: {
-            token: '',
-            loggedin: 0
-        }
-    };
-
     render(){
         return (
             <div>
@@ -38,7 +29,7 @@ class User extends Component {
     usernameData(data) {
         if (data.loading || data.discord === undefined) {
             return (<div><CircularProgress/></div>);
-        } else {return (<div><h1>Welcome, {data.discord.getusername}</h1></div>);}
+        } else {return (<div><h1>Welcome, {data.discord.getusername}</h1><h1>Current Token{this.props.user.token}</h1></div>);}
     }
 }
 
