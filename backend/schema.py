@@ -9,7 +9,7 @@ from graphql import (
 	GraphQLArgument,
 	GraphQLList
 )
-from resolvers import username, helloWorld, entityTest
+from resolvers import user, helloWorld, entityTest
 
 
 # Super useful 
@@ -25,14 +25,14 @@ queryschema = GraphQLObjectType(
 				type=GraphQLObjectType(
 					name="user",
 					fields={
-						"getusername" : GraphQLField(
+						"getuser" : GraphQLField(
 							type= GraphQLString,
 							args={
 								'token' : GraphQLArgument(
 									type=GraphQLString
 								)
 							},
-							resolver=username
+							resolver=user
 						)
 					}
 				),
