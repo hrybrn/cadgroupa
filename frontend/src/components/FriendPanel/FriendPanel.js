@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-
-import { GridList, GridListTile, ListSubheader, withStyles } from '@material-ui/core';
-
+import { GridList, GridListTile, ListSubheader, withStyles, CircularProgress } from '@material-ui/core';
 import CardTile from 'components/CardTile/CardTile';
 
 const styles = () => ({
@@ -36,7 +33,7 @@ class FriendPanel extends Component {
         if (data.loading || data.friends === undefined) {
             return (
                 <GridListTile className={classes.titleTile} cols={2}>
-                    <ListSubheader component='div'>Loading...</ListSubheader>
+                    <CircularProgress/>
                 </GridListTile>
             );
         } else {

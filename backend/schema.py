@@ -9,12 +9,11 @@ from graphql import (
 	GraphQLArgument,
 	GraphQLList
 )
-from resolvers import helloWorld, entityTest, goodbyeWorld
+from resolvers import username, helloWorld, entityTest
 
 
 # Super useful 
 # - https://github.com/graphql-python/graphql-core/blob/master/tests/starwars/starwars_schema.py
-# Note custom type definitions	
 # You can do some cool things with type + interface definitions + superclassing, but I'll keep this simple until we need
 # If anyone is curious then the file linked above is a good exmaple.
 
@@ -24,25 +23,16 @@ queryschema = GraphQLObjectType(
 		lambda: {
 			"discord": GraphQLField(
 				type=GraphQLObjectType(
-					name="nestedhelloworld",
+					name="user",
 					fields={
-						"helloworld" : GraphQLField(
+						"getusername" : GraphQLField(
 							type= GraphQLString,
 							args={
-								'name' : GraphQLArgument(
+								'token' : GraphQLArgument(
 									type=GraphQLString
 								)
 							},
-							resolver=helloWorld
-						),
-						"goodbyeworld" : GraphQLField(
-							type=GraphQLString,
-							args={
-								'username': GraphQLArgument(
-									type=GraphQLString
-								)
-							},
-							resolver=goodbyeWorld
+							resolver=username
 						)
 					}
 				),
