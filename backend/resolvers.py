@@ -1,10 +1,9 @@
 from google.cloud import datastore
 import os
 import json
+import requests
 
 helloWorld = lambda value, info, **args: 'Hello ' + args['name'] + '! Let\'s kill ourselves' if 'name' in args else 'Hello world! Let\'s kill ourselves'
-goodbyeWorld = lambda value, info, **args: 'Goodbye ' + args['username'] + '! Let\'s kill ourselves' if 'username' in args else 'Goodbye world! Let\'s kill ourselves'
-
 
 # print(os.environ['DATASTORE_HOST'])
 # print(os.environ['DATASTORE_EMULATOR_HOST'])
@@ -21,3 +20,13 @@ def entityTest(value, info, **args):
 	})
 	client.put(task)
 	return json.dumps(client.get(key))
+
+
+
+def username(value, info, **args):
+	api_token = args['token']
+	api_url_base = 'https://discordapp.com/api/users/@me'
+	headers = {'Content-Type': 'application/json',
+        	'Authorization': 'Bearer {0}'.format(api_token)}
+	response = requests.get(api_url_base, headers=headers)
+	return json.loads(response.content)['username']
