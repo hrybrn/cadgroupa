@@ -2,15 +2,18 @@ import React, { Component, Fragment } from 'react';
 import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/MenuSharp';
 import Person from '@material-ui/icons/Person';
+
 import { mapStatesToProps } from 'react-fluxible';
 import { updateStore } from 'fluxible-js';
 
+import { graphql } from 'react-apollo';
+import { get_user_obj } from 'queries/discord';
 
 import LeftPanel from 'components/LeftPanel/LeftPanel';
 import Modal from 'components/Modal/Modal';
+import FriendPanel from 'components/FriendPanel/FriendPanel';
 
 import matchmakr from 'assets/matchmakr.png';
-import FriendPanel from '../FriendPanel/FriendPanel';
 
 import { Link } from 'react-router-dom';
 
@@ -82,7 +85,8 @@ class Navigation extends Component {
                                         color='inherit'
                                         className='accountButton'
                                     >
-                                        <Person />
+                                        <Person/>
+                                        {this.usernameData(this.props.data)}
                                     </IconButton>
                                     <Menu
                                         id='menu-appbar'
@@ -152,16 +156,7 @@ class Navigation extends Component {
                     handleClose={hideModal}
                     title='Account'
                     fields={[
-                        <TextField
-                            autoFocus
-                            margin='dense'
-                            id='name'
-                            label='Email Address'
-                            type='email'
-                            fullWidth
-                            key='email'
-                            onChange={this.updateField.bind(this, 'email')}
-                        />
+                        this.emailData(this.props.data)
                     ]}
                     buttons={[
                         <Button onClick={hideModal} color='primary' key='cancel'>
@@ -192,6 +187,39 @@ class Navigation extends Component {
         );
     }
 
+    usernameData(data) {
+        if (data.loading || data.discord === undefined) {
+            return (<div>Loading</div>);
+        } else {
+            return (
+                <div>
+                    {JSON.parse(data.discord.getuser).username}
+                </div>
+            );
+        }
+    }
+
+    emailData(data) {
+        if (data.loading || data.discord === undefined) {
+            return (<div>Loading</div>);
+        } else {
+            return (
+                <TextField
+                    autoFocus
+                    margin='dense'
+                    id='name'
+                    label='Email Address'
+                    type='email'
+                    fullWidth
+                    value={data.discord.email === undefined ? JSON.parse(data.discord.getuser).email : 'No email set'}
+                    key='email'
+                    onChange={this.updateField.bind(this, 'email')}
+                />
+            );
+        }
+    }
+
+
     logout() {
         this.showModal('');
         updateStore({
@@ -213,7 +241,9 @@ class Navigation extends Component {
     }
 }
 
-export default mapStatesToProps(withStyles(styles)(Navigation), state => {
+export default mapStatesToProps(graphql(get_user_obj,{
+    options: (props) => ({ variables: { token: props.user.token } })
+})(withStyles(styles)(Navigation)), state => {
     return {
         user: state.user
     };

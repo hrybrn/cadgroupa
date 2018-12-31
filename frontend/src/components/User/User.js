@@ -1,18 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { mapStatesToProps } from 'react-fluxible';
 import { CircularProgress } from '@material-ui/core';
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
-
-
-export const GET_USERNAME = gql`
-    query Getusername($token: String!) {
-        discord {
-            getusername(token: $token)
-        }
-    }
-`;
+import { get_user_obj } from 'queries/discord.js';
 
 class User extends Component {
     render(){
@@ -29,11 +20,19 @@ class User extends Component {
     usernameData(data) {
         if (data.loading || data.discord === undefined) {
             return (<div><CircularProgress/></div>);
-        } else {return (<div><h1>Welcome, {data.discord.getusername}</h1></div>);}
+        } else {
+            const user = JSON.parse(data.discord.getuser);
+            return (
+                <div>
+                    <h1>Welcome, {user.username}</h1>
+                    {user.verified ? (<h1>User is verified!</h1>) : (<Fragment></Fragment>)}
+                </div>
+            );
+        }
     }
 }
 
-export default mapStatesToProps(graphql(GET_USERNAME,{
+export default mapStatesToProps(graphql(get_user_obj,{
     options: (props) => ({ variables: { token: props.user.token } })
 })(User), state => {
     return {
