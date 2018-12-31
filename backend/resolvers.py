@@ -1,7 +1,7 @@
 from google.cloud import datastore
 import os
 import json
-import requests
+from discord import getuserobj
 
 helloWorld = lambda value, info, **args: 'Hello ' + args['name'] + '! Let\'s kill ourselves' if 'name' in args else 'Hello world! Let\'s kill ourselves'
 
@@ -23,10 +23,8 @@ def entityTest(value, info, **args):
 
 
 
-def username(value, info, **args):
-	api_token = args['token']
-	api_url_base = 'https://discordapp.com/api/users/@me'
-	headers = {'Content-Type': 'application/json',
-        	'Authorization': 'Bearer {0}'.format(api_token)}
-	response = requests.get(api_url_base, headers=headers)
-	return json.loads(response.content)['username']
+def user(value, info, **args):
+	if not args['token']: 
+		return '401: Unauthorized'
+	else:
+		return getuserobj(args['token'])
