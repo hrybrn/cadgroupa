@@ -2,9 +2,11 @@ from google.cloud import datastore
 import os
 import json
 
+POLL_INTERVAL_TIMEOUT = 10
+
 client = datastore.Client()
 
-def joinQueue(userId, region, game, matchSize, rank):
+def joinQueue(userId, location, game, players, rank):
 	key = client.key('MatchRequest', userId)
 	requestTime = time.clock()
 	request = datastore.Entity(key)
@@ -13,36 +15,35 @@ def joinQueue(userId, region, game, matchSize, rank):
 		'lastPollTime': requestTime,
 		'rank': rank,
 		'gameId': game,
-		'matchSize': matchSize,
+		'players': players,
 		'matchId': '',
-		'region': region,
+		'location': location,
 	})
 	client.put(request)
 	return request
 
 def pollQueue(userId):
-	client = datastore.Client()
 	key = client.key('DiscordId', userId)
 	request = client.get(key)
 	request.update({
 		'lastPollTime': time.clock()
 	})
 	client.put(request)
-
 	# see if a match can be made
-	findMatch(game)
+	findMatch(request)
 	return #continue polling
 
-def findMatch(game):
+def findMatch(request):
+	filterTime = tick.clock() - POLL_INTERVAL_TIMEOUT
 	query = client.query(kind='MatchRequest')
-	query.add_filter('gameId', '=', game)
-	query.order = ['+initialRequestTime']
-	query = client.query()
-	matchRequests = list(query.fetch())
-
+	query.add_filter('gameId', '=', request['game'])
+	query.add_filter('lastPollTime', '>', filterTime)
+	query.add_filter('matchId' '=', '')
+	query.order = ['initialRequestTime']
+	
 	#interate through requests
-	for req in matchRequests:
-
+	for req in query.fetch():
+		print(req.key)
 
 	return
 
