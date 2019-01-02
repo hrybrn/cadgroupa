@@ -5,6 +5,10 @@ import json
 def joinQueue(userId, region, game, rank):
 	client = datastore.Client()
 	key = client.key('DiscordId', userId)
+	game = {
+  		'id': 12345,
+  		'matchSize': 4
+	}
 	requestTime = time.clock()
 	request = datastore.Entity(key)
 	request.update({
