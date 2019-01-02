@@ -6,7 +6,7 @@ POLL_INTERVAL_TIMEOUT = 10
 
 client = datastore.Client()
 
-def joinQueue(userId, location, game, players, rank):
+def joinQueue(userId, location, game, players, maxPlayers, rank):
 	key = client.key('MatchRequest', userId)
 	requestTime = time.clock()
 	request = datastore.Entity(key)
@@ -15,7 +15,8 @@ def joinQueue(userId, location, game, players, rank):
 		'lastPollTime': requestTime,
 		'rank': rank,
 		'gameId': game,
-		'players': players,
+		'partySize': players,
+		'gameSize': maxPlayers,
 		'matchId': '',
 		'location': location,
 	})
@@ -34,20 +35,28 @@ def pollQueue(userId):
 	return #continue polling
 
 def findMatch(request):
-	filterTime = tick.clock() - POLL_INTERVAL_TIMEOUT
+	currentTime = tick.clock()
 	query = client.query(kind='MatchRequest')
+	tolerance = calculateTolerance(currentTime - request['initialRequestTime'])
 	query.add_filter('gameId', '=', request['game'])
-	query.add_filter('lastPollTime', '>', filterTime)
+	query.add_filter('lastPollTime', '>', currentTime - POLL_INTERVAL_TIMEOUT)
+	query.add_filter('gameSize' '=', request['gameSize'])
+	query.add_filter('rank', '>=', request['rank'] - tolerance)
+	query.add_filter('rank', '<=', request['rank'] + tolerance)
 	query.add_filter('matchId' '=', '')
 	query.order = ['initialRequestTime']
+
+	players = []
 	
 	#interate through requests
 	for req in query.fetch():
+
 		print(req.key)
 
+
 	return
 
-def calculateTolerance(initialRequestTime, rank):
+def calculateTolerance(elapsedTime):
     # decrease tolerance as time goes on
     # higer rank = lower tolerance 
-	return
+	return 100000 if elapsedTime > 30 else elapsedTime * elapsedTime * 2 + 100
