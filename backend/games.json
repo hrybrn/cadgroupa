@@ -1,65 +1,65 @@
 {
 
     "League Of Legends": {
-      "maxplayers": "b",
-      "minplayers": "d",
-      "minage": "f"
+      "maxplayers": 5,
+      "minplayers": 5,
+      "minage": 13
       
     },
     "Fortnite": {
-        "maxplayers": "b",
-        "minplayers": "d",
-        "minage": "f"
+        "maxplayers": 4,
+        "minplayers": 1,
+        "minage": 12
     },
     "Grand Theft Auto V": {
-        "maxplayers": "b",
-        "minplayers": "d",
-        "minage": "f"
+        "maxplayers": 4,
+        "minplayers": 1,
+        "minage": 18
     },
     "Minecraft": {
-        "maxplayers": "b",
-        "minplayers": "d",
-        "minage": "f"
+        "maxplayers": 100,
+        "minplayers": 1,
+        "minage": 7
     },
     "Rocket League": {
-        "maxplayers": "b",
-        "minplayers": "d",
-        "minage": "f"
+        "maxplayers": 4,
+        "minplayers": 1,
+        "minage": 15
     },
     "Dota 2": {
-        "maxplayers": "b",
-        "minplayers": "d",
-        "minage": "f"
+        "maxplayers": 5,
+        "minplayers": 5,
+        "minage": 16
     },
     "Far Cry 5": {
-        "maxplayers": "b",
-        "minplayers": "d",
-        "minage": "f"
+        "maxplayers": 2,
+        "minplayers": 1,
+        "minage": 17
     },
     "Hearthstone: Heroes Of Warcraft": {
-        "maxplayers": "b",
-        "minplayers": "d",
-        "minage": "f"
+        "maxplayers": 2,
+        "minplayers": 1,
+        "minage": 7
     },
     "Team Fortress 2": {
-        "maxplayers": "b",
-        "minplayers": "d",
-        "minage": "f"
+        "maxplayers": 9,
+        "minplayers": 4,
+        "minage": 15
     },
     "FIFA 19": {
-        "maxplayers": "b",
-        "minplayers": "d",
-        "minage": "f"
+        "maxplayers": 4,
+        "minplayers": 1,
+        "minage": 13
     },
     "Overwatch": {
-        "maxplayers": "b",
-        "minplayers": "d",
-        "minage": "f"
+        "maxplayers": 6,
+        "minplayers": 4,
+        "minage": 12
     },
     "Tom Clancy’s Rainbow Six Siege": {
-        "maxplayers": "b",
-        "minplayers": "d",
-        "minage": "f"
+        "maxplayers": 5,
+        "minplayers": 1,
+        "minage": 18
     }
 
     
