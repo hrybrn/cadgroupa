@@ -1,65 +1,66 @@
 {
 
     "League Of Legends": {
-      "a": "b",
-      "c": "d",
-      "e": "f"
+      "maxplayers": "b",
+      "minplayers": "d",
+      "minage": "f"
+      
     },
     "Fortnite": {
-        "a": "b",
-        "c": "d",
-        "e": "f"
+        "maxplayers": "b",
+        "minplayers": "d",
+        "minage": "f"
     },
     "Grand Theft Auto V": {
-        "a": "b",
-        "c": "d",
-        "e": "f"
+        "maxplayers": "b",
+        "minplayers": "d",
+        "minage": "f"
     },
     "Minecraft": {
-        "a": "b",
-        "c": "d",
-        "e": "f"
+        "maxplayers": "b",
+        "minplayers": "d",
+        "minage": "f"
     },
     "Rocket League": {
-        "a": "b",
-        "c": "d",
-        "e": "f"
+        "maxplayers": "b",
+        "minplayers": "d",
+        "minage": "f"
     },
     "Dota 2": {
-        "a": "b",
-        "c": "d",
-        "e": "f"
+        "maxplayers": "b",
+        "minplayers": "d",
+        "minage": "f"
     },
     "Far Cry 5": {
-        "a": "b",
-        "c": "d",
-        "e": "f"
+        "maxplayers": "b",
+        "minplayers": "d",
+        "minage": "f"
     },
     "Hearthstone: Heroes Of Warcraft": {
-        "a": "b",
-        "c": "d",
-        "e": "f"
+        "maxplayers": "b",
+        "minplayers": "d",
+        "minage": "f"
     },
     "Team Fortress 2": {
-        "a": "b",
-        "c": "d",
-        "e": "f"
+        "maxplayers": "b",
+        "minplayers": "d",
+        "minage": "f"
     },
     "FIFA 19": {
-        "a": "b",
-        "c": "d",
-        "e": "f"
+        "maxplayers": "b",
+        "minplayers": "d",
+        "minage": "f"
     },
     "Overwatch": {
-        "a": "b",
-        "c": "d",
-        "e": "f"
+        "maxplayers": "b",
+        "minplayers": "d",
+        "minage": "f"
     },
     "Tom Clancy’s Rainbow Six Siege": {
-        "a": "b",
-        "c": "d",
-        "e": "f"
-    },
+        "maxplayers": "b",
+        "minplayers": "d",
+        "minage": "f"
+    }
 
     
   }
