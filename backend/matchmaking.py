@@ -30,3 +30,7 @@ def pollQueue(userId):
 
 def findMatch():
 	return
+
+def calculateTolerance(initialRequestTime, rank):
+    # decrease tolerance as time goes on
+    # higer rank = lower tolerance 
