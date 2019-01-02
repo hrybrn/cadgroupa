@@ -3,18 +3,29 @@
     "League Of Legends": {
       "maxplayers": 5,
       "minplayers": 5,
-      "minage": 13
-      
+      "minage": 13,
+      "description": "Recently recognized as the most played video game in the world—100 million play every month—League of Legends® is a multiplayer online battle arena game (MOBA).",
+      "website": "https://na.leagueoflegends.com/en/"
     },
     "Fortnite": {
         "maxplayers": 4,
         "minplayers": 1,
-        "minage": 12
+        "minage": 12,
+        "description":"Fortnite Battle Royale is the FREE 100-player PvP mode in Fortnite. One giant map. A battle bus. Fortnite building skills and destructible environments combined",
+        "website": "https://www.epicgames.com/fortnite/en-US/buy-now/battle-royale"
+    },
+    "PLAYERUNKNOWN'S BATTLEGROUNDS": {
+        "maxplayers": 4,
+        "minplayers": 1,
+        "minage": 18,
+        "description": "PLAYERUNKNOWN'S BATTLEGROUNDS is a battle royale shooter that pits 100 players against each other in a struggle for survival. Gather supplies and outwit your opponents to become the last person standing.",
+        "website": "https://www.pubg.com/"
     },
     "Grand Theft Auto V": {
         "maxplayers": 4,
         "minplayers": 1,
-        "minage": 18
+        "minage": 18,
+        "description": "Los Santos is a city of bright lights, long nights and dirty secrets, and they don’t come brighter, longer or dirtier than in GTA Online: After Hours. The party starts now."
     },
     "Minecraft": {
         "maxplayers": 100,
@@ -24,42 +35,52 @@
     "Rocket League": {
         "maxplayers": 4,
         "minplayers": 1,
-        "minage": 15
+        "minage": 15,
+        "description": "Soccer meets driving once again in the long-awaited, physics-based multiplayer-focused sequel to Supersonic Acrobatic Rocket-Powered Battle-Cars! Choose a variety of high-flying vehicles equipped with huge rocket boosters to score amazing aerial goals and pull-off incredible game-changing saves!"
     },
     "Dota 2": {
         "maxplayers": 5,
         "minplayers": 5,
-        "minage": 16
+        "minage": 16,
+        "description": "Every day, millions of players worldwide enter battle as one of over a hundred Dota heroes. And no matter if it's their 10th hour of play or 1,000th, there's always something new to discover. With regular updates that ensure a constant evolution of gameplay, features, and heroes, Dota 2 has taken on a life of its own."
     },
     "Far Cry 5": {
         "maxplayers": 2,
         "minplayers": 1,
-        "minage": 17
+        "minage": 17,
+        "description": ""
     },
     "Hearthstone: Heroes Of Warcraft": {
         "maxplayers": 2,
         "minplayers": 1,
-        "minage": 7
+        "minage": 7,
+        "description": "Nine distinct classes provide a broad range of tactical abilities and personalities. Constantly updated with new game modes, maps, equipment and, most importantly, hats!"
     },
     "Team Fortress 2": {
         "maxplayers": 9,
         "minplayers": 4,
-        "minage": 15
+        "minage": 15,
+        "description": 
     },
     "FIFA 19": {
         "maxplayers": 4,
         "minplayers": 1,
-        "minage": 13
+        "minage": 13,
+        "description":"Experience the World’s Biggest Club Competition, the UEFA Champions League. From Tactical Approach to Each Technical Touch, Control the Pitch in Every Moment.",
+        "website": "https://www.easports.com/fifa"
+
     },
     "Overwatch": {
         "maxplayers": 6,
         "minplayers": 4,
-        "minage": 12
+        "minage": 12,
+        "description":
     },
     "Tom Clancy’s Rainbow Six Siege": {
         "maxplayers": 5,
         "minplayers": 1,
-        "minage": 18
+        "minage": 18,
+        "description": "Tom Clancy's Rainbow Six Siege is the latest installment of the acclaimed first-person shooter franchise developed by the renowned Ubisoft Montreal studio."
     }
 
     
