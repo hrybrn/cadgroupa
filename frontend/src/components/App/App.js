@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { initializeStore } from 'fluxible-js';
 
-import LeftPanel from '../LeftPanel/LeftPanel';
-import Login from '../Auth/Login';
-import Auth from '../Auth/Auth';
 import Navigation from 'components/Navigation/Navigation';
-import User from '../User/User';
 
 initializeStore({
     initialStore: {
@@ -41,10 +36,6 @@ class App extends Component {
         return (
             <MuiThemeProvider theme={this.theme}>
                 <Navigation/>
-                <Route path='/auth' component={Auth}/>
-                <Route path='/user' component={User}/>
-                <Route path='/login' component={Login}/>
-                <Route exact path='/' component={LeftPanel}/>
             </MuiThemeProvider>
         );
     }
