@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText } from '@material-ui/core';
+import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText, CircularProgress } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/MenuSharp';
 import Person from '@material-ui/icons/Person';
 
@@ -16,6 +16,12 @@ import FriendPanel from 'components/FriendPanel/FriendPanel';
 import matchmakr from 'assets/matchmakr.png';
 
 import { Link } from 'react-router-dom';
+
+import { Route } from 'react-router-dom';
+
+import Login from 'components/Auth/Login';
+import Auth from 'components/Auth/Auth';
+import User from 'components/User/User';
 
 const styles = theme => ({
     logo: {
@@ -75,7 +81,7 @@ class Navigation extends Component {
                             className={logo}
                             alt='matchma.kr logo'
                         />
-                        {this.props.user.loggedin == 1 ? 
+                        {this.props.user.loggedin ? 
                             (
                                 <div className='accountMenu' >
                                     <IconButton
@@ -125,6 +131,12 @@ class Navigation extends Component {
                     <FriendPanel />
                 </Drawer>
                 {modal}
+                <div>
+                    <div className={toolbar} />
+                    <Route path='/auth' component={Auth}/>
+                    <Route path='/user' component={User}/>
+                    <Route path='/login' component={Login}/>
+                </div>
             </Fragment>
         );
     }
@@ -138,7 +150,7 @@ class Navigation extends Component {
     }
 
     toggleDrawer(){
-        this.setState(prev => ({ drawerOpen: !prev.drawerOpen }));
+        this.setState(prev => ({ drawers: { ...prev.drawers, left: !prev.drawers.left} }));
     }
 
     showModal(modal) {
@@ -189,7 +201,7 @@ class Navigation extends Component {
 
     usernameData(data) {
         if (data.loading || data.discord === undefined) {
-            return (<div>Loading</div>);
+            return (<CircularProgress />);
         } else {
             return (
                 <div>

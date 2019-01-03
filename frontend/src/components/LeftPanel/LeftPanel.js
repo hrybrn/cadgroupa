@@ -1,9 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import {GridList, GridListTile, FormLabel, Card, ListSubheader, Checkbox, RadioGroup, Radio, FormControlLabel} from '@material-ui/core';
 
-
-
-
 class LeftPanel extends Component {
     constructor(props){
         super(props);
