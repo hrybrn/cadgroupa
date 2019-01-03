@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Typography, Component, Fragment } from 'react';
 import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText, CircularProgress } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/MenuSharp';
 import Person from '@material-ui/icons/Person';
