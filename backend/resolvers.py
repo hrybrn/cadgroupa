@@ -1,12 +1,14 @@
 from google.cloud import datastore
 import os
 import json
-from discord import getuserobj
+from discord import getuserobj, getuserfriends
 
 helloWorld = lambda value, info, **args: 'Hello ' + args['name'] + '! Let\'s kill ourselves' if 'name' in args else 'Hello world! Let\'s kill ourselves'
 
 # print(os.environ['DATASTORE_HOST'])
 # print(os.environ['DATASTORE_EMULATOR_HOST'])
+with open('games.json') as f:
+    games_json = json.load(f)
 
 def entityTest(value, info, **args):
 	client = datastore.Client()
@@ -28,3 +30,12 @@ def user(value, info, **args):
 		return '401: Unauthorized'
 	else:
 		return getuserobj(args['token'])
+
+def userfriends(value, info, **args):
+	if not args['token']: 
+		return '401: Unauthorized'
+	else:
+		return getuserfriends(args['token'])
+
+def games(value, info, **args):
+	return json.dumps(games_json)
