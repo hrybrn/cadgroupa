@@ -9,7 +9,7 @@ from graphql import (
 	GraphQLArgument,
 	GraphQLList
 )
-from resolvers import user, helloWorld, entityTest
+from resolvers import user, userfriends, games, helloWorld, entityTest
 
 
 # Super useful 
@@ -33,11 +33,24 @@ queryschema = GraphQLObjectType(
 								)
 							},
 							resolver=user
+						),
+                        "userfriends" : GraphQLField(
+							type= GraphQLString,
+							args={
+								'token' : GraphQLArgument(
+									type=GraphQLString
+								)
+							},
+							resolver=userfriends
 						)
 					}
 				),
 				# This seems to need to be defined, although it's not used?
 				resolver=helloWorld	
+			),
+            "games": GraphQLField(
+					type= GraphQLString,
+					resolver=games
 			)
 		}
 )

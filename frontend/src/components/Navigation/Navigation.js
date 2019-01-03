@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText, CircularProgress } from '@material-ui/core';
+import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText, CircularProgress, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/MenuSharp';
 import Person from '@material-ui/icons/Person';
 
@@ -15,8 +15,6 @@ import FriendPanel from 'components/FriendPanel/FriendPanel';
 
 import matchmakr from 'assets/matchmakr.png';
 
-import { Link } from 'react-router-dom';
-
 import { Route } from 'react-router-dom';
 
 import Login from 'components/Auth/Login';
@@ -25,13 +23,24 @@ import Auth from 'components/Auth/Auth';
 const styles = theme => ({
     logo: {
         height: theme.mixins.toolbar.minHeight,
-        margin: '0 auto',
+        position: 'absolute',
+        margin: 'auto',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
     },
 
     navigation: {
         zIndex: theme.zIndex.drawer + 1,
         'text-align': 'center',
     },
+    
+    spreadToolbar: {
+        display: 'flex',
+        'justify-content': 'space-between'
+    },
+
     toolbar: theme.mixins.toolbar,
 });
 
@@ -71,7 +80,7 @@ class Navigation extends Component {
     }
 
     render() {
-        const { logo, navigation, toolbar } = this.props.classes;
+        const { logo, navigation, toolbar, spreadToolbar } = this.props.classes;
         const { anchorEl, drawers } = this.state;
         const accountMenuOpen = Boolean(anchorEl);
 
@@ -79,7 +88,7 @@ class Navigation extends Component {
         return (
             <Fragment>
                 <AppBar className={navigation}>
-                    <Toolbar>
+                    <Toolbar classes={{ root: spreadToolbar }}>
                         <IconButton
                             color='inherit'
                             aria-label='Menu'
@@ -119,11 +128,7 @@ class Navigation extends Component {
                                 </div>
                             ) : 
                             (
-                                <Link to='/login' style={{ color: '#FFF' }}>
-                                    <Button style={{ color: '#FFF' }}>
-                                        Login
-                                    </Button>
-                                </Link>
+                                <Button href='/login' style={{ color: 'white' }}>Login</Button>
                             )}
                     </Toolbar>
                 </AppBar>
@@ -213,13 +218,9 @@ class Navigation extends Component {
 
     usernameData(data) {
         if (data.loading || data.discord === undefined) {
-            return (<CircularProgress />);
+            return <CircularProgress />;
         } else {
-            return (
-                <div>
-                    {JSON.parse(data.discord.getuser).username}
-                </div>
-            );
+            return <Typography style={{ color: 'white' }}>{JSON.parse(data.discord.getuser).username}</Typography>;
         }
     }
 
