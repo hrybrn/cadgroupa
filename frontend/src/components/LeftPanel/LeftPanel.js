@@ -21,7 +21,8 @@ class LeftPanel extends Component {
         super(props);
         this.state = {
             noOfPlayers: 2,
-            modes: []
+            modes: [],
+            selectedGame: ''
         };
     }
     handleChange = event => {
