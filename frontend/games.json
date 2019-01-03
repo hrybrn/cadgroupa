@@ -1,13 +1,16 @@
 {
 
     "League Of Legends": {
-      "maxplayers": 5,
-      "minplayers": 5,
-      "minage": 13,
-      "description": "Recently recognized as the most played video game in the world—100 million play every month—League of Legends® is a multiplayer online battle arena game (MOBA).",
-      "website": "https://na.leagueoflegends.com/en/"
+        "logo" : "frontend/game-logos/lol.png",
+        "maxplayers": 5,
+        "minplayers": 5,
+        "minage": 13,
+        "description": "Recently recognized as the most played video game in the world—100 million play every month—League of Legends® is a multiplayer online battle arena game (MOBA).",
+        "website": "https://na.leagueoflegends.com/en/"
+
     },
     "Fortnite": {
+        "logo" : "frontend/game-logos/fortninte.png",
         "maxplayers": 4,
         "minplayers": 1,
         "minage": 12,
@@ -15,6 +18,7 @@
         "website": "https://www.epicgames.com/fortnite/en-US/buy-now/battle-royale"
     },
     "PLAYERUNKNOWN'S BATTLEGROUNDS": {
+        "logo" : "frontend/game-logos/pubg.png",
         "maxplayers": 4,
         "minplayers": 1,
         "minage": 18,
@@ -22,6 +26,7 @@
         "website": "https://www.pubg.com/"
     },
     "Grand Theft Auto V": {
+        "logo" : "frontend/game-logos/gtav.png",
         "maxplayers": 4,
         "minplayers": 1,
         "minage": 18,
@@ -29,6 +34,7 @@
         "website": "https://www.rockstargames.com/V/"
     },
     "Minecraft": {
+        "logo" : "frontend/game-logos/minecraft.png",
         "maxplayers": 100,
         "minplayers": 1,
         "minage": 7,
@@ -36,6 +42,7 @@
         "website": "https://minecraft.net/en-us/?ref=m"
     },
     "Rocket League": {
+        "logo" : "frontend/game-logos/rocketleague.png",
         "maxplayers": 4,
         "minplayers": 1,
         "minage": 15,
@@ -43,6 +50,7 @@
         "website": "https://store.steampowered.com/app/252950/Rocket_League/"
     },
     "Dota 2": {
+        "logo" : "frontend/game-logos/gota2.png",
         "maxplayers": 5,
         "minplayers": 5,
         "minage": 16,
@@ -50,6 +58,7 @@
         "website": "https://store.steampowered.com/app/570/Dota_2/"
     },
     "Far Cry 5": {
+        "logo" : "frontend/game-logos/farcry5.png",
         "maxplayers": 2,
         "minplayers": 1,
         "minage": 17,
@@ -57,6 +66,7 @@
         "website": "https://store.steampowered.com/app/552520/Far_Cry_5/"
     },
     "Hearthstone: Heroes Of Warcraft": {
+        "logo" : "frontend/game-logos/heartstone.png",
         "maxplayers": 2,
         "minplayers": 1,
         "minage": 7,
@@ -64,6 +74,7 @@
         "website" : "https://playhearthstone.com/en-gb/"
     },
     "Team Fortress 2": {
+        "logo" : "frontend/game-logos/tf2.png",
         "maxplayers": 9,
         "minplayers": 4,
         "minage": 15,
@@ -71,6 +82,7 @@
         "website": "https://store.steampowered.com/app/440/Team_Fortress_2/"
     },
     "FIFA 19": {
+        "logo" : "frontend/game-logos/fifa19.png",
         "maxplayers": 4,
         "minplayers": 1,
         "minage": 13,
@@ -79,6 +91,7 @@
 
     },
     "Overwatch": {
+        "logo" : "frontend/game-logos/overwatch.png",
         "maxplayers": 6,
         "minplayers": 4,
         "minage": 12,
@@ -86,6 +99,7 @@
         "website":"https://playoverwatch.com/en-gb/"
     },
     "Tom Clancy’s Rainbow Six Siege": {
+        "logo" : "frontend/game-logos/tomclancy.png",
         "maxplayers": 5,
         "minplayers": 1,
         "minage": 18,
@@ -93,6 +107,7 @@
         "website": "https://store.steampowered.com/app/359550/Tom_Clancys_Rainbow_Six_Siege/"
     },
     "Counter-Strike: Global Offensive": {
+        "logo" : "frontend/game-logos/csgo.png",
         "maxplayers": 8,
         "minplayers": 1,
         "minage": 18,
