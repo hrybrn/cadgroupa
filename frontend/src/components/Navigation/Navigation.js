@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText, CircularProgress } from '@material-ui/core';
+import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText, CircularProgress, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/MenuSharp';
 import Person from '@material-ui/icons/Person';
 
@@ -14,8 +14,6 @@ import Modal from 'components/Modal/Modal';
 import FriendPanel from 'components/FriendPanel/FriendPanel';
 
 import matchmakr from 'assets/matchmakr.png';
-
-import { Link } from 'react-router-dom';
 
 import { Route } from 'react-router-dom';
 
@@ -119,11 +117,7 @@ class Navigation extends Component {
                                 </div>
                             ) : 
                             (
-                                <Link to='/login' style={{ color: '#FFF' }}>
-                                    <Button style={{ color: '#FFF' }}>
-                                        Login
-                                    </Button>
-                                </Link>
+                                <Button href='/login' style={{ color: 'white' }}>Login</Button>
                             )}
                     </Toolbar>
                 </AppBar>
@@ -213,13 +207,9 @@ class Navigation extends Component {
 
     usernameData(data) {
         if (data.loading || data.discord === undefined) {
-            return (<CircularProgress />);
+            return <CircularProgress />;
         } else {
-            return (
-                <div>
-                    {JSON.parse(data.discord.getuser).username}
-                </div>
-            );
+            return <Typography style={{ color: 'white' }}>{JSON.parse(data.discord.getuser).username}</Typography>;
         }
     }
 
