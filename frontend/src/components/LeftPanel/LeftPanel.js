@@ -1,9 +1,8 @@
 import React, { Component, Fragment } from 'react';
-
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import {GridList, GridListTile, FormLabel,withStyles, ListSubheader, CircularProgress, Checkbox, RadioGroup, Radio, FormControlLabel} from '@material-ui/core';
 import CardTile from 'components/CardTile/CardTile';
+import { gameQuery } from 'queries/games'; 
 
 const styles = () => ({
     gridList: {
@@ -113,16 +112,5 @@ class LeftPanel extends Component {
         );
     }
 }
-
-export const gameQuery = gql`{
-    data {
-        games {
-            id
-            name
-            icon
-            modes
-        }
-    }
-}`;
 
 export default graphql(gameQuery)(withStyles(styles)(LeftPanel));

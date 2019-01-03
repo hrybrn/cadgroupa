@@ -7,3 +7,10 @@ export const get_user_obj = gql`
         }
     }
 `;
+
+
+export const gameQuery = gql`{
+    query {
+        games
+    }
+}`;
