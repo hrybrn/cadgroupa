@@ -1,14 +1,26 @@
 import React, { Component, Fragment } from 'react';
-import {GridList, GridListTile, FormLabel, Card, ListSubheader, Checkbox, RadioGroup, Radio, FormControlLabel} from '@material-ui/core';
+import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
+import {GridList, GridListTile, FormLabel,withStyles, ListSubheader, CircularProgress, Checkbox, RadioGroup, Radio, FormControlLabel} from '@material-ui/core';
+import CardTile from 'components/CardTile/CardTile';
 
-
-
+const styles = () => ({
+    gridList: {
+        width: 300,
+    },
+    titleTile: {
+        height: '50px !important',
+        'text-align': 'center',
+        margin: '0 auto',
+    }
+});
 
 class LeftPanel extends Component {
     constructor(props){
         super(props);
         this.state = {
-            noOfPlayers: 1
+            noOfPlayers: 2,
+            modes: []
         };
     }
     handleChange = event => {
@@ -16,24 +28,50 @@ class LeftPanel extends Component {
         this.setState({ noOfPlayers: parseInt(event.target.value) });
 
     };
-
-    renderGames = games => {
-        return games.map(
-            (game) =>
-                <GridListTile key={game.name}>
-                    <Card inputtype='checkbox'>
-                        {game.name}
-                    </Card>
+    gameTiles(data, classes) {
+        if (data.loading || data.friends === undefined) {
+            return (
+                <GridListTile className={classes.titleTile} cols={2}>
+                    <CircularProgress/>
                 </GridListTile>
-        );
+            );
+        } else {
+            return data.game.map(game =>
+                <CardTile
+                    key={game.id}
+                    activated={this.activated(game.modes)}
+                    deactivated={this.deactivated}
+                    {...game}
+                />
+            );
+        }
     }
+
+    activated(newModes) {
+        this.setState({modes: this.state.modes.append(newModes)});
+    }
+
+    deactivated() {
+
+    }
+
+    // renderGames = games => {
+    //     return games.map(
+    //         (game) =>
+    //             <GridListTile key={game.name}>
+    //                 <Card inputtype='checkbox'>
+    //                     {game.name}
+    //                 </Card>
+    //             </GridListTile>
+    //     );
+    // }
     
-    renderModes = modes => {
-        return modes.map(
+    renderModes = () => {
+        return this.state.modes.map(
             (mode) =>
-                <GridListTile key={mode.name}>
+                <GridListTile key={mode}>
                     <Checkbox>
-                        {mode.name}
+                        {mode}
                     </Checkbox>
                 </GridListTile>
         );
@@ -44,7 +82,7 @@ class LeftPanel extends Component {
                 value={this.state.noOfPlayers}
                 onChange={this.handleChange}
             >
-                { [1,2,3,4,5].map(
+                { [2,3,4,5,6].map(
                     (number) =>
                         <FormControlLabel
                             
@@ -60,15 +98,16 @@ class LeftPanel extends Component {
         );
     }
     render() {
+        const { gridList } = this.props.classes;
         return (
             <Fragment>
-                <GridList>
+                <GridList className={gridList}>
                     <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
                         <ListSubheader component="div">Games</ListSubheader>
                     </GridListTile>
-                    {this.renderGames}
+                    {this.gameTiles(this.props.data, this.props.classes)}
                 </GridList>
-                <GridList>
+                <GridList className={gridList}>
                     <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
                         <ListSubheader component="div">Modes</ListSubheader>
                     </GridListTile>
@@ -83,4 +122,15 @@ class LeftPanel extends Component {
     }
 }
 
-export default LeftPanel;
+export const gameQuery = gql`{
+    data {
+        games {
+            id
+            name
+            icon
+            modes
+        }
+    }
+}`;
+
+export default graphql(gameQuery)(withStyles(styles)(LeftPanel));
