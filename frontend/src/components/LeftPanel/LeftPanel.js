@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import {GridList, GridListTile, FormLabel,withStyles, ListSubheader, CircularProgress, Checkbox, RadioGroup, Radio, FormControlLabel} from '@material-ui/core';
@@ -14,6 +15,7 @@ const styles = () => ({
         margin: '0 auto',
     }
 });
+
 
 class LeftPanel extends Component {
     constructor(props){
