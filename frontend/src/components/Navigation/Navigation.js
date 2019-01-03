@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText } from '@material-ui/core';
+import React, { Typography, Component, Fragment } from 'react';
+import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText, CircularProgress } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/MenuSharp';
 import Person from '@material-ui/icons/Person';
 
@@ -16,6 +16,11 @@ import FriendPanel from 'components/FriendPanel/FriendPanel';
 import matchmakr from 'assets/matchmakr.png';
 
 import { Link } from 'react-router-dom';
+
+import { Route } from 'react-router-dom';
+
+import Login from 'components/Auth/Login';
+import Auth from 'components/Auth/Auth';
 
 const styles = theme => ({
     logo: {
@@ -48,8 +53,22 @@ class Navigation extends Component {
         user: {
             token: '',
             loggedin: 0
-        }
+        },
+
+        emailLoaded: false
     };
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (!this.state.emailLoaded && !nextProps.loading) {
+            this.setState(prev => ({
+                emailLoaded: true,
+                fields: {
+                    ...prev.fields,
+                    email: nextProps.user.loggedin ? JSON.parse(nextProps.data.discord.getuser).email : 'Not found'
+                }
+            }));
+        }
+    }
 
     render() {
         const { logo, navigation, toolbar } = this.props.classes;
@@ -75,7 +94,7 @@ class Navigation extends Component {
                             className={logo}
                             alt='matchma.kr logo'
                         />
-                        {this.props.user.loggedin == 1 ? 
+                        {this.props.user.loggedin ? 
                             (
                                 <div className='accountMenu' >
                                     <IconButton
@@ -125,6 +144,11 @@ class Navigation extends Component {
                     <FriendPanel />
                 </Drawer>
                 {modal}
+                <div>
+                    <div className={toolbar} />
+                    <Route path='/auth' component={Auth}/>
+                    <Route path='/login' component={Login}/>
+                </div>
             </Fragment>
         );
     }
@@ -138,7 +162,7 @@ class Navigation extends Component {
     }
 
     toggleDrawer(){
-        this.setState(prev => ({ drawerOpen: !prev.drawerOpen }));
+        this.setState(prev => ({ drawers: { ...prev.drawers, left: !prev.drawers.left} }));
     }
 
     showModal(modal) {
@@ -189,7 +213,7 @@ class Navigation extends Component {
 
     usernameData(data) {
         if (data.loading || data.discord === undefined) {
-            return (<div>Loading</div>);
+            return (<CircularProgress />);
         } else {
             return (
                 <div>
@@ -201,7 +225,7 @@ class Navigation extends Component {
 
     emailData(data) {
         if (data.loading || data.discord === undefined) {
-            return (<div>Loading</div>);
+            return (<CircularProgress />);
         } else {
             return (
                 <TextField
@@ -211,7 +235,7 @@ class Navigation extends Component {
                     label='Email Address'
                     type='email'
                     fullWidth
-                    value={this.props.user.loggedin ? JSON.parse(data.discord.getuser).email : 'Not found'}
+                    value={this.state.fields.email}
                     key='email'
                     onChange={this.updateField.bind(this, 'email')}
                 />
