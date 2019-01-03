@@ -1,5 +1,4 @@
 {
-
     "League Of Legends": {
         "logo" : "frontend/game-logos/lol.png",
         "maxplayers": 5,
@@ -7,10 +6,9 @@
         "minage": 13,
         "description": "Recently recognized as the most played video game in the world—100 million play every month—League of Legends® is a multiplayer online battle arena game (MOBA).",
         "website": "https://na.leagueoflegends.com/en/"
-
     },
     "Fortnite": {
-        "logo" : "frontend/game-logos/fortninte.png",
+        "logo" : "frontend/game-logos/fortnite.png",
         "maxplayers": 4,
         "minplayers": 1,
         "minage": 12,
@@ -50,7 +48,7 @@
         "website": "https://store.steampowered.com/app/252950/Rocket_League/"
     },
     "Dota 2": {
-        "logo" : "frontend/game-logos/gota2.png",
+        "logo" : "frontend/game-logos/dota2.png",
         "maxplayers": 5,
         "minplayers": 5,
         "minage": 16,
@@ -114,6 +112,4 @@
         "description": "Counter-Strike: Global Offensive (CS: GO) expands upon the team-based action gameplay that it pioneered when it was launched 19 years ago. CS: GO features new maps, characters, weapons, and game modes, and delivers updated versions of the classic CS content (de_dust2, etc.).",
         "website":"https://store.steampowered.com/app/730/CounterStrike_Global_Offensive/"
     }
-
-    
   }
