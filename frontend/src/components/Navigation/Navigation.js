@@ -23,13 +23,24 @@ import Auth from 'components/Auth/Auth';
 const styles = theme => ({
     logo: {
         height: theme.mixins.toolbar.minHeight,
-        margin: '0 auto',
+        position: 'absolute',
+        margin: 'auto',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
     },
 
     navigation: {
         zIndex: theme.zIndex.drawer + 1,
         'text-align': 'center',
     },
+    
+    spreadToolbar: {
+        display: 'flex',
+        'justify-content': 'space-between'
+    },
+
     toolbar: theme.mixins.toolbar,
 });
 
@@ -69,7 +80,7 @@ class Navigation extends Component {
     }
 
     render() {
-        const { logo, navigation, toolbar } = this.props.classes;
+        const { logo, navigation, toolbar, spreadToolbar } = this.props.classes;
         const { anchorEl, drawers } = this.state;
         const accountMenuOpen = Boolean(anchorEl);
 
@@ -77,7 +88,7 @@ class Navigation extends Component {
         return (
             <Fragment>
                 <AppBar className={navigation}>
-                    <Toolbar>
+                    <Toolbar classes={{ root: spreadToolbar }}>
                         <IconButton
                             color='inherit'
                             aria-label='Menu'
