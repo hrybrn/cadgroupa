@@ -6,3 +6,4 @@ venv/
 **/*.pyc
 apple.py
 set_vars.cmd
+.python_version
