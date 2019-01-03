@@ -50,23 +50,13 @@ class LeftPanel extends Component {
     }
 
     activated(newModes) {
-        this.setState({modes: this.state.modes.append(newModes)});
+        this.setState({modes: newModes});
     }
 
     deactivated() {
 
     }
 
-    // renderGames = games => {
-    //     return games.map(
-    //         (game) =>
-    //             <GridListTile key={game.name}>
-    //                 <Card inputtype='checkbox'>
-    //                     {game.name}
-    //                 </Card>
-    //             </GridListTile>
-    //     );
-    // }
     
     renderModes = () => {
         return this.state.modes.map(
