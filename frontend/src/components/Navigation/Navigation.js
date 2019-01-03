@@ -207,7 +207,7 @@ class Navigation extends Component {
 
     usernameData(data) {
         if (data.loading || data.discord === undefined) {
-            return <CircularProgress />;
+            return <Typography style={{ color: 'white' }}>Loading...</Typography>;
         } else {
             return <Typography style={{ color: 'white' }}>{JSON.parse(data.discord.getuser).username}</Typography>;
         }
@@ -218,17 +218,21 @@ class Navigation extends Component {
             return (<CircularProgress />);
         } else {
             return (
-                <TextField
-                    autoFocus
-                    margin='dense'
-                    id='name'
-                    label='Email Address'
-                    type='email'
-                    fullWidth
-                    value={this.state.fields.email}
-                    key='email'
-                    onChange={this.updateField.bind(this, 'email')}
-                />
+                <Fragment>
+                    <TextField
+                        autoFocus
+                        margin='dense'
+                        id='name'
+                        label='Email Address'
+                        type='email'
+                        fullWidth
+                        value={this.state.fields.email}
+                        key='email'
+                        onChange={this.updateField.bind(this, 'email')}
+                    />
+                    {JSON.parse(data.discord.getuser).verified ? (<Typography value='h2'>User is verified</Typography>) : (<Typography value='h2'>User is not verified!</Typography>)}
+                </Fragment>
+
             );
         }
     }
