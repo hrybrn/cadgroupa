@@ -91,6 +91,13 @@
         "minage": 18,
         "description": "Tom Clancy's Rainbow Six Siege is the latest installment of the acclaimed first-person shooter franchise developed by the renowned Ubisoft Montreal studio.",
         "website": "https://store.steampowered.com/app/359550/Tom_Clancys_Rainbow_Six_Siege/"
+    },
+    "Counter-Strike: Global Offensive": {
+        "maxplayers": 8,
+        "minplayers": 1,
+        "minage": 18,
+        "description": "Counter-Strike: Global Offensive (CS: GO) expands upon the team-based action gameplay that it pioneered when it was launched 19 years ago. CS: GO features new maps, characters, weapons, and game modes, and delivers updated versions of the classic CS content (de_dust2, etc.).",
+        "website":"https://store.steampowered.com/app/730/CounterStrike_Global_Offensive/"
     }
 
     
