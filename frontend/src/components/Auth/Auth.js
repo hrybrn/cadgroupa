@@ -33,7 +33,7 @@ class Auth extends Component{
             client_secret: DISCORD_SECRET,
             code: this.state.qsparsed.code,
             redirect_uri: 'http://127.0.0.1:3000/auth',
-            scope: 'identify'
+            scope: 'identify connections email messages.read'
         }),
         {
             method: 'POST',

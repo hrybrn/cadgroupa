@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText } from '@material-ui/core';
+import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/MenuSharp';
 import Person from '@material-ui/icons/Person';
 
@@ -203,18 +203,22 @@ class Navigation extends Component {
         if (data.loading || data.discord === undefined) {
             return (<div>Loading</div>);
         } else {
+            console.log(this.props.data);
             return (
-                <TextField
-                    autoFocus
-                    margin='dense'
-                    id='name'
-                    label='Email Address'
-                    type='email'
-                    fullWidth
-                    value={this.props.user.loggedin ? JSON.parse(data.discord.getuser).email : 'Not found'}
-                    key='email'
-                    onChange={this.updateField.bind(this, 'email')}
-                />
+                <div>
+                    { JSON.parse(this.props.data.discord.getuser) ? (<Typography type='h2'>User is verified!</Typography>) : (<Typography type='h2'>Not verified</Typography>)}
+                    <TextField
+                        autoFocus
+                        margin='dense'
+                        id='name'
+                        label='Email Address'
+                        type='email'
+                        fullWidth
+                        value={this.props.user.loggedin ? JSON.parse(data.discord.getuser).email : 'Not found'}
+                        key='email'
+                        onChange={this.updateField.bind(this, 'email')}
+                    />
+                </div>
             );
         }
     }

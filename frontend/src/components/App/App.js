@@ -7,7 +7,6 @@ import LeftPanel from '../LeftPanel/LeftPanel';
 import Login from '../Auth/Login';
 import Auth from '../Auth/Auth';
 import Navigation from 'components/Navigation/Navigation';
-import User from '../User/User';
 
 initializeStore({
     initialStore: {
@@ -42,7 +41,6 @@ class App extends Component {
             <MuiThemeProvider theme={this.theme}>
                 <Navigation/>
                 <Route path='/auth' component={Auth}/>
-                <Route path='/user' component={User}/>
                 <Route path='/login' component={Login}/>
                 <Route exact path='/' component={LeftPanel}/>
             </MuiThemeProvider>
