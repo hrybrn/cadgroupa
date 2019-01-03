@@ -21,7 +21,6 @@ import { Route } from 'react-router-dom';
 
 import Login from 'components/Auth/Login';
 import Auth from 'components/Auth/Auth';
-import User from 'components/User/User';
 
 const styles = theme => ({
     logo: {
@@ -134,7 +133,6 @@ class Navigation extends Component {
                 <div>
                     <div className={toolbar} />
                     <Route path='/auth' component={Auth}/>
-                    <Route path='/user' component={User}/>
                     <Route path='/login' component={Login}/>
                 </div>
             </Fragment>
@@ -215,7 +213,6 @@ class Navigation extends Component {
         if (data.loading || data.discord === undefined) {
             return (<div>Loading</div>);
         } else {
-            console.log(this.props.data);
             return (
                 <div>
                     { JSON.parse(this.props.data.discord.getuser) ? (<Typography type='h2'>User is verified!</Typography>) : (<Typography type='h2'>Not verified</Typography>)}
