@@ -53,8 +53,22 @@ class Navigation extends Component {
         user: {
             token: '',
             loggedin: 0
-        }
+        },
+
+        emailLoaded: false
     };
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (!this.state.emailLoaded && !nextProps.loading) {
+            this.setState(prev => ({
+                emailLoaded: true,
+                fields: {
+                    ...prev.fields,
+                    email: nextProps.user.loggedin ? JSON.parse(nextProps.data.discord.getuser).email : 'Not found'
+                }
+            }));
+        }
+    }
 
     render() {
         const { logo, navigation, toolbar } = this.props.classes;
@@ -211,23 +225,20 @@ class Navigation extends Component {
 
     emailData(data) {
         if (data.loading || data.discord === undefined) {
-            return (<div>Loading</div>);
+            return (<CircularProgress />);
         } else {
             return (
-                <div>
-                    { JSON.parse(this.props.data.discord.getuser) ? (<Typography type='h2'>User is verified!</Typography>) : (<Typography type='h2'>Not verified</Typography>)}
-                    <TextField
-                        autoFocus
-                        margin='dense'
-                        id='name'
-                        label='Email Address'
-                        type='email'
-                        fullWidth
-                        value={this.props.user.loggedin ? JSON.parse(data.discord.getuser).email : 'Not found'}
-                        key='email'
-                        onChange={this.updateField.bind(this, 'email')}
-                    />
-                </div>
+                <TextField
+                    autoFocus
+                    margin='dense'
+                    id='name'
+                    label='Email Address'
+                    type='email'
+                    fullWidth
+                    value={this.state.fields.email}
+                    key='email'
+                    onChange={this.updateField.bind(this, 'email')}
+                />
             );
         }
     }
