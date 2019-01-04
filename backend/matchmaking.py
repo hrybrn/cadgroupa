@@ -35,7 +35,7 @@ def pollQueue(userId):
 	return #continue polling
 
 def findMatch(request):
-	currentTime = tick.clock()
+	currentTime = time.clock()
 	query = client.query(kind='MatchRequest')
 	tolerance = calculateTolerance(currentTime - request['initialRequestTime'])
 	query.add_filter('gameId', '=', request['game'])
@@ -60,3 +60,26 @@ def calculateTolerance(elapsedTime):
     # decrease tolerance as time goes on
     # higer rank = lower tolerance 
 	return 100000 if elapsedTime > 30 else elapsedTime * elapsedTime * 2 + 100
+
+
+
+# tolerance band idea
+import sys
+class ToleranceBand(Enum):
+    INITIAL = 10
+    SHORT_WAIT = 20
+	MEDIUM_WAIT = 30
+	LONG_WAIT = 30
+
+def calculateToleranceBand(elapsedTime):
+	if elapsedTime < ToleranceBand.INITIAL:
+		return ToleranceBand.INITIAL
+
+	elif elapsedTime < SHORT_WAIT:
+		return ToleranceBand.SHORT_WAIT
+
+	elif elapsedTime < MEDIUM_WAIT:
+		return ToleranceBand.MEDIUM_WAIT
+	
+	else:
+		return ToleranceBand.LONG_WAIT
