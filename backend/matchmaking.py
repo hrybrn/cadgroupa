@@ -83,7 +83,7 @@ def calculateMaxRankDifference(acceptance)
 	return acceptance * acceptance + 100 # Measured in IDK what
 
 def calculateMaxDistance(acceptance)
-	return acceptance * 20 + 100 # Measured in KM
+	return acceptance * 15 + 200 # Measured in KM
 
 # tolerance band idea
 import sys
