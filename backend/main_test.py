@@ -13,3 +13,5 @@ from graphql import graphql
 # 	result = graphql(schema, query)
 # 	assert (not result.errors) and (result.data == expected)
 	
+def test_example():
+	assert true
