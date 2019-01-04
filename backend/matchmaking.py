@@ -6,8 +6,8 @@ POLL_INTERVAL_TIMEOUT = 10
 
 client = datastore.Client()
 
-def joinQueue(userId, location, game, players, maxPlayers, rank):
-	key = client.key('MatchRequest', userId)
+def joinQueue(token, location, game, players, rank):
+	key = client.key('MatchRequest', token)
 	requestTime = time.clock()
 	request = datastore.Entity(key)
 	request.update({
@@ -15,16 +15,15 @@ def joinQueue(userId, location, game, players, maxPlayers, rank):
 		'lastPollTime': requestTime,
 		'rank': rank,
 		'gameId': game,
-		'partySize': players,
-		'gameSize': maxPlayers,
+		'gameSize': players,
 		'matchId': '',
 		'location': location,
 	})
 	client.put(request)
 	return request
 
-def pollQueue(userId):
-	key = client.key('DiscordId', userId)
+def pollQueue(token):
+	key = client.key('MatchRequest', token)
 	request = client.get(key)
 	request.update({
 		'lastPollTime': time.clock()
