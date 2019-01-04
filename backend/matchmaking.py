@@ -41,9 +41,9 @@ def pollQueue(token):
 def findMatch(request):
 	currentTime = time.clock()
 
-	acceptanceLevel = calculateAcceptanceLevel(currentTime - request['initialRequestTime'])
-	maxRankDifference = calculateMaxRankDifference(acceptance)
-	maxDistance = calculateMaxDistance(acceptance)
+	tolerance = calculateTolerance(currentTime - request['initialRequestTime'])
+	maxRankDifference = calculateMaxRankDifference(tolerance)
+	maxDistance = calculateMaxDistance(tolerance)
 
 	query = client.query(kind='MatchRequest')
 	query.add_filter('gameId', '=', request['game'])
@@ -59,10 +59,10 @@ def findMatch(request):
 	
 	#interate through requests
 	for req in query.fetch():
-		requestAcceptanceLevel = calculateAcceptanceLevel(currentTime - req['initialRequestTime'])
-		maxRankDifference = calculateMaxRankDifference(requestAcceptanceLevel)
+		reqTolerance = calculateTolerance(currentTime - req['initialRequestTime'])
+		maxRankDifference = calculateMaxRankDifference(reqTolerance)
 		rankDifference = abs(request['rank'] - req['rank'])
-		maxDistance = min(calculateMaxDistance(requestAcceptanceLevel), maxDistance)
+		maxDistance = min(calculateMaxDistance(reqTolerance), maxDistance)
 		distance = 0 #TODO multiple by 111 for KM
 		if (distance < maxDistance and rankDifference < maxRankDifference)
 			players.append(req)
@@ -72,18 +72,13 @@ def findMatch(request):
 	return false, players
 
 def calculateTolerance(elapsedTime):
-    # decrease tolerance as time goes on
-    # higer rank = lower tolerance 
-	return 100000 if elapsedTime > 60 else elapsedTime * elapsedTime + 100
-
-def calculateAcceptanceLevel(elapsedTime):
 	return elapsedTime
 
-def calculateMaxRankDifference(acceptance):
-	return acceptance * acceptance + 100 # Measured in IDK what
+def calculateMaxRankDifference(tolerance):
+	return tolerance * tolerance + 100 # Measured in IDK what
 
-def calculateMaxDistance(acceptance):
-	return acceptance * 15 + 200 # Measured in KM
+def calculateMaxDistance(tolerance):
+	return tolerance * 15 + 200 # Measured in KM
 
 def calculateDistance(lat1, long1, lat2, long2):
 	lat = lat2 - lat1
@@ -91,68 +86,3 @@ def calculateDistance(lat1, long1, lat2, long2):
 	a = math.sin(lat/2) * math.sin(lat/2) + math.cos(lat1) * math.cos(lat2) * math.sin(long/2) * math.sin(long/2)
 	c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
 	return 6371 * c
-
-# tolerance band idea
-import sys
-class ToleranceBand(Enum):
-    INITIAL = 10
-    SHORT_WAIT = 20
-	MEDIUM_WAIT = 30
-	LONG_WAIT = sys.maxsize
-
-class RankAllowance(Enum):
-    INITIAL = 10
-    SHORT_WAIT = 50
-	MEDIUM_WAIT = 100
-	LONG_WAIT = sys.maxsize
-
-def calculateToleranceBand(elapsedTime):
-	if elapsedTime < ToleranceBand.INITIAL:
-		return ToleranceBand.INITIAL
-
-	elif elapsedTime < SHORT_WAIT:
-		return ToleranceBand.SHORT_WAIT
-
-	elif elapsedTime < MEDIUM_WAIT:
-		return ToleranceBand.MEDIUM_WAIT
-	
-	else:
-		return ToleranceBand.LONG_WAIT
-
-def calculateRankAllowance(toleranceBand):
-	if toleranceBand == ToleranceBand.INITIAL:
-		return RankAllowance.INITIAL
-
-	elif toleranceBand == ToleranceBand.SHORT_WAIT:
-		return RankAllowance.SHORT_WAIT
-
-	elif toleranceBand == ToleranceBand.MEDIUM_WAIT:
-		return RankAllowance.MEDIUM_WAIT
-	
-	else:
-		return RankAllowance.LONG_WAIT
-
-def findMatch(request):
-	currentTime = time.clock()
-	toleranceBand = calculateTolerance(currentTime - request['initialRequestTime'])
-	rankAllowance = calculateRankAllowance(toleranceBand)
-	
-	query = client.query(kind='MatchRequest')
-
-	query.add_filter('gameId', '=', request['game'])
-	query.add_filter('lastPollTime', '>', currentTime - POLL_INTERVAL_TIMEOUT)
-	query.add_filter('gameSize' '=', request['gameSize'])
-	query.add_filter('matchId' '=', '')
-	query.add_filter('rank', '>=', request['rank'] - rankAllowance)
-	query.add_filter('rank', '<=', request['rank'] + rankAllowance)
-	query.order = ['initialRequestTime']
-
-	matchedPlayers = []
-	
-	#interate through requests
-	for req in query.fetch():
-		if  matchedPlayers < request['gameSize']:
-			players.append(req)
-		else:
-			return matchedPlayers
-	return []
