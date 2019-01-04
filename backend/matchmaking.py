@@ -64,7 +64,7 @@ def findMatch(request):
 		rankDifference = abs(request['rank'] - req['rank'])
 		maxDistance = min(calculateMaxDistance(otherRequestAcceptance), maxDistance)
 		distance = 0 #TODO multiple by 111 for KM
-		if (distance < maxDistance && rankDifference < maxRankDifference)
+		if (distance < maxDistance and rankDifference < maxRankDifference)
 			players.append(req)
 			if (len(players) == requestedPlayerCount):
 				return true, players
