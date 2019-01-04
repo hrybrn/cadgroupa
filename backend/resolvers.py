@@ -3,10 +3,21 @@ import os
 import json
 from discord import getuserobj, getuserfriends
 
+from collections import namedtuple
+
 helloWorld = lambda value, info, **args: "Hello " + args['name'] + "!" if 'name' in args else "Hello World!"
 
 # print(os.environ['DATASTORE_HOST'])
 # print(os.environ['DATASTORE_EMULATOR_HOST'])
+class Struct(object):
+    def __init__(self, d):
+        for a, b in d.items():
+            if isinstance(b, (list, tuple)):
+               setattr(self, a, [obj(x) if isinstance(x, dict) else x for x in b])
+            else:
+               setattr(self, a, obj(b) if isinstance(b, dict) else b)
+
+
 with open('games.json') as f:
     games_json = json.load(f)
 
@@ -38,7 +49,10 @@ def userfriends(value, info, **args):
 		return getuserfriends(args['token'])
 
 def games(value, info, **args):
-	return json.dumps(games_json)
+	game_list = []
+	for game in games_json:
+		game_list.append(Struct(game))
+	return game_list
 
 
 def resolver(value, info, **args):

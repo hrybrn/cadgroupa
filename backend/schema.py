@@ -7,7 +7,8 @@ from graphql import (
 	GraphQLInterfaceType,
 	GraphQLNonNull,
 	GraphQLArgument,
-	GraphQLList
+	GraphQLList,
+	GraphQLInt
 )
 from resolvers import user, userfriends, games, helloWorld, entityTest
 
@@ -49,7 +50,21 @@ queryschema = GraphQLObjectType(
 				resolver=helloWorld	
 			),
             "games": GraphQLField(
-					type= GraphQLString,
+					type= GraphQLList(
+						type=GraphQLObjectType(
+							name="game",
+							fields={
+								"id": GraphQLField(type=GraphQLString),
+								"name": GraphQLField(type=GraphQLString),
+								"icon": GraphQLField(type=GraphQLString),
+								"maxplayers": GraphQLField(type=GraphQLInt),
+								"minplayers": GraphQLField(type=GraphQLInt),
+								"minage": GraphQLField(type=GraphQLInt),
+								"description": GraphQLField(type=GraphQLString),
+								"website": GraphQLField(type=GraphQLString),
+							}
+						)
+					),
 					resolver=games
 			),
             "helloworld": GraphQLField(
