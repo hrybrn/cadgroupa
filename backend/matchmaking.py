@@ -83,3 +83,16 @@ def calculateToleranceBand(elapsedTime):
 	
 	else:
 		return ToleranceBand.LONG_WAIT
+
+def calculateRankAllowance(toleranceBand):
+	if toleranceBand == ToleranceBand.INITIAL:
+		return 10
+
+	elif elapsedTime == ToleranceBand.SHORT_WAIT:
+		return 50
+
+	elif elapsedTime == ToleranceBand.MEDIUM_WAIT:
+		return 100
+	
+	else:
+		return sys.maxsize
