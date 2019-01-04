@@ -2,6 +2,7 @@ from google.cloud import datastore
 import os
 import json
 import matchmaking
+import users
 
 from collections import namedtuple
 
@@ -62,3 +63,6 @@ def pollSearch(value, info, **args):
 # for testing purposes
 def requestsInSystem(value, info, **args):
 	return matchmaking.getMatchRequests(args['gameId'])
+
+def getRecentPlayers(value, info, **args):
+	return users.getRecentPlayers(args["token"])

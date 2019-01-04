@@ -38,6 +38,12 @@ queryschema = GraphQLObjectType(
                 },
                 resolver=helloWorld
             ),
+			"recentPlayers": GraphQLField(
+				type=GraphQLList(GraphQLString),
+				args={
+					"token": GraphQLArgument(GraphQLString)
+				}
+			),
 			"requestsInSystem": GraphQLField(
                 type=GraphQLString,
                 args={
