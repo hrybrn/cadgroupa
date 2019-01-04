@@ -46,15 +46,15 @@ def findMatch(request):
 	query.add_filter('matchId' '=', '')
 	query.order = ['initialRequestTime']
 
-	matchedPlayers = []
+	players = []
 	
 	#interate through requests
 	for req in query.fetch():
-		if  matchedPlayers < request['gameSize']:
-			players.append(req)
-		else:
-			return matchedPlayers
-	return []
+
+		print(req.key)
+
+
+	return
 
 def calculateTolerance(elapsedTime):
     # decrease tolerance as time goes on
@@ -112,12 +112,12 @@ def findMatch(request):
 	query.add_filter('rank', '<=', request['rank'] + rankAllowance)
 	query.order = ['initialRequestTime']
 
-	players = []
+	matchedPlayers = []
 	
 	#interate through requests
 	for req in query.fetch():
-
-		print(req.key)
-
-
-	return
+		if  matchedPlayers < request['gameSize']:
+			players.append(req)
+		else:
+			return matchedPlayers
+	return []
