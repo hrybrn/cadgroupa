@@ -34,7 +34,7 @@ class LeftPanel extends Component {
 
     };
     gameTiles(data, classes) {
-        if (data.loading || data.friends === undefined) {
+        if (data.loading || data.games === undefined) {
             return (
                 <GridListTile className={classes.titleTile} cols={2}>
                     <CircularProgress/>
