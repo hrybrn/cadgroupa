@@ -54,14 +54,23 @@ queryschema = GraphQLObjectType(
 						type=GraphQLObjectType(
 							name="game",
 							fields={
-								"id": GraphQLField(type=GraphQLString),
-								"name": GraphQLField(type=GraphQLString),
-								"icon": GraphQLField(type=GraphQLString),
-								"maxplayers": GraphQLField(type=GraphQLInt),
-								"minplayers": GraphQLField(type=GraphQLInt),
-								"minage": GraphQLField(type=GraphQLInt),
-								"description": GraphQLField(type=GraphQLString),
-								"website": GraphQLField(type=GraphQLString),
+								"id": GraphQLField(GraphQLString),
+								"name": GraphQLField(GraphQLString),
+								"icon": GraphQLField(GraphQLString),
+								"maxplayers": GraphQLField(GraphQLInt),
+								"minplayers": GraphQLField(GraphQLInt),
+								"minage": GraphQLField(GraphQLInt),
+								"description": GraphQLField(GraphQLString),
+								"website": GraphQLField(GraphQLString),
+								"modes": GraphQLField(GraphQLList(
+									type=GraphQLObjectType(
+										name="mode",
+										fields={
+											"name": GraphQLField(GraphQLString),
+											"players": GraphQLField(GraphQLInt)
+										}
+									)
+								))
 							}
 						)
 					),
