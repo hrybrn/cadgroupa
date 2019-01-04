@@ -7,7 +7,7 @@ DEFAULT_MATCH_ID = "BLANK"
 
 client = datastore.Client()
 
-def joinQueue(token, location, game, players, rank):
+def joinQueue(token, location, game, mode, players, rank):
 	key = client.key('MatchRequest', token)
 	requestTime = time.clock()
 	request = datastore.Entity(key)
@@ -15,7 +15,7 @@ def joinQueue(token, location, game, players, rank):
 		'initialRequestTime': requestTime,
 		'lastPollTime': requestTime,
 		'rank': rank,
-		'gameId': game,
+		'gameId': game + ':' + mode,
 		'gameSize': players,
 		'matchId': DEFAULT_MATCH_ID,
 		'location': location,
