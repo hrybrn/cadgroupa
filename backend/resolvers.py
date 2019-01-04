@@ -2,8 +2,9 @@ from google.cloud import datastore
 import os
 import json
 
-helloWorld = lambda value, info, **args: 'Hello ' + args['name'] + '! Let\'s kill ourselves' if 'name' in args else 'Hello world! Let\'s kill ourselves'
-goodbyeWorld = lambda value, info, **args: 'Goodbye ' + args['username'] + '! Let\'s kill ourselves' if 'username' in args else 'Goodbye world! Let\'s kill ourselves'
+from collections import namedtuple
+
+helloWorld = lambda value, info, **args: "Hello " + args['name'] + "!" if 'name' in args else "Hello World!"
 
 
 # print(os.environ['DATASTORE_HOST'])
@@ -21,3 +22,36 @@ def entityTest(value, info, **args):
 	})
 	client.put(task)
 	return json.dumps(client.get(key))
+
+
+
+def user(value, info, **args):
+	if not args['token']: 
+		return '401: Unauthorized'
+	else:
+		return getuserobj(args['token'])
+
+def userfriends(value, info, **args):
+	if not args['token']: 
+		return '401: Unauthorized'
+	else:
+		return getuserfriends(args['token'])
+
+def games(value, info, **args):
+	return json.dumps(games_json)
+
+def registerSearch(value, info, **args):
+	if not args['token']: 
+		return '401: Unauthorized'
+	else:
+		# TODO: actually register search
+		literal = lambda **kw: namedtuple('literal', kw)(**kw)
+		return literal(success=True, game="testGame", mode="testMode", registrationID="testID")
+
+def pollSearch(value, info, **args):
+	if not args['token']: 
+		return '401: Unauthorized'
+	else:
+		# TODO: actually poll for match
+		literal = lambda **kw: namedtuple('literal', kw)(**kw)
+		return literal(success=True, registrationID=args["registrationID"], playerDiscordIDs=["hello", "world"])
