@@ -10,5 +10,9 @@ export const gameQuery = gql`{
         id
         maxplayers
         icon
+        modes {
+            name
+            players
+        }
     }
 }`;
