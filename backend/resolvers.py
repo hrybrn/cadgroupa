@@ -39,3 +39,10 @@ def userfriends(value, info, **args):
 
 def games(value, info, **args):
 	return json.dumps(games_json)
+
+
+def resolver(value, info, **args):
+    if not args['token']:
+        return '401: Unauthorized'
+    else:
+        return 'Brad'
