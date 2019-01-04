@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { mapStatesToProps } from 'react-fluxible';
-import { withStyles, Typography, Paper } from '@material-ui/core';
+import { withStyles, Typography, Paper, Button } from '@material-ui/core';
 
 import Searching from './Searching';
 
@@ -49,6 +49,7 @@ class CenterPanel extends Component {
                 <div id='heightOffset' style={{ height: '100px' }}/>
                 <Paper className={this.props.classes.root}>
                     <Typography variant='h4'>{message}</Typography>
+                    <Button>Search</Button>
                 </Paper>
             </div>
         );

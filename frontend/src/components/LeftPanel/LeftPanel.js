@@ -1,61 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { graphql } from 'react-apollo';
-import {GridList, GridListTile,withStyles, ListSubheader, CircularProgress, Checkbox} from '@material-ui/core';
+import {GridList, GridListTile,withStyles, ListSubheader, CircularProgress, Radio, RadioGroup, FormControlLabel, Button } from '@material-ui/core';
 import CardTile from 'components/CardTile/CardTile';
 import { gameQuery } from 'queries/games'; 
-
-import csgo from 'assets/game-logos/csgo.png';
-import dota2 from 'assets/game-logos/dota2.png';
-import farcry5 from 'assets/game-logos/farcry5.png';
-import fifa19 from 'assets/game-logos/fifa19.png';
-import fortnite from 'assets/game-logos/fortnite.png';
-import gtav from 'assets/game-logos/gtav.png';
-import heartstone from 'assets/game-logos/heartstone.png';
-import lol from 'assets/game-logos/lol.png';
-import minecraft from 'assets/game-logos/minecraft.png';
-import overwatch from 'assets/game-logos/overwatch.png';
-import pubg from 'assets/game-logos/pubg.png';
-import rocketleague from 'assets/game-logos/rocketleague.png';
-import tf2 from 'assets/game-logos/tf2.png';
-import tomclancy from 'assets/game-logos/tomclancy.png';
-
-function getImage(name) {
-    console.log(name);
-    switch(name) {
-    case 'csgo':
-        return csgo;
-    case 'dota2':
-        return dota2;
-    case 'farcry5':
-        return farcry5;
-    case 'fifa19':
-        return fifa19;
-    case 'fortnite':
-        return fortnite;
-    case 'gtav':
-        return gtav;
-    case 'heartstone':
-        return heartstone;
-    case 'lol':
-        return lol;
-    case 'minecraft':
-        return minecraft;
-    case 'overwatch':
-        return overwatch;
-    case 'pubg':
-        return pubg;
-    case 'rocketleague':
-        return rocketleague;
-    case 'tf2':
-        return tf2;
-    case 'tomclancy':
-        return tomclancy;
-    }
-}
+import { getGameLogo } from 'assets/game-logos';
 
 const styles = () => ({
     gridList: {
-        width: 300,
+        width: 315,
+        maxHeight: 500
     },
     titleTile: {
         height: '50px !important',
@@ -72,7 +25,8 @@ class LeftPanel extends Component {
     state = {
         noOfPlayers: 2,
         modes: [],
-        selectedGame: ''
+        selectedGame: '',
+        selectedMode: '',
     };
 
     handleChange(event) {
@@ -83,7 +37,7 @@ class LeftPanel extends Component {
         if (data.loading || data.games === undefined) {
             return (
                 <GridListTile className={classes.titleTile} cols={2}>
-                    <CircularProgress/>
+                    <CircularProgress />
                 </GridListTile>
             );
         } else {
@@ -93,25 +47,35 @@ class LeftPanel extends Component {
                     pressed={this.gameSelected.bind(this, game)}
                     active={this.state.selectedGame === game.name}
                     {...game}
-                    icon={getImage(game.icon)}
+                    icon={getGameLogo(game.icon)}
                 />
             );
         }
     }
 
     gameSelected(game) {
-        this.setState(prev => prev.selectedGame === game.name ? { selectedGame: '' } : { selectedGame: game.name });
+        this.setState(prev => prev.selectedGame === game.name ? { selectedMode: '', selectedGame: '', modes: [] } : { selectedMode: '', selectedGame: game.name, modes: game.modes });
+    }
+
+    modeSelected({ target: { value: value }}) {
+        this.setState({ selectedMode: value });
     }
     
-    renderModes = () => {
+    renderModes() {
         return this.state.modes.map(
             (mode) =>
-                <GridListTile key={mode}>
-                    <Checkbox>
-                        {mode}
-                    </Checkbox>
-                </GridListTile>
+                <FormControlLabel
+                    value={mode.name}
+                    control={<Radio color="primary" />}
+                    label={mode.name}
+                    labelPlacement="start"
+                    key={mode.name}
+                />
         );
+    }
+
+    search() {
+        // TODO: implement search start
     }
 
     render() {
@@ -119,18 +83,28 @@ class LeftPanel extends Component {
         return (
             <Fragment>
                 <GridList className={gridList}>
-                    <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+                    <GridListTile key="Subheader" cols={2} style={{ height: 'auto', 'text-align': 'center' }}>
                         <ListSubheader component="div">Games</ListSubheader>
                     </GridListTile>
+                </GridList>
+                <GridList className={gridList}>
                     {this.gameTiles(this.props.data, this.props.classes)}
                 </GridList>
                 <GridList className={gridList}>
-                    <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+                    <GridListTile key="Subheader" cols={2} style={{ height: 'auto', 'text-align': 'center' }}>
                         <ListSubheader component="div">Modes</ListSubheader>
                     </GridListTile>
-                    {this.renderModes}
                 </GridList>
-                
+                <GridList className={gridList}>
+                    <RadioGroup value={this.state.selectedMode} onChange={this.modeSelected.bind(this)}>
+                        {this.renderModes()}
+                    </RadioGroup>
+                </GridList>
+                <GridList className={gridList}>
+                    <GridListTile key="Subheader" cols={2} style={{ height: 'auto', 'text-align': 'center' }}>
+                        {this.state.selectedGame && this.state.selectedMode && <Button onClick={this.search.bind(this)}>Search</Button>}
+                    </GridListTile>
+                </GridList>
             </Fragment>
         );
     }
