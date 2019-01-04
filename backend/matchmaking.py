@@ -46,15 +46,15 @@ def findMatch(request):
 	query.add_filter('matchId' '=', '')
 	query.order = ['initialRequestTime']
 
-	players = []
+	matchedPlayers = []
 	
 	#interate through requests
 	for req in query.fetch():
-
-		print(req.key)
-
-
-	return
+		if  matchedPlayers < request['gameSize']:
+			players.append(req)
+		else:
+			return matchedPlayers
+	return []
 
 def calculateTolerance(elapsedTime):
     # decrease tolerance as time goes on
@@ -96,3 +96,28 @@ def calculateRankAllowance(toleranceBand):
 	
 	else:
 		return sys.maxsize
+
+def findMatch(request):
+	currentTime = time.clock()
+	toleranceBand = calculateTolerance(currentTime - request['initialRequestTime'])
+	rankAllowance = calculateRankAllowance(toleranceBand)
+	
+	query = client.query(kind='MatchRequest')
+
+	query.add_filter('gameId', '=', request['game'])
+	query.add_filter('lastPollTime', '>', currentTime - POLL_INTERVAL_TIMEOUT)
+	query.add_filter('gameSize' '=', request['gameSize'])
+	query.add_filter('matchId' '=', '')
+	query.add_filter('rank', '>=', request['rank'] - rankAllowance)
+	query.add_filter('rank', '<=', request['rank'] + rankAllowance)
+	query.order = ['initialRequestTime']
+
+	players = []
+	
+	#interate through requests
+	for req in query.fetch():
+
+		print(req.key)
+
+
+	return
