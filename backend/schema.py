@@ -9,13 +9,15 @@ from graphql import (
 	GraphQLArgument,
 	GraphQLList,
 	GraphQLBoolean,
+	GraphQLInt,
+	GraphQLFloat
 )
 from resolvers import user, userfriends, games, helloWorld, entityTest, registerSearch, pollSearch
 
 
 # Super useful 
 # - https://github.com/graphql-python/graphql-core/blob/master/tests/starwars/starwars_schema.py
-# Note custom type definitions	
+# Note custom type definitions
 # You can do some cool things with type + interface definitions + superclassing, but I'll keep this simple until we need
 # If anyone is curious then the file linked above is a good exmaple.
 
@@ -23,33 +25,6 @@ from resolvers import user, userfriends, games, helloWorld, entityTest, register
 queryschema = GraphQLObjectType(
 		'RootQueryType',
 		lambda: {
-			"discord": GraphQLField(
-				type=GraphQLObjectType(
-					name="nestedhelloworld",
-					fields={
-						"getuser": GraphQLField(
-							type= GraphQLString,
-							args={
-								'token': GraphQLArgument(
-									type=GraphQLString
-								)
-							},
-							resolver=helloWorld
-						),
-                        "userfriends": GraphQLField(
-							type= GraphQLString,
-							args={
-								'token': GraphQLArgument(
-									type=GraphQLString
-								)
-							},
-							resolver=goodbyeWorld
-						)
-					}
-				),
-				# This seems to need to be defined, although it's not used?
-				resolver=helloWorld	
-			),
             "games": GraphQLField(
 					type= GraphQLString,
 					resolver=games
@@ -71,7 +46,7 @@ queryschema = GraphQLObjectType(
 							type=GraphQLObjectType(
 								name="registerResponse",
 								fields={
-									"game": GraphQLField(
+									"gameID": GraphQLField(
 										type=GraphQLString
 									),
 									"mode": GraphQLField(
@@ -89,12 +64,24 @@ queryschema = GraphQLObjectType(
 								"token": GraphQLArgument(
 									type=GraphQLString
 								),
-								"game": GraphQLArgument(
+								"gameID": GraphQLArgument(
 									type=GraphQLString
 								),
-								"mode": GraphQLArgument(
+								"modeID": GraphQLArgument(
 									type=GraphQLString
 								),
+								"players": GraphQLArgument(
+									type=GraphQLString
+								),
+								"rank": GraphQLArgument(
+									type=GraphQLInt
+								),
+								"lat": GraphQLArgument(
+									type=GraphQLFloat
+								),
+								"lon": GraphQLArgument(
+									type=GraphQLFloat
+								)
 							},
 							resolver=registerSearch
 						),
@@ -102,7 +89,7 @@ queryschema = GraphQLObjectType(
 							type=GraphQLObjectType(
 								name="pollResponse",
 								fields={
-									"registrationID": GraphQLField(
+									"token": GraphQLField(
 										type=GraphQLString
 									),
 									"success": GraphQLField(
