@@ -51,7 +51,16 @@ queryschema = GraphQLObjectType(
             "games": GraphQLField(
 					type= GraphQLString,
 					resolver=games
-			)
+			),
+            "helloworld": GraphQLField(
+                type=GraphQLString,
+                args={
+                    'name': GraphQLArgument(
+                        type=GraphQLString,
+                    )
+                },
+                resolver=helloWorld
+            )
 		}
 )
 
