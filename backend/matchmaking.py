@@ -63,7 +63,7 @@ def findMatch(request):
 		maxRankDifference = calculateMaxRankDifference(acceptance)
 		rankDifference = abs(request['rank'] - req['rank'])
 		maxDistance = min(calculateMaxDistance(otherRequestAcceptance), maxDistance)
-		distance = 0 #TODO
+		distance = 0 #TODO multiple by 111 for KM
 		if (distance < maxDistance && rankDifference < maxRankDifference)
 			players.append(req)
 			if (len(players) == requestedPlayerCount):
@@ -80,10 +80,10 @@ def calculateAcceptance(elapsedTime)
 	return elapsedTime
 
 def calculateMaxRankDifference(acceptance)
-	return acceptance * acceptance + 100
+	return acceptance * acceptance + 100 # Measured in IDK what
 
 def calculateMaxDistance(acceptance)
-	return acceptance + 1
+	return acceptance + 100 # Measured in KM
 
 # tolerance band idea
 import sys
