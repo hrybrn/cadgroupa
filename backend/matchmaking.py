@@ -59,7 +59,7 @@ def findMatch(request):
 	
 	#interate through requests
 	for req in query.fetch():
-		otherRequestAcceptance = calculateAcceptanceLevel(currentTime - req['initialRequestTime'])
+		requestAcceptanceLevel = calculateAcceptanceLevel(currentTime - req['initialRequestTime'])
 		maxRankDifference = calculateMaxRankDifference(acceptance)
 		rankDifference = abs(request['rank'] - req['rank'])
 		maxDistance = min(calculateMaxDistance(otherRequestAcceptance), maxDistance)
