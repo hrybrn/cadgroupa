@@ -7,6 +7,7 @@ POLL_INTERVAL = 5
 POLL_INTERVAL_TIMEOUT = 10
 DEFAULT_MATCH_ID = 'BLANK'
 GAME_MODE_SEPERATOR = ':'
+EARTH_RADIUS = 6371
 
 client = datastore.Client()
 
@@ -90,7 +91,7 @@ def calculateDistance(lat1, long1, lat2, long2):
 	longR = longR2 - longR1
 	a = math.sin(latR/2) * math.sin(latR/2) + math.cos(latR1) * math.cos(latR2) * math.sin(longR/2) * math.sin(longR/2)
 	c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
-	return 6371 * c
+	return EARTH_RADIUS * c
 
 def getMatchRequests(gameId):
 	query = client.query(kind='MatchRequest')
