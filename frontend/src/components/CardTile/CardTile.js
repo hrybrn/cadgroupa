@@ -36,7 +36,7 @@ const styles = () => ({
 
 class CardTile extends Component {
     state = {
-        active: false
+        active: this.props.active
     };
 
     render() {
