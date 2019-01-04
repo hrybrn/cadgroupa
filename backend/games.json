@@ -2,7 +2,7 @@
     {
         "id": "0",
         "name": "League Of Legends",
-        "icon" : "frontend/game-logos/lol.png",
+        "icon" : "lol",
         "maxplayers": 5,
         "minplayers": 5,
         "minage": 13,
@@ -26,7 +26,7 @@
     {
         "id": "1",
         "name": "Fortnite",
-        "icon" : "frontend/game-logos/fortnite.png",
+        "icon" : "fortnite",
         "maxplayers": 4,
         "minplayers": 1,
         "minage": 12,
@@ -50,7 +50,7 @@
     {
         "id": "2",
         "name": "PLAYERUNKNOWN'S BATTLEGROUNDS",
-        "icon" : "frontend/game-logos/pubg.png",
+        "icon" : "pubg",
         "maxplayers": 4,
         "minplayers": 1,
         "minage": 18,
@@ -74,7 +74,7 @@
     {
         "id": "3",
         "name": "Grand Theft Auto V",
-        "icon" : "frontend/game-logos/gtav.png",
+        "icon" : "gtav",
         "maxplayers": 4,
         "minplayers": 1,
         "minage": 18,
@@ -94,7 +94,7 @@
     {
         "id": "4",
         "name": "Minecraft",
-        "icon" : "frontend/game-logos/minecraft.png",
+        "icon" : "minecraft",
         "maxplayers": 100,
         "minplayers": 1,
         "minage": 7,
@@ -114,7 +114,7 @@
     {
         "id": "5",
         "name": "Rocket League",
-        "icon" : "frontend/game-logos/rocketleague.png",
+        "icon" : "rocketleague",
         "maxplayers": 4,
         "minplayers": 1,
         "minage": 15,
@@ -138,7 +138,7 @@
     {
         "id": "6",
         "name": "Dota 2",
-        "icon" : "frontend/game-logos/dota2.png",
+        "icon" : "dota2",
         "maxplayers": 5,
         "minplayers": 5,
         "minage": 16,
@@ -162,7 +162,7 @@
     {
         "id": "7",
         "name": "Far Cry 5",
-        "icon" : "frontend/game-logos/farcry5.png",
+        "icon" : "farcry5",
         "maxplayers": 2,
         "minplayers": 1,
         "minage": 17,
@@ -178,7 +178,7 @@
     {
         "id": "8",
         "name": "Hearthstone: Heroes Of Warcraft",
-        "icon" : "frontend/game-logos/heartstone.png",
+        "icon" : "heartstone",
         "maxplayers": 2,
         "minplayers": 1,
         "minage": 7,
@@ -198,7 +198,7 @@
     {
         "id": "9",
         "name": "Team Fortress 2",
-        "icon" : "frontend/game-logos/tf2.png",
+        "icon" : "tf2",
         "maxplayers": 9,
         "minplayers": 4,
         "minage": 15,
@@ -226,7 +226,7 @@
     {
         "id": "10",
         "name": "FIFA 19",
-        "icon" : "frontend/game-logos/fifa19.png",
+        "icon" : "fifa19",
         "maxplayers": 4,
         "minplayers": 1,
         "minage": 13,
@@ -250,7 +250,7 @@
     {
         "id": "11",
         "name": "Overwatch",
-        "icon" : "frontend/game-logos/overwatch.png",
+        "icon" : "overwatch",
         "maxplayers": 6,
         "minplayers": 4,
         "minage": 12,
@@ -270,7 +270,7 @@
     {
         "id": "12",
         "name": "Tom Clancy’s Rainbow Six Siege",
-        "icon" : "frontend/game-logos/tomclancy.png",
+        "icon" : "tomclancy",
         "maxplayers": 5,
         "minplayers": 1,
         "minage": 18,
@@ -290,7 +290,7 @@
     {
         "id": "13",
         "name": "Counter-Strike: Global Offensive",
-        "icon" : "frontend/game-logos/csgo.png",
+        "icon" : "csgo",
         "maxplayers": 8,
         "minplayers": 1,
         "minage": 18,
