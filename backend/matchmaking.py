@@ -60,9 +60,9 @@ def findMatch(request):
 	#interate through requests
 	for req in query.fetch():
 		requestAcceptanceLevel = calculateAcceptanceLevel(currentTime - req['initialRequestTime'])
-		maxRankDifference = calculateMaxRankDifference(acceptance)
+		maxRankDifference = calculateMaxRankDifference(requestAcceptanceLevel)
 		rankDifference = abs(request['rank'] - req['rank'])
-		maxDistance = min(calculateMaxDistance(otherRequestAcceptance), maxDistance)
+		maxDistance = min(calculateMaxDistance(requestAcceptanceLevel), maxDistance)
 		distance = 0 #TODO multiple by 111 for KM
 		if (distance < maxDistance and rankDifference < maxRankDifference)
 			players.append(req)
