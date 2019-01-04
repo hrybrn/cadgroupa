@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_graphql import GraphQLView
 from schema import schema
+from flask_cors import CORS
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/graphql": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]}})
