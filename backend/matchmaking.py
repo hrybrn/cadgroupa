@@ -39,7 +39,7 @@ def pollQueue(userId):
 		return true #continue polling
 
 def findMatch(request):
-	currentTime = tick.clock()
+	currentTime = time.clock()
 	query = client.query(kind='MatchRequest')
 	tolerance = calculateTolerance(currentTime - request['initialRequestTime'])
 	query.add_filter('gameId', '=', request['game'])
@@ -67,3 +67,70 @@ def calculateTolerance(elapsedTime):
     # decrease tolerance as time goes on
     # higer rank = lower tolerance 
 	return 100000 if elapsedTime > 60 else elapsedTime * elapsedTime + 100
+
+
+
+# tolerance band idea
+import sys
+class ToleranceBand(Enum):
+    INITIAL = 10
+    SHORT_WAIT = 20
+	MEDIUM_WAIT = 30
+	LONG_WAIT = sys.maxsize
+
+class RankAllowance(Enum):
+    INITIAL = 10
+    SHORT_WAIT = 50
+	MEDIUM_WAIT = 100
+	LONG_WAIT = sys.maxsize
+
+def calculateToleranceBand(elapsedTime):
+	if elapsedTime < ToleranceBand.INITIAL:
+		return ToleranceBand.INITIAL
+
+	elif elapsedTime < SHORT_WAIT:
+		return ToleranceBand.SHORT_WAIT
+
+	elif elapsedTime < MEDIUM_WAIT:
+		return ToleranceBand.MEDIUM_WAIT
+	
+	else:
+		return ToleranceBand.LONG_WAIT
+
+def calculateRankAllowance(toleranceBand):
+	if toleranceBand == ToleranceBand.INITIAL:
+		return RankAllowance.INITIAL
+
+	elif toleranceBand == ToleranceBand.SHORT_WAIT:
+		return RankAllowance.SHORT_WAIT
+
+	elif toleranceBand == ToleranceBand.MEDIUM_WAIT:
+		return RankAllowance.MEDIUM_WAIT
+	
+	else:
+		return RankAllowance.LONG_WAIT
+
+def findMatch(request):
+	currentTime = time.clock()
+	toleranceBand = calculateTolerance(currentTime - request['initialRequestTime'])
+	rankAllowance = calculateRankAllowance(toleranceBand)
+	
+	query = client.query(kind='MatchRequest')
+
+	query.add_filter('gameId', '=', request['game'])
+	query.add_filter('lastPollTime', '>', currentTime - POLL_INTERVAL_TIMEOUT)
+	query.add_filter('gameSize' '=', request['gameSize'])
+	query.add_filter('matchId' '=', '')
+	query.add_filter('rank', '>=', request['rank'] - rankAllowance)
+	query.add_filter('rank', '<=', request['rank'] + rankAllowance)
+	query.order = ['initialRequestTime']
+
+	matchedPlayers = []
+	
+	#interate through requests
+	for req in query.fetch():
+		if  matchedPlayers < request['gameSize']:
+			players.append(req)
+		else:
+			return matchedPlayers
+	return []
