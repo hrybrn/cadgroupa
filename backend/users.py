@@ -1,6 +1,6 @@
 from google.cloud import datastore
 
-MAX_RECENT_PLAYERS = 10
+MAX_RECENT_PLAYERS = 20
 
 client = datastore.Client()
 
