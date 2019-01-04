@@ -4,6 +4,55 @@ import {GridList, GridListTile,withStyles, ListSubheader, CircularProgress, Chec
 import CardTile from 'components/CardTile/CardTile';
 import { gameQuery } from 'queries/games'; 
 
+import csgo from 'assets/game-logos/csgo.png';
+import dota2 from 'assets/game-logos/dota2.png';
+import farcry5 from 'assets/game-logos/farcry5.png';
+import fifa19 from 'assets/game-logos/fifa19.png';
+import fortnite from 'assets/game-logos/fortnite.png';
+import gtav from 'assets/game-logos/gtav.png';
+import heartstone from 'assets/game-logos/heartstone.png';
+import lol from 'assets/game-logos/lol.png';
+import minecraft from 'assets/game-logos/minecraft.png';
+import overwatch from 'assets/game-logos/overwatch.png';
+import pubg from 'assets/game-logos/pubg.png';
+import rocketleague from 'assets/game-logos/rocketleague.png';
+import tf2 from 'assets/game-logos/tf2.png';
+import tomclancy from 'assets/game-logos/tomclancy.png';
+
+function getImage(name) {
+    console.log(name);
+    switch(name) {
+    case 'csgo':
+        return csgo;
+    case 'dota2':
+        return dota2;
+    case 'farcry5':
+        return farcry5;
+    case 'fifa19':
+        return fifa19;
+    case 'fortnite':
+        return fortnite;
+    case 'gtav':
+        return gtav;
+    case 'heartstone':
+        return heartstone;
+    case 'lol':
+        return lol;
+    case 'minecraft':
+        return minecraft;
+    case 'overwatch':
+        return overwatch;
+    case 'pubg':
+        return pubg;
+    case 'rocketleague':
+        return rocketleague;
+    case 'tf2':
+        return tf2;
+    case 'tomclancy':
+        return tomclancy;
+    }
+}
+
 const styles = () => ({
     gridList: {
         width: 300,
@@ -38,26 +87,21 @@ class LeftPanel extends Component {
                 </GridListTile>
             );
         } else {
-            return this.props.data.games.map(game =>
+            return data.games.map(game =>
                 <CardTile
                     key={game.id}
-                    activated={this.activated.bind(this, game)}
-                    deactivated={this.deactivated}
-                    active={this.state.selectedGame == game.name ? true : false}
+                    pressed={this.gameSelected.bind(this, game)}
+                    active={this.state.selectedGame === game.name}
                     {...game}
+                    icon={getImage(game.icon)}
                 />
             );
         }
     }
 
-    activated(game) {
-        this.setState({modes: 'erg', selectedGame: game.name});
+    gameSelected(game) {
+        this.setState(prev => prev.selectedGame === game.name ? { selectedGame: '' } : { selectedGame: game.name });
     }
-
-    deactivated() {
-
-    }
-
     
     renderModes = () => {
         return this.state.modes.map(

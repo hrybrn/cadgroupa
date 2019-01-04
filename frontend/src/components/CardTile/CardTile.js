@@ -35,16 +35,13 @@ const styles = () => ({
 });
 
 class CardTile extends Component {
-    state = {
-        active: this.props.active
-    };
-
     render() {
         const { classes, id, icon, name } = this.props;
-        const addIconClass = this.state.active ? classes.spin : classes.icon;
+        const addIconClass = this.props.active ? classes.spin : classes.icon;
+
         return (
             <Card key={id} className={classes.card}>
-                <CardActionArea className={classes.tile} onClick={this.toggleActivated.bind(this)}>
+                <CardActionArea className={classes.tile} onClick={this.props.pressed}>
                     <CardMedia
                         component="img"
                         alt={name}
@@ -60,13 +57,6 @@ class CardTile extends Component {
                 </CardActionArea>
             </Card>
         );
-    }
-
-    toggleActivated() {
-        this.setState(prev => {
-            prev.active ? this.props.deactivated() : this.props.activated();
-            return { active: !prev.active };
-        });
     }
 }
 
