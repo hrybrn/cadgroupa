@@ -86,8 +86,8 @@ def calculateMaxDistance(acceptance):
 	return acceptance * 15 + 200 # Measured in KM
 
 def calculateDistance(lat1, long1, lat2, long2):
-	lat = lat2-lat1
-	long = long2-long1)
+	lat = lat2 - lat1
+	long = long2 - long1
 	a = math.sin(lat/2) * math.sin(lat/2) + math.cos(lat1) * math.cos(lat2) * math.sin(long/2) * math.sin(long/2)
 	c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
 	return 6371 * c
