@@ -67,9 +67,9 @@ def findMatch(request):
 		if (distance < maxDistance and rankDifference < maxRankDifference):
 			players.append(req)
 			if (len(players) == playersRequired):
-				return true, players
+				return True, players
 
-	return false, players
+	return False, players
 
 def calculateTolerance(elapsedTime):
 	return elapsedTime
