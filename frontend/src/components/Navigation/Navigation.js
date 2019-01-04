@@ -19,6 +19,7 @@ import { Route } from 'react-router-dom';
 
 import Login from 'components/Auth/Login';
 import Auth from 'components/Auth/Auth';
+import CenterPanel from 'components/CenterPanel/CenterPanel';
 
 const styles = theme => ({
     logo: {
@@ -153,6 +154,7 @@ class Navigation extends Component {
                     <div className={toolbar} />
                     <Route path='/auth' component={Auth}/>
                     <Route path='/login' component={Login}/>
+                    <Route exact path='/' component={CenterPanel}/>
                 </div>
             </Fragment>
         );
