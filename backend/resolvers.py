@@ -3,7 +3,7 @@ import os
 import json
 from discord import getuserobj, getuserfriends
 
-helloWorld = lambda value, info, **args: 'Hello ' + args['name'] + '! Let\'s kill ourselves' if 'name' in args else 'Hello world! Let\'s kill ourselves'
+helloWorld = lambda value, info, **args: "Hello " + args['name'] + "!" if 'name' in args else "Hello World!"
 
 # print(os.environ['DATASTORE_HOST'])
 # print(os.environ['DATASTORE_EMULATOR_HOST'])
