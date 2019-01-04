@@ -8,11 +8,20 @@
         "minage": 13,
         "description": "Recently recognized as the most played video game in the world—100 million play every month—League of Legends® is a multiplayer online battle arena game (MOBA).",
         "website": "https://na.leagueoflegends.com/en/",
-        "modes" : {
-            "Rift": 5,
-            "Twisted Treeline": 6,
-            "One For All": 5
-        }
+        "modes" : [
+            {
+                "name": "Rift",
+                "players": 5
+            },
+            {
+                "name": "Twisted Treeline",
+                "players": 6
+            },
+            {
+                "name": "One For All",
+                "players": 5
+            }
+        ]
     },
     {
         "id": "1",
@@ -23,11 +32,20 @@
         "minage": 12,
         "description":"Fortnite Battle Royale is the FREE 100-player PvP mode in Fortnite. One giant map. A battle bus. Fortnite building skills and destructible environments combined",
         "website": "https://www.epicgames.com/fortnite/en-US/buy-now/battle-royale",
-        "modes": {
-            "Single Player": 1,
-            "2 Players": 2,
-            "4 Players": 4
-        }
+        "modes": [
+            {
+                "name": "Single Player",
+                "players": 1
+            },
+            {
+                "name": "2 Players",
+                "players": 2
+            },
+            {
+                "name": "4 Players",
+                "players": 4
+            }
+        ]
     },
     {
         "id": "2",
@@ -38,11 +56,20 @@
         "minage": 18,
         "description": "PLAYERUNKNOWN'S BATTLEGROUNDS is a battle royale shooter that pits 100 players against each other in a struggle for survival. Gather supplies and outwit your opponents to become the last person standing.",
         "website": "https://www.pubg.com/",
-        "modes": {
-            "Single Player": 1,
-            "2 Players": 2,
-            "4 Players": 4
-        }
+        "modes": [
+            {
+                "name": "Single Player",
+                "players": 1
+            },
+            {
+                "name": "2 Players",
+                "players": 2
+            },
+            {
+                "name": "4 Players",
+                "players": 4
+            }
+        ]
     },
     {
         "id": "3",
@@ -53,10 +80,16 @@
         "minage": 18,
         "description": "Los Santos is a city of bright lights, long nights and dirty secrets, and they don’t come brighter, longer or dirtier than in GTA Online: After Hours. The party starts now.",
         "website": "https://www.rockstargames.com/V/",
-        "modes": {
-            "Passive Mode" : 2,
-            "Gang" : 4
-        }
+        "modes": [
+            {
+                "name": "Passive Mode",
+                "players": 2
+            },
+            {
+                "name": "Gang",
+                "players": 4
+            }
+        ]
     },
     {
         "id": "4",
@@ -67,10 +100,16 @@
         "minage": 7,
         "description": "IT’S A GAME ABOUT PLACING BLOCKS AND GOING ON ADVENTURES",
         "website": "https://minecraft.net/en-us/?ref=m",
-        "modes": {
-            "Co-op" : 2,
-            "Party" : 10
-        }
+        "modes": [
+            {
+                "name": "Co-op",
+                "players": 2
+            },
+            {
+                "name": "Party",
+                "players": 10
+            }
+        ]
     },
     {
         "id": "5",
@@ -81,11 +120,20 @@
         "minage": 15,
         "description": "Soccer meets driving once again in the long-awaited, physics-based multiplayer-focused sequel to Supersonic Acrobatic Rocket-Powered Battle-Cars! Choose a variety of high-flying vehicles equipped with huge rocket boosters to score amazing aerial goals and pull-off incredible game-changing saves!",        
         "website": "https://store.steampowered.com/app/252950/Rocket_League/",
-        "modes": {
-            "Soccar" : 2,
-            "Dropshot" : 3,
-            "Snow Day": 4
-        }
+        "modes": [
+            {
+                "name": "Soccar",
+                "players": 2
+            },
+            {
+                "name": "Dropshot",
+                "players": 3
+            },
+            {
+                "name": "Snow Day",
+                "players": 4
+            }
+        ]
     },
     {
         "id": "6",
@@ -96,11 +144,20 @@
         "minage": 16,
         "description": "Every day, millions of players worldwide enter battle as one of over a hundred Dota heroes. And no matter if it's their 10th hour of play or 1,000th, there's always something new to discover. With regular updates that ensure a constant evolution of gameplay, features, and heroes, Dota 2 has taken on a life of its own.",
         "website": "https://store.steampowered.com/app/570/Dota_2/",
-        "modes" : {
-            "Ranked All Pick" : 5,
-            "1v1 Solo Mid (SM)" : 2,
-            "All Random Deathmatch (ARDM)" : 5
-        }
+        "modes": [
+            {
+                "name": "Ranked All Pick",
+                "players": 5
+            },
+            {
+                "name": "1v1 Solo Mid (SM)",
+                "players": 2
+            },
+            {
+                "name": "All Random Deathmatch (ARDM)",
+                "players": 5
+            }
+        ]
     },
     {
         "id": "7",
@@ -111,10 +168,12 @@
         "minage": 17,
         "description": "Welcome to Hope County, Montana, home to a fanatical doomsday cult known as Eden’s Gate. Stand up to cult leader Joseph Seed & his siblings, the Heralds, to spark the fires of resistance & liberate the besieged community.",
         "website": "https://store.steampowered.com/app/552520/Far_Cry_5/",
-        "modes" : {
-            "Co-op": 2
-
-        }
+        "modes" : [
+            {
+                "name": "Co-op",
+                "players": 2
+            }
+        ]
     },
     {
         "id": "8",
@@ -125,10 +184,16 @@
         "minage": 7,
         "description": "Get your deck ready. Play Hearthstone, Blizzard's fast-paced strategy card game! Witchwood. Brands: Overwatch, WoW, Warcraft, Starcraft, Heroes of the Storm.",
         "website" : "https://playhearthstone.com/en-gb/",
-        "modes" : {
-            "Team" : 2,
-            "Single": 2
-        }
+        "modes": [
+            {
+                "name": "Team",
+                "players": 2
+            },
+            {
+                "name": "Single",
+                "players": 2
+            }
+        ]
     },
     {
         "id": "9",
@@ -139,12 +204,24 @@
         "minage": 15,
         "description":  "Nine distinct classes provide a broad range of tactical abilities and personalities. Constantly updated with new game modes, maps, equipment and, most importantly, hats!",
         "website": "https://store.steampowered.com/app/440/Team_Fortress_2/",
-        "modes" : {
-            "4v4" : 4,
-            "5v5" : 5,
-            "6v6" : 6,
-            "9v9" : 9
-        }
+        "modes" : [
+            {
+                "name": "4v4",
+                "players": 4
+            },
+            {
+                "name": "5v5",
+                "players": 5
+            },
+            {
+                "name": "6v6",
+                "players": 6
+            },
+            {
+                "name": "9v9",
+                "players": 9
+            }
+        ]
     },
     {
         "id": "10",
@@ -155,12 +232,20 @@
         "minage": 13,
         "description":"Experience the World’s Biggest Club Competition, the UEFA Champions League. From Tactical Approach to Each Technical Touch, Control the Pitch in Every Moment.",
         "website": "https://www.easports.com/fifa",
-        "modes" : {
-            "1v1" : 2,
-            "2v2" : 2,
-            "4v4" : 4
-        }
-
+        "modes": [
+            {
+                "name": "1v1",
+                "players" : 2
+            },
+            {
+                "name": "2v2",
+                "players" : 2
+            },
+            {
+                "name": "4v4",
+                "players" : 4
+            }
+        ]
     },
     {
         "id": "11",
@@ -171,10 +256,16 @@
         "minage": 12,
         "description": "Overwatch is a team-based multiplayer first-person shooter video game developed and published by Blizzard Entertainment",
         "website":"https://playoverwatch.com/en-gb/",
-        "modes" : {
-            "Assault" : 4,
-            "Escort" : 6
-        }
+        "modes": [
+            {
+                "name": "Assault",
+                "players" : 4
+            },
+            {
+                "name": "Escort",
+                "players" : 6
+            }
+        ]
     },
     {
         "id": "12",
@@ -185,10 +276,16 @@
         "minage": 18,
         "description": "Tom Clancy's Rainbow Six Siege is the latest installment of the acclaimed first-person shooter franchise developed by the renowned Ubisoft Montreal studio.",
         "website": "https://store.steampowered.com/app/359550/Tom_Clancys_Rainbow_Six_Siege/",
-        "modes": {
-            "5-Team" : 5,
-            "Single" : 2
-        } 
+        "modes": [
+            {
+                "name": "5-Team",
+                "players": 5
+            },
+            {
+                "name": "Single",
+                "players": 2
+            }
+        ]
     },
     {
         "id": "13",
@@ -199,11 +296,19 @@
         "minage": 18,
         "description": "Counter-Strike: Global Offensive (CS: GO) expands upon the team-based action gameplay that it pioneered when it was launched 19 years ago. CS: GO features new maps, characters, weapons, and game modes, and delivers updated versions of the classic CS content (de_dust2, etc.).",
         "website":"https://store.steampowered.com/app/730/CounterStrike_Global_Offensive/",
-        "modes" : {
-            "Co-op" : 2,
-            "4-Team" : 4,
-            "8-Team" : 8
-
-        }
+        "modes": [
+            {
+                "name": "Co-op",
+                "players" : 2
+            },
+            {
+                "name": "4-Team",
+                "players" : 4
+            },
+            {
+                "name": "8-Team",
+                "players" : 8
+            }
+        ]
     }
 ]
