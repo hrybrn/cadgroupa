@@ -69,7 +69,13 @@ class ToleranceBand(Enum):
     INITIAL = 10
     SHORT_WAIT = 20
 	MEDIUM_WAIT = 30
-	LONG_WAIT = 30
+	LONG_WAIT = sys.maxsize
+
+class RankAllowance(Enum):
+    INITIAL = 10
+    SHORT_WAIT = 50
+	MEDIUM_WAIT = 100
+	LONG_WAIT = sys.maxsize
 
 def calculateToleranceBand(elapsedTime):
 	if elapsedTime < ToleranceBand.INITIAL:
@@ -86,16 +92,16 @@ def calculateToleranceBand(elapsedTime):
 
 def calculateRankAllowance(toleranceBand):
 	if toleranceBand == ToleranceBand.INITIAL:
-		return 10
+		return RankAllowance.INITIAL
 
-	elif elapsedTime == ToleranceBand.SHORT_WAIT:
-		return 50
+	elif toleranceBand == ToleranceBand.SHORT_WAIT:
+		return RankAllowance.SHORT_WAIT
 
-	elif elapsedTime == ToleranceBand.MEDIUM_WAIT:
-		return 100
+	elif toleranceBand == ToleranceBand.MEDIUM_WAIT:
+		return RankAllowance.MEDIUM_WAIT
 	
 	else:
-		return sys.maxsize
+		return RankAllowance.LONG_WAIT
 
 def findMatch(request):
 	currentTime = time.clock()
