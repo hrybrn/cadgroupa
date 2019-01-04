@@ -20,19 +20,16 @@ const styles = () => ({
 
 
 class LeftPanel extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            noOfPlayers: 2,
-            modes: [],
-            selectedGame: ''
-        };
-    }
-    handleChange = event => {
-
-        this.setState({ noOfPlayers: parseInt(event.target.value) });
-
+    state = {
+        noOfPlayers: 2,
+        modes: [],
+        selectedGame: ''
     };
+
+    handleChange(event) {
+        this.setState({ noOfPlayers: parseInt(event.target.value) });
+    }
+
     gameTiles(data, classes) {
         if (data.loading || data.games === undefined) {
             return (
@@ -44,7 +41,7 @@ class LeftPanel extends Component {
             return this.props.data.games.map(game =>
                 <CardTile
                     key={game.id}
-                    activated={this.activated(game)}
+                    activated={this.activated.bind(this, game)}
                     deactivated={this.deactivated}
                     active={this.state.selectedGame == game.name ? true : false}
                     {...game}
@@ -53,8 +50,8 @@ class LeftPanel extends Component {
         }
     }
 
-    activated = (game) => {
-        this.setState({modes: game.modes, selectedGame: game.name});
+    activated(game) {
+        this.setState({modes: 'erg', selectedGame: game.name});
     }
 
     deactivated() {
