@@ -1,6 +1,7 @@
 from google.cloud import datastore
 import os
 import json
+import matchmaking
 
 from collections import namedtuple
 
@@ -44,7 +45,9 @@ def registerSearch(value, info, **args):
 	if not args['token']: 
 		return '401: Unauthorized'
 	else:
-		# TODO: actually register search
+		#token, location, game, mode, players, rank
+		matchmaking.joinQueue(args['token'], args['lat'], args['long'], args['gameID'], args['modeID'],
+			args['players'], args['rank'])
 		literal = lambda **kw: namedtuple('literal', kw)(**kw)
 		return literal(success=True, game="testGame", mode="testMode", registrationID="testID")
 
@@ -58,6 +61,4 @@ def pollSearch(value, info, **args):
 
 # for testing purposes
 def requestsInSystem(value, info, **args):
-	# TODO: actually poll for match
-	literal = lambda **kw: namedtuple('literal', kw)(**kw)
-	return getMatchRequests(args['gameId'])
+	return matchmaking.getMatchRequests(args['gameId'])
