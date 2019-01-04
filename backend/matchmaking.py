@@ -31,8 +31,12 @@ def pollQueue(userId):
 	})
 	client.put(request)
 	# see if a match can be made
-	findMatch(request)
-	return #continue polling
+	success, players = findMatch(request)
+	if (success):
+		#launch match
+		return false
+	else:
+		return true #continue polling
 
 def findMatch(request):
 	currentTime = tick.clock()
@@ -46,17 +50,20 @@ def findMatch(request):
 	query.add_filter('matchId' '=', '')
 	query.order = ['initialRequestTime']
 
+	requestedPlayerCount = request['gameSize'] - request['partySize']
 	players = []
 	
 	#interate through requests
 	for req in query.fetch():
+		# TODO: check you are within their tolernace
+		# TODO: check their party size
+		players.append(req)
+		if (len(players) == requestedPlayerCount):
+			return true, players
 
-		print(req.key)
-
-
-	return
+	return false, players
 
 def calculateTolerance(elapsedTime):
     # decrease tolerance as time goes on
     # higer rank = lower tolerance 
-	return 100000 if elapsedTime > 30 else elapsedTime * elapsedTime * 2 + 100
+	return 100000 if elapsedTime > 60 else elapsedTime * elapsedTime + 100
