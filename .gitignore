@@ -7,3 +7,4 @@ venv/
 apple.py
 set_vars.cmd
 .python_version
+set_env.cmd
