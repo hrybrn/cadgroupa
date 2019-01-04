@@ -2,6 +2,7 @@ from google.cloud import datastore
 import os
 import json
 
+POLL_INTERVAL = 5
 POLL_INTERVAL_TIMEOUT = 10
 DEFAULT_MATCH_ID = "BLANK"
 
