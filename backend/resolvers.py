@@ -55,3 +55,9 @@ def pollSearch(value, info, **args):
 		# TODO: actually poll for match
 		literal = lambda **kw: namedtuple('literal', kw)(**kw)
 		return literal(success=True, registrationID=args["registrationID"], playerDiscordIDs=["hello", "world"])
+
+# for testing purposes
+def requestsInSystem(value, info, **args):
+	# TODO: actually poll for match
+	literal = lambda **kw: namedtuple('literal', kw)(**kw)
+	return literal(success=True, playerDiscordIDs=["hello", "world"])
