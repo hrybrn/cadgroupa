@@ -80,7 +80,7 @@ queryschema = GraphQLObjectType(
 									type=GraphQLString
 								),
 								"players": GraphQLArgument(
-									type=GraphQLString
+									type=GraphQLInt
 								),
 								"rank": GraphQLArgument(
 									type=GraphQLInt

@@ -1,14 +1,16 @@
 from google.cloud import datastore
 import os
 import json
+import time
 
 POLL_INTERVAL = 5
 POLL_INTERVAL_TIMEOUT = 10
-DEFAULT_MATCH_ID = "BLANK"
+DEFAULT_MATCH_ID = 'BLANK'
+GAME_MODE_SEPERATOR = ':'
 
 client = datastore.Client()
 
-def joinQueue(token, location, game, mode, players, rank):
+def joinQueue(token, lat, long, game, mode, players, rank):
 	key = client.key('MatchRequest', token)
 	requestTime = time.clock()
 	request = datastore.Entity(key)
@@ -16,10 +18,11 @@ def joinQueue(token, location, game, mode, players, rank):
 		'initialRequestTime': requestTime,
 		'lastPollTime': requestTime,
 		'rank': rank,
-		'gameId': game + ':' + mode,
+		'gameId': game + GAME_MODE_SEPERATOR + mode,
 		'gameSize': players,
 		'matchId': DEFAULT_MATCH_ID,
-		'location': location,
+		'latitude': lat,
+		'longitude': long
 	})
 	client.put(request)
 	return request
