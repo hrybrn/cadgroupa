@@ -185,7 +185,7 @@ class Navigation extends Component {
                     handleClose={hideModal}
                     title='Account'
                     fields={[
-                        this.emailData(this.props.data)
+                        this.emailData(this.props.data),
                     ]}
                     buttons={[
                         <Button onClick={hideModal} color='primary' key='cancel'>
@@ -225,11 +225,15 @@ class Navigation extends Component {
     }
 
     emailData(data) {
+        if(!this.props.user.loggedin){
+            return (<Typography value='h2'>Not logged in!</Typography>);
+        }
+
         if (data.loading || data.discord === undefined) {
             return (<CircularProgress />);
         } else {
             return (
-                <Fragment>
+                <div>
                     <TextField
                         autoFocus
                         margin='dense'
@@ -241,13 +245,11 @@ class Navigation extends Component {
                         key='email'
                         onChange={this.updateField.bind(this, 'email')}
                     />
-                    {JSON.parse(data.discord.getuser).verified ? (<Typography value='h2'>User is verified</Typography>) : (<Typography value='h2'>User is not verified!</Typography>)}
-                </Fragment>
-
+                    { JSON.parse(data.discord.getuser).verified ? (<Typography value='h2'>User is verified</Typography>) : (<Typography value='h2'>User is not verified!</Typography>)}
+                </div>
             );
         }
     }
-
 
     logout() {
         this.showModal('');
