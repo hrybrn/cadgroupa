@@ -14,4 +14,4 @@ from graphql import graphql
 # 	assert (not result.errors) and (result.data == expected)
 	
 def test_example():
-	assert true
+	assert True
