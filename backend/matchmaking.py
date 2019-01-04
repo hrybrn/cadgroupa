@@ -40,26 +40,34 @@ def pollQueue(userId):
 
 def findMatch(request):
 	currentTime = time.clock()
+
+	acceptance = calculateAcceptance(currentTime - request['initialRequestTime'])
+	maxRankDifference = calculateMaxRankDifference(acceptance)
+	maxDistance = calculateMaxDistance(acceptance)
+
 	query = client.query(kind='MatchRequest')
-	tolerance = calculateTolerance(currentTime - request['initialRequestTime'])
 	query.add_filter('gameId', '=', request['game'])
 	query.add_filter('lastPollTime', '>', currentTime - POLL_INTERVAL_TIMEOUT)
 	query.add_filter('gameSize' '=', request['gameSize'])
-	query.add_filter('rank', '>=', request['rank'] - tolerance)
-	query.add_filter('rank', '<=', request['rank'] + tolerance)
+	query.add_filter('rank', '>=', request['rank'] - maxRankDifference)
+	query.add_filter('rank', '<=', request['rank'] + maxRankDifference)
 	query.add_filter('matchId' '=', '')
 	query.order = ['initialRequestTime']
 
-	requestedPlayerCount = request['gameSize'] - request['partySize']
+	requestedPlayerCount = request['gameSize'] - 1
 	players = []
 	
 	#interate through requests
 	for req in query.fetch():
-		# TODO: check you are within their tolernace
-		# TODO: check their party size
-		players.append(req)
-		if (len(players) == requestedPlayerCount):
-			return true, players
+		otherRequestAcceptance = calculateAcceptance(currentTime - req['initialRequestTime'])
+		maxRankDifference = calculateMaxRankDifference(acceptance)
+		rankDifference = abs(request['rank'] - req['rank'])
+		maxDistance = min(calculateMaxDistance(otherRequestAcceptance), maxDistance)
+		distance = 0 #TODO
+		if (distance < maxDistance && rankDifference < maxRankDifference)
+			players.append(req)
+			if (len(players) == requestedPlayerCount):
+				return true, players
 
 	return false, players
 
@@ -68,7 +76,14 @@ def calculateTolerance(elapsedTime):
     # higer rank = lower tolerance 
 	return 100000 if elapsedTime > 60 else elapsedTime * elapsedTime + 100
 
+def calculateAcceptance(elapsedTime)
+	return elapsedTime
 
+def calculateMaxRankDifference(acceptance)
+	return acceptance * acceptance + 100
+
+def calculateMaxDistance(acceptance)
+	return acceptance + 1
 
 # tolerance band idea
 import sys
