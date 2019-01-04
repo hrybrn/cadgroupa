@@ -3,6 +3,7 @@ import os
 import json
 
 POLL_INTERVAL_TIMEOUT = 10
+DEFAULT_MATCH_ID = "BLANK"
 
 client = datastore.Client()
 
@@ -16,7 +17,7 @@ def joinQueue(token, location, game, players, rank):
 		'rank': rank,
 		'gameId': game,
 		'gameSize': players,
-		'matchId': '',
+		'matchId': DEFAULT_MATCH_ID,
 		'location': location,
 	})
 	client.put(request)
@@ -50,7 +51,7 @@ def findMatch(request):
 	query.add_filter('gameSize' '=', request['gameSize'])
 	query.add_filter('rank', '>=', request['rank'] - maxRankDifference)
 	query.add_filter('rank', '<=', request['rank'] + maxRankDifference)
-	query.add_filter('matchId' '=', '')
+	query.add_filter('matchId' '=', DEFAULT_MATCH_ID)
 	query.order = ['initialRequestTime']
 
 	requestedPlayerCount = request['gameSize'] - 1
