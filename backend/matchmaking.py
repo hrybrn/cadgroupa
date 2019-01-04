@@ -7,7 +7,7 @@ POLL_INTERVAL = 5
 POLL_INTERVAL_TIMEOUT = 10
 DEFAULT_MATCH_ID = 'BLANK'
 GAME_MODE_SEPERATOR = ':'
-EARTH_RADIUS = 6371
+EARTH_RADIUS = 6371 # radius of the earth in km
 
 client = datastore.Client()
 
