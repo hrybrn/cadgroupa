@@ -7,9 +7,10 @@ from graphql import (
 	GraphQLInterfaceType,
 	GraphQLNonNull,
 	GraphQLArgument,
-	GraphQLList
+	GraphQLList,
+	GraphQLBoolean,
 )
-from resolvers import helloWorld, entityTest, goodbyeWorld
+from resolvers import user, userfriends, games, helloWorld, entityTest, registerSearch, pollSearch
 
 
 # Super useful 
@@ -26,24 +27,104 @@ queryschema = GraphQLObjectType(
 				type=GraphQLObjectType(
 					name="nestedhelloworld",
 					fields={
-						"helloworld" : GraphQLField(
+						"getuser": GraphQLField(
 							type= GraphQLString,
 							args={
-								'name' : GraphQLArgument(
+								'token': GraphQLArgument(
 									type=GraphQLString
 								)
 							},
 							resolver=helloWorld
 						),
-						"goodbyeworld" : GraphQLField(
-							type=GraphQLString,
+                        "userfriends": GraphQLField(
+							type= GraphQLString,
 							args={
-								'username': GraphQLArgument(
+								'token': GraphQLArgument(
 									type=GraphQLString
 								)
 							},
 							resolver=goodbyeWorld
 						)
+					}
+				),
+				# This seems to need to be defined, although it's not used?
+				resolver=helloWorld	
+			),
+            "games": GraphQLField(
+					type= GraphQLString,
+					resolver=games
+			),
+            "helloworld": GraphQLField(
+                type=GraphQLString,
+                args={
+                    "name": GraphQLArgument(
+                        type=GraphQLString,
+                    )
+                },
+                resolver=helloWorld
+            ),
+			"matchmaking": GraphQLField(
+				type=GraphQLObjectType(
+					name="matchmakingOptions",
+					fields={
+						"registerSearch": GraphQLField(
+							type=GraphQLObjectType(
+								name="registerResponse",
+								fields={
+									"game": GraphQLField(
+										type=GraphQLString
+									),
+									"mode": GraphQLField(
+										type=GraphQLString
+									),
+									"registrationID": GraphQLField(
+										type=GraphQLString
+									),
+									"success": GraphQLField(
+										type=GraphQLBoolean
+									)
+								}
+							),
+							args={
+								"token": GraphQLArgument(
+									type=GraphQLString
+								),
+								"game": GraphQLArgument(
+									type=GraphQLString
+								),
+								"mode": GraphQLArgument(
+									type=GraphQLString
+								),
+							},
+							resolver=registerSearch
+						),
+                        "poll": GraphQLField(
+							type=GraphQLObjectType(
+								name="pollResponse",
+								fields={
+									"registrationID": GraphQLField(
+										type=GraphQLString
+									),
+									"success": GraphQLField(
+										type=GraphQLBoolean
+									),
+									"playerDiscordIDs": GraphQLField(
+										type=GraphQLList(
+											type=GraphQLString
+										)
+									)
+								}
+							),
+							args={
+								"token": GraphQLArgument(
+									type=GraphQLString
+								),
+								"registrationID": GraphQLArgument(
+									type=GraphQLString
+								),
+							},
+							resolver=pollSearch
+						),
 					}
 				),
 				# This seems to need to be defined, although it's not used?
