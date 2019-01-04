@@ -88,3 +88,8 @@ def calculateDistance(lat1, long1, lat2, long2):
 	a = math.sin(latR/2) * math.sin(latR/2) + math.cos(latR1) * math.cos(latR2) * math.sin(longR/2) * math.sin(longR/2)
 	c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
 	return 6371 * c
+
+def getMatchRequests(gameId):
+	query = client.query(kind='MatchRequest')
+	query.add_filter('gameId', '=', gameId)
+	return json.dumps(list(query.fetch()))

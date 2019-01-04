@@ -60,4 +60,4 @@ def pollSearch(value, info, **args):
 def requestsInSystem(value, info, **args):
 	# TODO: actually poll for match
 	literal = lambda **kw: namedtuple('literal', kw)(**kw)
-	return literal(success=True, playerDiscordIDs=["hello", "world"])
+	return getMatchRequests(args['gameId'])
