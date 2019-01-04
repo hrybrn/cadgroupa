@@ -55,7 +55,7 @@ def pollSearch(value, info, **args):
 	if not args['token']: 
 		return '401: Unauthorized'
 	else:
-		# TODO: actually poll for match
+		matchmaking.pollQueue(args['token'])
 		literal = lambda **kw: namedtuple('literal', kw)(**kw)
 		return literal(success=True, registrationID=args["registrationID"], playerDiscordIDs=["hello", "world"])
 
