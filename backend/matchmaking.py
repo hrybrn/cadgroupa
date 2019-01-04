@@ -41,7 +41,7 @@ def pollQueue(userId):
 def findMatch(request):
 	currentTime = time.clock()
 
-	acceptance = calculateAcceptance(currentTime - request['initialRequestTime'])
+	acceptanceLevel = calculateAcceptanceLevel(currentTime - request['initialRequestTime'])
 	maxRankDifference = calculateMaxRankDifference(acceptance)
 	maxDistance = calculateMaxDistance(acceptance)
 
@@ -54,19 +54,19 @@ def findMatch(request):
 	query.add_filter('matchId' '=', '')
 	query.order = ['initialRequestTime']
 
-	requestedPlayerCount = request['gameSize'] - 1
+	playersRequired = request['gameSize'] - 1
 	players = []
 	
 	#interate through requests
 	for req in query.fetch():
-		otherRequestAcceptance = calculateAcceptance(currentTime - req['initialRequestTime'])
+		otherRequestAcceptance = calculateAcceptanceLevel(currentTime - req['initialRequestTime'])
 		maxRankDifference = calculateMaxRankDifference(acceptance)
 		rankDifference = abs(request['rank'] - req['rank'])
 		maxDistance = min(calculateMaxDistance(otherRequestAcceptance), maxDistance)
 		distance = 0 #TODO multiple by 111 for KM
 		if (distance < maxDistance and rankDifference < maxRankDifference)
 			players.append(req)
-			if (len(players) == requestedPlayerCount):
+			if (len(players) == playersRequired):
 				return true, players
 
 	return false, players
@@ -76,7 +76,7 @@ def calculateTolerance(elapsedTime):
     # higer rank = lower tolerance 
 	return 100000 if elapsedTime > 60 else elapsedTime * elapsedTime + 100
 
-def calculateAcceptance(elapsedTime)
+def calculateAcceptanceLevel(elapsedTime)
 	return elapsedTime
 
 def calculateMaxRankDifference(acceptance)
