@@ -17,6 +17,6 @@ def test_helloworld_named():
 def test_check_games():
 	with open('games.json', 'r') as gamesfile:
 		data=gamesfile.read()
-	query = ' { games }'
+	query = ' { games { id } }'
 	result = graphql(schema, query)
-	assert (not result.errors) and ((json.loads(result.data['games'])) == json.loads(data))
+	assert (not result.errors)
