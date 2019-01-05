@@ -1,13 +1,25 @@
 from google.cloud import datastore
 import os
 import json
+from discord import getuserobj, getuserfriends
 
-helloWorld = lambda value, info, **args: 'Hello ' + args['name'] + '! Let\'s kill ourselves' if 'name' in args else 'Hello world! Let\'s kill ourselves'
-goodbyeWorld = lambda value, info, **args: 'Goodbye ' + args['username'] + '! Let\'s kill ourselves' if 'username' in args else 'Goodbye world! Let\'s kill ourselves'
+from collections import namedtuple
 
+helloWorld = lambda value, info, **args: "Hello " + args['name'] + "!" if 'name' in args else "Hello World!"
 
 # print(os.environ['DATASTORE_HOST'])
 # print(os.environ['DATASTORE_EMULATOR_HOST'])
+class Struct(object):
+    def __init__(self, d):
+        for a, b in d.items():
+            if isinstance(b, (list, tuple)):
+               setattr(self, a, [Struct(x) if isinstance(x, dict) else x for x in b])
+            else:
+               setattr(self, a, Struct(b) if isinstance(b, dict) else b)
+
+
+with open('games.json') as f:
+    games_json = json.load(f)
 
 def entityTest(value, info, **args):
 	client = datastore.Client()
@@ -21,3 +33,30 @@ def entityTest(value, info, **args):
 	})
 	client.put(task)
 	return json.dumps(client.get(key))
+
+
+
+def user(value, info, **args):
+	if not args['token']: 
+		return '401: Unauthorized'
+	else:
+		return getuserobj(args['token'])
+
+def userfriends(value, info, **args):
+	if not args['token']: 
+		return '401: Unauthorized'
+	else:
+		return getuserfriends(args['token'])
+
+def games(value, info, **args):
+	game_list = []
+	for game in games_json:
+		game_list.append(Struct(game))
+	return game_list
+
+
+def resolver(value, info, **args):
+    if not args['token']:
+        return '401: Unauthorized'
+    else:
+        return 'Brad'
