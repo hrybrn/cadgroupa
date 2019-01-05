@@ -32,3 +32,22 @@ def addRecentPlayers(token, players):
 		'recentPlayers': recentPlayers
 	})
 	client.put(request)
+
+def changePlayerRating(token, rating_change):
+	key = client.key('User', token)
+	request = client.get(key)
+
+	score = request['toxicity']
+	score = score - 50 if rating_change else score + 50
+	request.update({
+		'toxicity': score,
+	})
+	client.put(request)
+	return True
+
+
+def checkPlayerRating(token):
+	key = client.key('User', token)
+	request = client.get(key)
+	score = request['toxicity'] if request['toxicity'] else 0
+	return True if score > 0 else False

@@ -2,6 +2,7 @@ from google.cloud import datastore
 import os
 import json
 import time
+import math
 
 POLL_INTERVAL = 5
 POLL_INTERVAL_TIMEOUT = 10
@@ -39,9 +40,9 @@ def pollQueue(token):
 	success, players = findMatch(request)
 	if (success):
 		#launch match
-		return false
+		return False
 	else:
-		return true #continue polling
+		return True #continue polling
 
 def findMatch(request):
 	currentTime = time.clock()
