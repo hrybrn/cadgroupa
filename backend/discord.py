@@ -14,5 +14,7 @@ def discord_req(token, uri):
     # JSON 
     if response.status_code == 200:
         return response.content.decode("utf-8")
+    elif json.load(response.text)['verified']=="false":
+        return False
     else:
         return False    
