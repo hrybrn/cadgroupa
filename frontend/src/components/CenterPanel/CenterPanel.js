@@ -37,7 +37,7 @@ class CenterPanel extends Component {
         case 'loggedin':
             return this.generateMessageBox('Select a game and mode on the left.');
         case 'logout':
-            return this.generateMessageBox('Login to use matchma.kr.');
+            return this.generateMessageBox(<Button href='/login'>Login to use matchma.kr.</Button>);
         case 'searching':
             return <Searching />;
         }
@@ -45,11 +45,10 @@ class CenterPanel extends Component {
 
     generateMessageBox(message) {
         return (
-            <div className={this.props.classes.content}>
+            <div  className={this.props.classes.content}>
                 <div id='heightOffset' style={{ height: '100px' }}/>
                 <Paper className={this.props.classes.root}>
                     <Typography variant='h4'>{message}</Typography>
-                    <Button>Search</Button>
                 </Paper>
             </div>
         );
