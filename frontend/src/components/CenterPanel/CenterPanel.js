@@ -21,7 +21,7 @@ const styles = theme => ({
 
 class CenterPanel extends Component {
     state = {
-        matchmakingState: 'logout'
+        matchmakingState: 'searching'
     };
 
     constructor(props) {
