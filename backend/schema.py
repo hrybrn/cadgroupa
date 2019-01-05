@@ -12,7 +12,7 @@ from graphql import (
 	GraphQLInt,
 	GraphQLFloat
 )
-from resolvers import user, userfriends, games, helloWorld, entityTest, registerSearch, pollSearch, requestsInSystem, getRecentPlayers
+from resolvers import user, userfriends, games, helloWorld, entityTest, registerSearch, pollSearch, requestsInSystem, getRecentPlayers, changeUserScore
 
 
 # Super useful 
@@ -77,6 +77,15 @@ queryschema = GraphQLObjectType(
 				type=GraphQLObjectType(
 					name="matchmakingOptions",
 					fields={
+                        "rating":GraphQLField(
+                            type=GraphQLString,
+                            args={
+                                "playerID":GraphQLArgument(GraphQLString),
+                                "good":GraphQLArgument(GraphQLBoolean),
+                                "token":GraphQLArgument(GraphQLString)
+                            },
+                            resolver=changeUserScore
+                        ),
 						"registerSearch": GraphQLField(
 							type=GraphQLObjectType(
 								name="registerResponse",
