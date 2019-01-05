@@ -20,6 +20,7 @@ import { Route } from 'react-router-dom';
 import Login from 'components/Auth/Login';
 import Auth from 'components/Auth/Auth';
 import CenterPanel from 'components/CenterPanel/CenterPanel';
+import MessageBox from 'components/MessageBox/MessageBox';
 
 const styles = theme => ({
     logo: {
@@ -154,6 +155,7 @@ class Navigation extends Component {
                     <div className={toolbar} />
                     <Route path='/auth' component={Auth}/>
                     <Route path='/login' component={Login}/>
+                    <Route path='/error' render={() => <MessageBox message="Something went terribly wrong 😢"/>}/>
                     <Route exact path='/' component={CenterPanel}/>
                 </div>
             </Fragment>
