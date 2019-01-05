@@ -3,9 +3,12 @@ import { LinearProgress , FormLabel, Grid} from '@material-ui/core';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
+
+
+
 class Searching extends Component {
-    render() {
-        if (this.props.data.loading || this.props.data.matchmaking.registerSearch.success == false){
+    renderloading(data) {
+        if (data.loading || data.matchmaking.registerSearch.success == false){
             return(
                 <Fragment>
                     <Grid
@@ -21,10 +24,20 @@ class Searching extends Component {
             );
         } else {
             return(
-                <button>go to discord</button>
+                <button>make me better button</button>
             );
         }
     }
+    
+    
+
+    render() {
+        return (
+            setInterval(this.renderloading.bind(this, this.props.data.refetch), 1000)
+        );
+
+    }
+        
 }
 
 export const searchQuery = gql`{
