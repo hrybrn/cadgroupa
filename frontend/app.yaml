@@ -6,6 +6,14 @@ handlers:
   upload: build/index.html
   secure: always
 
+- url: /login
+  static_files: build/index.html
+  upload: build/index.html
+
+- url: /auth
+  static_files: build/index.html
+  upload: build/index.html
+
 - url: /(.*)
   static_files: build/\1
   upload: build/(.*)

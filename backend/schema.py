@@ -7,14 +7,14 @@ from graphql import (
 	GraphQLInterfaceType,
 	GraphQLNonNull,
 	GraphQLArgument,
-	GraphQLList
+	GraphQLList,
+	GraphQLInt
 )
-from resolvers import helloWorld, entityTest, goodbyeWorld
+from resolvers import user, userfriends, games, helloWorld, entityTest
 
 
 # Super useful 
 # - https://github.com/graphql-python/graphql-core/blob/master/tests/starwars/starwars_schema.py
-# Note custom type definitions	
 # You can do some cool things with type + interface definitions + superclassing, but I'll keep this simple until we need
 # If anyone is curious then the file linked above is a good exmaple.
 
@@ -24,31 +24,67 @@ queryschema = GraphQLObjectType(
 		lambda: {
 			"discord": GraphQLField(
 				type=GraphQLObjectType(
-					name="nestedhelloworld",
+					name="user",
 					fields={
-						"helloworld" : GraphQLField(
+						"getuser" : GraphQLField(
 							type= GraphQLString,
 							args={
-								'name' : GraphQLArgument(
+								'token' : GraphQLArgument(
 									type=GraphQLString
 								)
 							},
-							resolver=helloWorld
+							resolver=user
 						),
-						"goodbyeworld" : GraphQLField(
-							type=GraphQLString,
+                        "userfriends" : GraphQLField(
+							type= GraphQLString,
 							args={
-								'username': GraphQLArgument(
+								'token' : GraphQLArgument(
 									type=GraphQLString
 								)
 							},
-							resolver=goodbyeWorld
+							resolver=userfriends
 						)
 					}
 				),
 				# This seems to need to be defined, although it's not used?
 				resolver=helloWorld	
-			)
+			),
+            "games": GraphQLField(
+					type= GraphQLList(
+						type=GraphQLObjectType(
+							name="game",
+							fields={
+								"id": GraphQLField(GraphQLString),
+								"name": GraphQLField(GraphQLString),
+								"icon": GraphQLField(GraphQLString),
+								"maxplayers": GraphQLField(GraphQLInt),
+								"minplayers": GraphQLField(GraphQLInt),
+								"minage": GraphQLField(GraphQLInt),
+								"description": GraphQLField(GraphQLString),
+								"website": GraphQLField(GraphQLString),
+								"modes": GraphQLField(GraphQLList(
+									type=GraphQLObjectType(
+										name="mode",
+										fields={
+											"name": GraphQLField(GraphQLString),
+											"players": GraphQLField(GraphQLInt)
+										}
+									)
+								))
+							}
+						)
+					),
+					resolver=games
+			),
+            "helloworld": GraphQLField(
+                type=GraphQLString,
+                args={
+                    'name': GraphQLArgument(
+                        type=GraphQLString,
+                    )
+                },
+                resolver=helloWorld
+            )
 		}
 )
 
