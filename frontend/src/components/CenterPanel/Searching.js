@@ -3,12 +3,31 @@ import { LinearProgress , FormLabel, Grid} from '@material-ui/core';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
-
-
-
 class Searching extends Component {
-    renderloading(data) {
-        if (data.loading || data.matchmaking.registerSearch.success == false){
+    state = {
+        currentlyPolling: false
+    };
+
+    constructor(props) {
+        super(props);
+        this.poll();
+    }
+
+    async poll() {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        this.props.data.refetch().then(this.continuePolling.bind(this), this.continuePolling.bind(this));
+    }
+
+    async continuePolling() {
+        if (this.props.data.loading || !this.props.data.matchmaking || !this.props.data.matchmaking.registerSearch.success) {
+            this.poll();
+        }
+    }
+
+    render() {
+        const { loading, matchmaking } = this.props.data;
+
+        if (loading || !matchmaking || !matchmaking.registerSearch.success){
             return(
                 <Fragment>
                     <Grid
@@ -27,23 +46,13 @@ class Searching extends Component {
                 <button>make me better button</button>
             );
         }
-    }
-    
-    
-
-    render() {
-        return (
-            setInterval(this.renderloading.bind(this, this.props.data.refetch), 1000)
-        );
-
-    }
-        
+    }        
 }
 
 export const searchQuery = gql`{
     data {
         matchmaking {
-            reigsterSearch{
+            registerSearch{
                 success
             }
         }
