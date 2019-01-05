@@ -87,7 +87,7 @@ def calculateMaxDistance(tolerance):
 	return tolerance * 15 + 200 # Measured in KM
 
 def calculateDistance(lat1, long1, lat2, long2):
-    latR1, longR1, latR2, longR2 = math.radians(lat1), math.radians(long1), math.radians(lat2), math.radians(long2)
+	latR1, longR1, latR2, longR2 = math.radians(lat1), math.radians(long1), math.radians(lat2), math.radians(long2)
 	latR = latR2 - latR1
 	longR = longR2 - longR1
 	a = math.sin(latR/2) * math.sin(latR/2) + math.cos(latR1) * math.cos(latR2) * math.sin(longR/2) * math.sin(longR/2)
