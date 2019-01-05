@@ -39,9 +39,9 @@ def pollQueue(token):
 	success, players = findMatch(request)
 	if (success):
 		#launch match
-		return false
+		return False
 	else:
-		return true #continue polling
+		return True #continue polling
 
 def findMatch(request):
 	currentTime = time.clock()
