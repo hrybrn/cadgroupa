@@ -38,7 +38,10 @@ def user(value, info, **args):
 	if not args['token']: 
 		return '401: Unauthorized'
 	else:
-		return getuserobj(args['token'])
+		out = getuserobj(args['token'])
+		print(out)
+		print('hello world')
+		return out
 
 def userfriends(value, info, **args):
 	if not args['token']: 

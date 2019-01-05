@@ -27,25 +27,30 @@ queryschema = GraphQLObjectType(
 		lambda: {
 			"discord": GraphQLField(
 				type=GraphQLObjectType(
-					name="discordOptions",
+					name="user",
 					fields={
-						"getuser": GraphQLField(
-							type=GraphQLString,
+						"getuser" : GraphQLField(
+							type= GraphQLString,
 							args={
-								"token": GraphQLArgument(GraphQLString)
+								'token' : GraphQLArgument(
+									type=GraphQLString
+								)
 							},
 							resolver=user
 						),
-						"userfriends": GraphQLField(
-							type=GraphQLString,
+                        "userfriends" : GraphQLField(
+							type= GraphQLString,
 							args={
-								"token": GraphQLArgument(GraphQLString),
-								"registrationID": GraphQLArgument(GraphQLString),
+								'token' : GraphQLArgument(
+									type=GraphQLString
+								)
 							},
 							resolver=userfriends
 						)
 					}
-				)
+				),
+				# This seems to need to be defined, although it's not used?
+				resolver=helloWorld	
 			),
             "helloworld": GraphQLField(
                 type=GraphQLString,
@@ -78,16 +83,16 @@ queryschema = GraphQLObjectType(
 								fields={
 									"gameID": GraphQLField(GraphQLString),
 									"mode": GraphQLField(GraphQLString),
-									"players": GraphQLArgument(GraphQLInt),
-									"rank": GraphQLArgument(GraphQLInt),
-									"lat": GraphQLArgument(GraphQLFloat),
-									"lon": GraphQLArgument(GraphQLFloat)
+									"players": GraphQLField(GraphQLInt),
+									"rank": GraphQLField(GraphQLInt),
+									"lat": GraphQLField(GraphQLFloat),
+									"lon": GraphQLField(GraphQLFloat)
 								}
 							),
 							args={
 								"token": GraphQLArgument(GraphQLString),
-								"gameID": GraphQLField(GraphQLString),
-								"mode": GraphQLField(GraphQLString),
+								"gameID": GraphQLArgument(GraphQLString),
+								"mode": GraphQLArgument(GraphQLString),
 								"players": GraphQLArgument(GraphQLInt),
 								"rank": GraphQLArgument(GraphQLInt),
 								"lat": GraphQLArgument(GraphQLFloat),
@@ -108,11 +113,12 @@ queryschema = GraphQLObjectType(
 									"playerDiscordIDs": GraphQLField(GraphQLList(GraphQLString)),
 									"groupDMURL": GraphQLField(GraphQLString)
 								},
-								args={
-									"token": GraphQLArgument(GraphQLString)
-								},
-								resolver=pollSearch
-							)
+							),
+							args={
+								"token": GraphQLArgument(GraphQLString)
+							},
+							resolver=pollSearch
+							
 						),
 					}
 				),
