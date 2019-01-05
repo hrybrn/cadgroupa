@@ -5,9 +5,9 @@ import { CircularProgress } from '@material-ui/core';
 import { updateStore } from 'fluxible-js';
 
 // eslint-disable-next-line no-undef
-const DISCORD_CLIENT = process.env.DISCORD_CLIENT;
+const DISCORD_CLIENT = process.env.REACT_APP_DISCORD_CLIENT;
 // eslint-disable-next-line no-undef
-const DISCORD_SECRET = process.env.DISCORD_SECRET;
+const DISCORD_SECRET = process.env.REACT_APP_DISCORD_SECRET;
 
 
 class Auth extends Component {
