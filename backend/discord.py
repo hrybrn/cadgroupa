@@ -1,5 +1,6 @@
 import requests
 import json
+from graphql import GraphQLError
 
 def getuserobj(token):
     return discord_req(token, 'https://discordapp.com/api/users/@me')
@@ -15,6 +16,6 @@ def discord_req(token, uri):
     if response.status_code == 200:
         return response.content.decode("utf-8")
     elif json.load(response.text)['verified']=="false":
-        return False
+        raise GraphQLError('You must be authenticated with discord to use this service!')
     else:
         return False    
