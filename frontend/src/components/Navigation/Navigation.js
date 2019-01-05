@@ -15,11 +15,12 @@ import FriendPanel from 'components/FriendPanel/FriendPanel';
 
 import matchmakr from 'assets/matchmakr.png';
 
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import Login from 'components/Auth/Login';
 import Auth from 'components/Auth/Auth';
 import CenterPanel from 'components/CenterPanel/CenterPanel';
+import MessageBox from 'components/MessageBox/MessageBox';
 
 const styles = theme => ({
     logo: {
@@ -64,7 +65,7 @@ class Navigation extends Component {
             token: '',
             loggedin: 0
         },
-
+        errorredirect: false,
         emailLoaded: false
     };
 
@@ -88,6 +89,7 @@ class Navigation extends Component {
         const modal = this.renderModal();
         return (
             <Fragment>
+                {this.state.errorredirect ? (<Redirect to='/error'/>) : (<Fragment></Fragment>)}
                 <AppBar className={navigation}>
                     <Toolbar classes={{ root: spreadToolbar }}>
                         <IconButton
@@ -154,6 +156,7 @@ class Navigation extends Component {
                     <div className={toolbar} />
                     <Route path='/auth' component={Auth}/>
                     <Route path='/login' component={Login}/>
+                    <Route path='/error' render={() => <MessageBox message="Something went terribly wrong 😢"/>}/>
                     <Route exact path='/' component={CenterPanel}/>
                 </div>
             </Fragment>
@@ -229,6 +232,12 @@ class Navigation extends Component {
     emailData(data) {
         if(!this.props.user.loggedin){
             return (<Typography value='h2'>Not logged in!</Typography>);
+        }
+
+        if(data.error){
+            this.setState({
+                errorredirect: true
+            });
         }
 
         if (data.loading || data.discord === undefined) {
