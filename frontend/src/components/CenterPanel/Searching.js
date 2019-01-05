@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import { LinearProgress, withStyles , FormLabel, Grid} from '@material-ui/core';
+import { LinearProgress , FormLabel, Grid} from '@material-ui/core';
+import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
 
 class Searching extends Component {
     render() {
-        if (data.loading){
+        if (this.props.data.loading || this.props.data.matchmaking.registerSearch.success == false){
             return(
                 <Fragment>
                     <Grid
@@ -19,10 +21,20 @@ class Searching extends Component {
             );
         } else {
             return(
-
+                <button>go to discord</button>
             );
         }
     }
 }
 
-export default Searching;
+export const searchQuery = gql`{
+    data {
+        matchmaking {
+            reigsterSearch{
+                success
+            }
+        }
+    }
+}`;
+
+export default graphql(searchQuery)(Searching);
