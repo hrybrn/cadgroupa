@@ -18,7 +18,7 @@ class Struct(object):
 			else:
 				setattr(self, a, Struct(b) if isinstance(b, dict) else b)
 
-def validate(**args):
+def validate(args):
 	if not args['token'] or not discord.getuserobj(args["token"]): 
 		raise GraphQLError('There was an error authenticating!')
 	else:
@@ -40,12 +40,12 @@ def entityTest(value, info, **args):
 	client.put(task)
 	return json.dumps(client.get(key))
 
-def user(self, value, info, **args):
-	self.validate(args)
+def user(value, info, **args):
+	validate(args)
 	return discord.getuserobj(args['token'])
 
-def userfriends(self, value, info, **args):
-	self.validate(args)
+def userfriends(value, info, **args):
+	validate(args)
 	return discord.getuserfriends(args['token'])
 
 def games(value, info, **args):
@@ -54,30 +54,30 @@ def games(value, info, **args):
 		game_list.append(Struct(game))
 	return game_list
 
-def registerSearch(self, value, info, **args):
-	self.validate(args)
+def registerSearch(value, info, **args):
+	validate(args)
 	#token, location, game, mode, players, rank
 	matchmaking.joinQueue(args['token'], args['lat'], args['long'], args['gameID'], args['modeID'],
 		args['players'], args['rank'])
 	literal = lambda **kw: namedtuple('literal', kw)(**kw)
 	return literal(success=True, game="testGame", mode="testMode", registrationID="testID")
 
-def pollSearch(self, value, info, **args):
-	self.validate(args)
+def pollSearch(value, info, **args):
+	validate(args)
 	matchmaking.pollQueue(args['token'])
 	literal = lambda **kw: namedtuple('literal', kw)(**kw)
 	return literal(success=True, registrationID=args["registrationID"], playerDiscordIDs=["hello", "world"])
 
 # for testing purposes
-def requestsInSystem(self, value, info, **args):
-	self.validate(args)
+def requestsInSystem(value, info, **args):
+	validate(args)
 	return matchmaking.getMatchRequests(args['gameId'])
 
-def getRecentPlayers(self, value, info, **args):
-	self.validate(args)
+def getRecentPlayers( value, info, **args):
+	validate(args)
 	return users.getRecentPlayers(args["token"])
 
-def changeUserScore(self, value, info, **args):
-	self.validate(args)
+def changeUserScore(value, info, **args):
+	validate(args)
 	users.changePlayerRating(args['token'], args['good'])
 	return "Success"
