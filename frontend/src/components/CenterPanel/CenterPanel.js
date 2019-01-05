@@ -4,6 +4,7 @@ import { mapStatesToProps } from 'react-fluxible';
 import { withStyles, Typography, Paper, Button } from '@material-ui/core';
 
 import Searching from './Searching';
+import Rating from './Rating';
 
 const styles = theme => ({
     content: {
@@ -40,6 +41,8 @@ class CenterPanel extends Component {
             return this.generateMessageBox(<Button href='/login'>Login to use matchma.kr.</Button>);
         case 'searching':
             return <Searching />;
+        case 'matched':
+            return <Rating/>;
         }
     }
 
