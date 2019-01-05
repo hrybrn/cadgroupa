@@ -4,10 +4,6 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
 class Searching extends Component {
-    state = {
-        currentlyPolling: false
-    };
-
     constructor(props) {
         super(props);
         this.poll();
@@ -19,7 +15,7 @@ class Searching extends Component {
     }
 
     async continuePolling() {
-        if (this.props.data.loading || !this.props.data.matchmaking || !this.props.data.matchmaking.registerSearch.success) {
+        if (!this.props.data.matchmaking || !this.props.data.matchmaking.registerSearch.success) {
             this.poll();
         }
     }
