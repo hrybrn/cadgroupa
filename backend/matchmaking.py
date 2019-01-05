@@ -2,6 +2,7 @@ from google.cloud import datastore
 import os
 import json
 import time
+import math
 
 POLL_INTERVAL = 5
 POLL_INTERVAL_TIMEOUT = 10
