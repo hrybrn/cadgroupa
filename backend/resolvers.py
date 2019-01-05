@@ -82,4 +82,4 @@ def getRecentPlayers( value, info, **args):
 def changeUserScore(value, info, **args):
 	validate(args)
 	users.changePlayerRating(args['token'], args['good'])
-	return "Success"
+	return Struct({ "success": True })
