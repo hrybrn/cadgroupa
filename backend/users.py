@@ -44,3 +44,10 @@ def changePlayerRating(token, rating_change):
 	})
     client.put(request)
     return True
+
+
+def checkPlayerRating(token):
+    key = client.key('User', token)
+    request = client.get(key)
+    score = request['toxicity'] if request['toxicity'] else 0
+    return True if score > 0 else False
