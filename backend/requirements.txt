@@ -1,6 +1,6 @@
 Flask==1.0.2
 flask_graphql==2.0.0
+flask_cors
 pytest
-discord.py
 requests-oauthlib
 google-cloud-datastore
