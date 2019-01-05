@@ -1,8 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { LinearProgress, withStyles , FormLabel, Grid} from '@material-ui/core';
 
 class Searching extends Component {
     render() {
-        return <div>hi</div>;
+        if (data.loading){
+            return(
+                <Fragment>
+                    <Grid
+                        container
+                        spacing={0}
+                        alignItems="center"
+                        justify="center"
+                        style={{ minHeight: '100vh' }}
+                    >
+                        <FormLabel>Finding other players <LinearProgress /></FormLabel>
+                    </Grid>
+                </Fragment>
+            );
+        } else {
+            return(
+
+            );
+        }
     }
 }
 
