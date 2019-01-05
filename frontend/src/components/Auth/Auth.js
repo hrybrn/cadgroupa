@@ -3,9 +3,14 @@ import { Redirect } from 'react-router-dom';
 import qs from 'query-string';
 import { CircularProgress } from '@material-ui/core';
 import { updateStore } from 'fluxible-js';
-import { DISCORD_CLIENT, DISCORD_SECRET } from 'components/Auth/api_config_discord';
 
-class Auth extends Component{
+// eslint-disable-next-line no-undef
+const DISCORD_CLIENT = process.env.DISCORD_CLIENT;
+// eslint-disable-next-line no-undef
+const DISCORD_SECRET = process.env.DISCORD_SECRET;
+
+
+class Auth extends Component {
     state = {
         qsparsed : qs.parse(this.props.location.search, { ignoreQueryPrefix: true }),
         loading : true,
