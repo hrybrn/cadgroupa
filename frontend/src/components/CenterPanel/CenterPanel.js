@@ -22,7 +22,7 @@ const styles = theme => ({
 
 class CenterPanel extends Component {
     state = {
-        matchmakingState: 'searching'
+        matchmakingState: 'logout'
     };
 
     constructor(props) {
@@ -33,6 +33,12 @@ class CenterPanel extends Component {
         }
     }
 
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.search.inProgress) {
+            this.setState({ matchmakingState: 'searching' });
+        }
+    }
+
     render() {
         switch(this.state.matchmakingState) {
         case 'loggedin':
@@ -40,9 +46,9 @@ class CenterPanel extends Component {
         case 'logout':
             return this.generateMessageBox(<Button href='/login'>Login to use matchma.kr.</Button>);
         case 'searching':
-            return <Searching />;
+            return <Searching selectedGame={this.props.search.selectedGame} selectedMode={this.props.search.selectedMode} />;
         case 'matched':
-            return <Rating/>;
+            return <Rating />;
         }
     }
 
@@ -60,6 +66,7 @@ class CenterPanel extends Component {
 
 export default mapStatesToProps(withStyles(styles)(CenterPanel), state => {
     return {
-        user: state.user
+        user: state.user,
+        search: state.search
     };
 });

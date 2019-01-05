@@ -22,7 +22,6 @@ class Searching extends Component {
 
     render() {
         const { loading, matchmaking } = this.props.data;
-
         if (loading || !matchmaking || !matchmaking.registerSearch.success){
             return(
                 <Fragment>
@@ -33,7 +32,7 @@ class Searching extends Component {
                         justify="center"
                         style={{ minHeight: '100vh' }}
                     >
-                        <FormLabel>Finding other players <LinearProgress /></FormLabel>
+                        <FormLabel>Finding other players for {this.props.selectedGame.name}<LinearProgress /></FormLabel>
                     </Grid>
                 </Fragment>
             );

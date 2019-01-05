@@ -10,6 +10,11 @@ initializeStore({
             token: '',
             loggedin: 0
         },
+        search: {
+            inProgress: false,
+            selectedGameID: '',
+            selectedMode: ''
+        }
     },   
     persist: {
         useJSON: false,
@@ -30,9 +35,7 @@ class App extends Component {
         },
     });
 
-    render() {		
-        // Consider returning left panel for the default route here a placeholder.
-        // In reality the main route would return the central component.
+    render() {
         return (
             <MuiThemeProvider theme={this.theme}>
                 <Navigation/>
