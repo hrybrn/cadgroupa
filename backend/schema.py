@@ -12,7 +12,7 @@ from graphql import (
 	GraphQLInt,
 	GraphQLFloat
 )
-from resolvers import user, userfriends, games, helloWorld, entityTest, registerSearch, pollSearch, requestsInSystem
+from resolvers import user, userfriends, games, helloWorld, entityTest, registerSearch, pollSearch, requestsInSystem, getRecentPlayers
 
 
 # Super useful 
@@ -23,18 +23,34 @@ from resolvers import user, userfriends, games, helloWorld, entityTest, register
 
 # Note that a different schema would be defined for mutations - this is not a complete schema object (see below)
 queryschema = GraphQLObjectType(
-		'RootQueryType',
+		"RootQueryType",
 		lambda: {
-            "games": GraphQLField(
-					type= GraphQLString,
-					resolver=games
+			"discord": GraphQLField(
+				type=GraphQLObjectType(
+					name="discordOptions",
+					fields={
+						"getuser": GraphQLField(
+							type=GraphQLString,
+							args={
+								"token": GraphQLArgument(GraphQLString)
+							},
+							resolver=user
+						),
+						"userfriends": GraphQLField(
+							type=GraphQLString,
+							args={
+								"token": GraphQLArgument(GraphQLString),
+								"registrationID": GraphQLArgument(GraphQLString),
+							},
+							resolver=userfriends
+						)
+					}
+				)
 			),
             "helloworld": GraphQLField(
                 type=GraphQLString,
                 args={
-                    "name": GraphQLArgument(
-                        type=GraphQLString,
-                    )
+                    "name": GraphQLArgument(GraphQLString)
                 },
                 resolver=helloWorld
             ),
@@ -42,14 +58,13 @@ queryschema = GraphQLObjectType(
 				type=GraphQLList(GraphQLString),
 				args={
 					"token": GraphQLArgument(GraphQLString)
-				}
+				},
+				resolver=getRecentPlayers
 			),
 			"requestsInSystem": GraphQLField(
                 type=GraphQLString,
                 args={
-                    "gameId": GraphQLArgument(
-                        type=GraphQLString,
-                    )
+                    "gameId": GraphQLArgument(GraphQLString)
                 },
                 resolver=requestsInSystem
             ),
@@ -61,42 +76,22 @@ queryschema = GraphQLObjectType(
 							type=GraphQLObjectType(
 								name="registerResponse",
 								fields={
-									"gameID": GraphQLField(
-										type=GraphQLString
-									),
-									"mode": GraphQLField(
-										type=GraphQLString
-									),
-									"registrationID": GraphQLField(
-										type=GraphQLString
-									),
-									"success": GraphQLField(
-										type=GraphQLBoolean
-									)
+									"gameID": GraphQLField(GraphQLString),
+									"mode": GraphQLField(GraphQLString),
+									"players": GraphQLArgument(GraphQLInt),
+									"rank": GraphQLArgument(GraphQLInt),
+									"lat": GraphQLArgument(GraphQLFloat),
+									"lon": GraphQLArgument(GraphQLFloat)
 								}
 							),
 							args={
-								"token": GraphQLArgument(
-									type=GraphQLString
-								),
-								"gameID": GraphQLArgument(
-									type=GraphQLString
-								),
-								"modeID": GraphQLArgument(
-									type=GraphQLString
-								),
-								"players": GraphQLArgument(
-									type=GraphQLInt
-								),
-								"rank": GraphQLArgument(
-									type=GraphQLInt
-								),
-								"lat": GraphQLArgument(
-									type=GraphQLFloat
-								),
-								"lon": GraphQLArgument(
-									type=GraphQLFloat
-								)
+								"token": GraphQLArgument(GraphQLString),
+								"gameID": GraphQLField(GraphQLString),
+								"mode": GraphQLField(GraphQLString),
+								"players": GraphQLArgument(GraphQLInt),
+								"rank": GraphQLArgument(GraphQLInt),
+								"lat": GraphQLArgument(GraphQLFloat),
+								"lon": GraphQLArgument(GraphQLFloat)
 							},
 							resolver=registerSearch
 						),
@@ -110,28 +105,54 @@ queryschema = GraphQLObjectType(
 									"success": GraphQLField(
 										type=GraphQLBoolean
 									),
-									"playerDiscordIDs": GraphQLField(
-										type=GraphQLList(
-											type=GraphQLString
-										)
-									)
-								}
-							),
-							args={
-								"token": GraphQLArgument(
-									type=GraphQLString
-								),
-								"registrationID": GraphQLArgument(
-									type=GraphQLString
-								),
-							},
-							resolver=pollSearch
+									"playerDiscordIDs": GraphQLField(GraphQLList(GraphQLString)),
+									"groupDMURL": GraphQLField(GraphQLString)
+								},
+								args={
+									"token": GraphQLArgument(GraphQLString)
+								},
+								resolver=pollSearch
+							)
 						),
 					}
 				),
 				# This seems to need to be defined, although it's not used?
 				resolver=helloWorld	
-			)
+			),
+            "games": GraphQLField(
+					type=GraphQLList(
+						type=GraphQLObjectType(
+							name="game",
+							fields={
+								"id": GraphQLField(GraphQLString),
+								"name": GraphQLField(GraphQLString),
+								"icon": GraphQLField(GraphQLString),
+								"maxplayers": GraphQLField(GraphQLInt),
+								"minplayers": GraphQLField(GraphQLInt),
+								"minage": GraphQLField(GraphQLInt),
+								"description": GraphQLField(GraphQLString),
+								"website": GraphQLField(GraphQLString),
+								"modes": GraphQLField(GraphQLList(
+									type=GraphQLObjectType(
+										name="mode",
+										fields={
+											"name": GraphQLField(GraphQLString),
+											"players": GraphQLField(GraphQLInt)
+										}
+									)
+								))
+							}
+						)
+					),
+					resolver=games
+			),
+            "helloworld": GraphQLField(
+                type=GraphQLString,
+                args={
+                    'name': GraphQLArgument(GraphQLString)
+                },
+                resolver=helloWorld
+            )
 		}
 )
 
