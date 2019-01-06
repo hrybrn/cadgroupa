@@ -75,7 +75,7 @@ class Navigation extends Component {
                 emailLoaded: true,
                 fields: {
                     ...prev.fields,
-                    email: nextProps.user.loggedin ? JSON.parse(nextProps.data.discord.getuser).email : 'Not found'
+                    email: (nextProps.user.loggedin && nextProps.data) ? JSON.parse(nextProps.data.discord.getuser).email : 'Not found'
                 }
             }));
         }
