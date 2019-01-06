@@ -53,7 +53,8 @@ def getVotes(user, type):
 	else:
 		return 0
 
-def vote(userId, recipientId, type):
+def vote(userId, recipientId, enumType):
+	type = enumType.value
 	recipient = getUser(recipientId)
 	votes = getVotes(recipient, type)
 	recipient.update({
