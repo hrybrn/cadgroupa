@@ -20,8 +20,8 @@ class Rating extends Component {
             justify="center"
             style={{ minHeight: '100vh' }}
         >
-            <Fragment key={player.name}>
-                <FormLabel>{player.name}&nbsp;&nbsp;&nbsp;&nbsp;</FormLabel>
+            <Fragment key={player.displayName}>
+                <FormLabel>{player.displayName}&nbsp;&nbsp;&nbsp;&nbsp;</FormLabel>
                 <Vote class={this} sendFeedback={this.sendFeedback} player={player} rated={false}/>
             </Fragment>
         </Grid>;
@@ -49,7 +49,7 @@ class Vote extends Component{
         );
     }
     rate(rating){
-        this.props.sendFeedback.bind(this.props.class, this.props.player.id, rating);
+        this.props.sendFeedback.bind(this.props.class, this.props.player.userId, rating);
         this.setState({rated:true});
     }
 }
