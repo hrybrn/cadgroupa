@@ -80,9 +80,12 @@ def pollQueue(userId):
 			client.put(request)
 		return success, players, url
 	else:
-		return True, ['lol'], "http://www.youvebeenhad.com/"
+		return True, getMatchMembers(matchId), "http://www.youvebeenhad.com/"
 
-# def getMatchMembers(matchId):
+def getMatchMembers(matchId):
+	query = client.query(kind='MatchRequest')
+	query.add_filter('matchId', '=', matchId)
+	return [result['userId'] for result in query.fetch()]
 
 
 def findMatch(request):
