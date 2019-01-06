@@ -148,14 +148,11 @@ mutationschema = GraphQLObjectType(
 						type=GraphQLObjectType(
 							name="pollResponse",
 							fields={
-								"token": GraphQLField(
-									type=GraphQLString
-								),
 								"success": GraphQLField(
 									type=GraphQLBoolean
 								),
-								"playerDiscordIDs": GraphQLField(GraphQLList(GraphQLString)),
-								"groupDMURL": GraphQLField(GraphQLString)
+								"players": GraphQLField(GraphQLList(GraphQLString)),
+								"url": GraphQLField(GraphQLString)
 							},
 						),
 						args={
