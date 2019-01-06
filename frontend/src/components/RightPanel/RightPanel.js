@@ -24,7 +24,7 @@ class RightPanel extends Component {
             <Fragment>
                 <GridList className={gridList}>
                     <GridListTile className={titleTile} cols={2}>
-                        <ListSubheader component='div'>Recent Players (Click for link to discord)</ListSubheader>
+                        <ListSubheader component='div'>Recent Players</ListSubheader>
                     </GridListTile>
                     {this.playerTiles(this.props.data, this.props.classes)}
                 </GridList>
@@ -35,7 +35,7 @@ class RightPanel extends Component {
     playerTiles(data, classes) {
         if (data.loading || data.recentPlayers === undefined) {
             return (
-                <GridListTile className={classes.titleTile} cols={2}>
+                <GridListTile className={classes.titleTile} cols={2}>    
                     <CircularProgress/>
                 </GridListTile>
             );
