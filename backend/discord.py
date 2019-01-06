@@ -44,7 +44,7 @@ def createguildrole(matchid):
 # create Discord voice channel with the given role set and with given name (match id) 
 def createvoicechannnel(matchid, roleid):
 	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format(BOT_TOKEN)}
-	jsontext = { 'name' : str(matchid), 'type' : 2, 'permission_overwrites' : [{ 'id' : str(roleid), 'type': 'role'}] }
+	jsontext = { 'name' : str(matchid), 'type' : 2, 'permission_overwrites' : [{ 'id' : str(roleid), 'type': 'role', 'allow': 36785216}] }
 	response = requests.post(URL_BASE + 'guilds/' + GUILD_ID + '/channels', headers=headers, json=jsontext)
 	if (response.status_code == 201):
 		return response.content
@@ -53,7 +53,7 @@ def createvoicechannnel(matchid, roleid):
 # create Discord text channel with the given role set and with given name (match id) 
 def createtextchannnel(matchid, roleid):
 	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format(BOT_TOKEN)}
-	jsontext = { 'name' : str(matchid), 'type' : 0, 'permission_overwrites' : [{ 'id' : str(roleid), 'type': 'role'}] }
+	jsontext = { 'name' : str(matchid), 'type' : 0, 'permission_overwrites' : [{ 'id' : str(roleid), 'type': 'role', 'allow': 36785216}] }
 	response = requests.post(URL_BASE + 'guilds/' + GUILD_ID + '/channels', headers=headers, json=jsontext)
 	if (response.status_code == 201):
 		return True
