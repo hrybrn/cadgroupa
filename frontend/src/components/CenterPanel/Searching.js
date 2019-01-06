@@ -13,7 +13,7 @@ class Searching extends Component {
 
     async poll() {
         await new Promise(resolve => setTimeout(resolve, 2000));
-        this.props.data.refetch().then(this.continuePolling.bind(this), this.continuePolling.bind(this));
+        this.props.mutate().then(this.continuePolling.bind(this), this.continuePolling.bind(this));
     }
 
     async continuePolling() {
