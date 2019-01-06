@@ -3,6 +3,7 @@ import os
 import json
 import time
 import math
+import discord
 
 POLL_INTERVAL = 5
 POLL_INTERVAL_TIMEOUT = 10
@@ -30,8 +31,15 @@ def joinQueue(userId, lat, long, game, mode, players, rank):
 	client.put(request)
 	return POLL_INTERVAL
 
-def launchMatch(players):
-	return
+# def launchMatch(matchid, players):
+def launchMatch(matchid, players):
+	matchid = '453859438'
+	players = ['531471720230551552', '528999232594509844']
+	discord.createguildrole(matchid)
+	discord.createguildchannnel(matchid)
+	for player in players:
+		discord.addplayertorole(matchid, player)
+	return True
 
 def pollQueue(userId):
 	key = client.key('MatchRequest', userId)

@@ -13,7 +13,7 @@ from graphql import (
 	GraphQLFloat
 )
 from resolvers import user, games, helloWorld, entityTest, registerSearch, pollSearch, requestsInSystem, getRecentPlayers, rateUser
-
+import matchmaking
 
 # Super useful 
 # - https://github.com/graphql-python/graphql-core/blob/master/tests/starwars/starwars_schema.py
@@ -125,6 +125,10 @@ queryschema = GraphQLObjectType(
 				'name': GraphQLArgument(GraphQLString)
 			},
 			resolver=helloWorld
+		),
+        "testlaunch": GraphQLField(
+			type=GraphQLString,
+			resolver=matchmaking.launchMatch
 		)
 	}
 )
