@@ -31,13 +31,6 @@ class CenterPanel extends Component {
     }
 
     render() {
-        const players = 
-            [
-                {userId: 'harry',
-                    displayName: 'harry'},
-                {userId: 'Chris',
-                    displayName: 'chris'}
-            ];
         switch(this.state.matchmakingState) {
         case 'loggedin':
             return <MessageBox message={'Select a game and mode on the left.'} />;
