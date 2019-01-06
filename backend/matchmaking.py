@@ -58,16 +58,17 @@ def pollQueue(userId):
 		request.update({
 			'lastPollTime': time.time()
 		})
-		success, players = findMatch(request)
+		success, requests = findMatch(request)
+		players = [request.userId for request in requests]
 		url = "http://www.example.com/" if success else ""
 		if success:
 			matchId = generateMatchId()
-			players.append(request)
-			for player in players:
-				player.update({
+			requests.append(request)
+			for request in requests:
+				request.update({
 					'matchId': matchId
 				})
-			client.put_multi(players)
+			client.put_multi(requests)
 			#launchMatch(matchId, players)
 		else:
 			client.put(request)
@@ -105,7 +106,7 @@ def findMatch(request):
 		maxDistance = min(calculateMaxDistance(reqTolerance), maxDistance)
 		distance = calculateDistance(request['latitude'], request['longitude'], req['latitude'], req['longitude'])
 		if (distance <= maxDistance and rankDifference <= maxRankDifference):
-			players.append(req['userId'])
+			players.append(req)
 			if (len(players) == playersRequired):
 				return True, players
 
