@@ -4,6 +4,7 @@ import json
 import discord
 import matchmaking
 import users
+import sys
 from graphql import GraphQLError
 
 from collections import namedtuple
@@ -18,11 +19,14 @@ class Struct(object):
 			else:
 				setattr(self, a, Struct(b) if isinstance(b, dict) else b)
 
-def validate(args):
-	if not args['token'] or not discord.getuserobj(args["token"]): 
+def validate(token):
+	if not token: 
 		raise GraphQLError('There was an error authenticating!')
+	userobj = json.loads(discord.getuserobj(token))
+	if(userobj['verified'] == "false"):
+		raise GraphQLError('The user must be verified with Discord in order to use this app!')
 	else:
-		return True
+		return userobj['id']
 
 with open('games.json') as f:
 	games_json = json.load(f)
@@ -41,12 +45,8 @@ def entityTest(value, info, **args):
 	return json.dumps(client.get(key))
 
 def user(value, info, **args):
-	validate(args)
+	id = validate(args['token'])
 	return discord.getuserobj(args['token'])
-
-def userfriends(value, info, **args):
-	validate(args)
-	return discord.getuserfriends(args['token'])
 
 def games(value, info, **args):
 	game_list = []
@@ -55,7 +55,7 @@ def games(value, info, **args):
 	return game_list
 
 def registerSearch(value, info, **args):
-	validate(args)
+	validate(args['token'])
 	#token, location, game, mode, players, rank
 	matchmaking.joinQueue(args['token'], args['lat'], args['long'], args['gameID'], args['modeID'],
 		args['players'], args['rank'])
@@ -63,21 +63,21 @@ def registerSearch(value, info, **args):
 	return literal(success=True, game="testGame", mode="testMode", registrationID="testID")
 
 def pollSearch(value, info, **args):
-	validate(args)
+	playerid = validate(args['token'])
 	matchmaking.pollQueue(args['token'])
 	literal = lambda **kw: namedtuple('literal', kw)(**kw)
-	return literal(success=True, registrationID=args["registrationID"], playerDiscordIDs=["hello", "world"])
+	return literal(success=True, registrationID=args["registrationID"], playerDiscordIDs=['Insert', 'A', 'List', 'of', 'playerids'])
 
 # for testing purposes
 def requestsInSystem(value, info, **args):
-	validate(args)
+	id = validate(args['token'])
 	return matchmaking.getMatchRequests(args['gameId'])
 
 def getRecentPlayers( value, info, **args):
-	validate(args)
+	validate(args['token'])
 	return users.getRecentPlayers(args["token"])
 
 def changeUserScore(value, info, **args):
-	validate(args)
+	validate(args['token'])
 	users.changePlayerRating(args['token'], args['good'])
 	return Struct({ "success": True })
