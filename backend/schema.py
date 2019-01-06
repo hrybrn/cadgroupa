@@ -12,7 +12,7 @@ from graphql import (
 	GraphQLInt,
 	GraphQLFloat
 )
-from resolvers import user, userfriends, games, helloWorld, entityTest, registerSearch, pollSearch, requestsInSystem, getRecentPlayers, changeUserScore
+from resolvers import user, games, helloWorld, entityTest, registerSearch, pollSearch, requestsInSystem, getRecentPlayers, changeUserScore
 
 
 # Super useful 
@@ -37,15 +37,6 @@ queryschema = GraphQLObjectType(
 							)
 						},
 						resolver=user
-					),
-					"userfriends" : GraphQLField(
-						type= GraphQLString,
-						args={
-							'token' : GraphQLArgument(
-								type=GraphQLString
-							)
-						},
-						resolver=userfriends
 					)
 				}
 			),
