@@ -46,20 +46,20 @@ def addRecentPlayers(userId, players):
 	})
 	client.put(user)
 
-def getVotes(user, type):
-	if 'votes' + type in user:
-		elapsedDays = (time.clock() - user['last' + type + 'Vote']) / SECONDS_IN_DAY
-		return user['votes' + type] * math.exp(0.5, elapsedDays)
+def getVotes(user, voteType):
+	if 'votes' + voteType in user:
+		elapsedDays = (time.clock() - user['last' + voteType + 'Vote']) / SECONDS_IN_DAY
+		return user['votes' + voteType] * math.exp(0.5, elapsedDays)
 	else:
 		return 0
 
 def vote(userId, recipientId, enumType):
-	type = enumType.value
+	voteType = enumType.value
 	recipient = getUser(recipientId)
-	votes = getVotes(recipient, type)
+	votes = getVotes(recipient, voteType)
 	recipient.update({
-		'votes' + type: votes + 1,
-		'last' + type + 'Vote': time.clock()
+		'votes' + voteType: votes + 1,
+		'last' + voteType + 'Vote': time.clock()
 	})
 	client.put(recipient)
 
