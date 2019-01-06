@@ -28,7 +28,10 @@ def joinQueue(userId, lat, long, game, mode, players, rank):
 		'longitude': long
 	})
 	client.put(request)
-	return request
+	return POLL_INTERVAL
+
+def launchMatch(players):
+	return
 
 def pollQueue(userId):
 	key = client.key('MatchRequest', userId)
@@ -39,11 +42,8 @@ def pollQueue(userId):
 	client.put(request)
 	# see if a match can be made
 	success, players = findMatch(request)
-	if (success):
-		#launch match
-		return False
-	else:
-		return True #continue polling
+	url = "http://www.example.com/" if success else ""
+	return success, players, url
 
 def findMatch(request):
 	currentTime = time.clock()
@@ -52,13 +52,12 @@ def findMatch(request):
 	maxRankDifference = calculateMaxRankDifference(tolerance)
 	maxDistance = calculateMaxDistance(tolerance)
 
+	minPollTime = currentTime - POLL_INTERVAL_TIMEOUT
+
 	query = client.query(kind='MatchRequest')
-	query.add_filter('gameId', '=', request['game'])
-	query.add_filter('lastPollTime', '>', currentTime - POLL_INTERVAL_TIMEOUT)
-	query.add_filter('gameSize' '=', request['gameSize'])
-	query.add_filter('rank', '>=', request['rank'] - maxRankDifference)
-	query.add_filter('rank', '<=', request['rank'] + maxRankDifference)
-	query.add_filter('matchId' '=', DEFAULT_MATCH_ID)
+	query.add_filter('gameId', '=', request['gameId'])
+	query.add_filter('gameSize', '=', request['gameSize'])
+	query.add_filter('matchId', '=', DEFAULT_MATCH_ID)
 	query.order = ['initialRequestTime']
 
 	playersRequired = request['gameSize'] - 1
@@ -68,12 +67,14 @@ def findMatch(request):
 	for req in query.fetch():
 		if req['userId'] == request['userId']:
 			continue
+		if req['lastPollTime'] < minPollTime:
+			continue
 		reqTolerance = calculateTolerance(currentTime - req['initialRequestTime'])
-		maxRankDifference = calculateMaxRankDifference(reqTolerance)
+		maxRankDifference = min(calculateMaxRankDifference(reqTolerance), maxRankDifference)
 		rankDifference = abs(request['rank'] - req['rank'])
 		maxDistance = min(calculateMaxDistance(reqTolerance), maxDistance)
 		distance = calculateDistance(request['latitude'], request['longitude'], req['latitude'], req['longitude'])
-		if (distance < maxDistance and rankDifference < maxRankDifference):
+		if (distance <= maxDistance and rankDifference <= maxRankDifference):
 			players.append(req['userId'])
 			if (len(players) == playersRequired):
 				return True, players

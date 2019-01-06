@@ -1,6 +1,7 @@
 from google.cloud import datastore
 from enum import Enum
 import time
+import uuid
 
 MAX_RECENT_PLAYERS = 20
 SECONDS_IN_DAY = 86400
@@ -31,11 +32,11 @@ def getUser(userId):
 
 def getRecentPlayers(userId):
 	user = getUser(userId)
-	return user['recentPlayers'] if user['recentPlayers'] else []
+	return user['recentPlayers'] if 'recentPlayers' in user else []
 
 def addRecentPlayers(userId, players):
 	user = getUser(userId)
-	recentPlayers = user['recentPlayers'] if user['recentPlayers'] else []
+	recentPlayers = user['recentPlayers'] if 'recentPlayers' in user else []
 	recentPlayers.extend(players)
 	if len(recentPlayers) > MAX_RECENT_PLAYERS:
 		for i in range(0, len(recentPlayers) - MAX_RECENT_PLAYERS):
@@ -46,7 +47,7 @@ def addRecentPlayers(userId, players):
 	client.put(user)
 
 def getVotes(user, type):
-	if user['votes' + type]:
+	if 'votes' + type in users:
 		elapsedDays = (time.clock() - user['last' + type + 'Vote']) / SECONDS_IN_DAY
 		return user['votes' + type] * math.exp(0.5, elapsedDays)
 	else:
@@ -64,3 +65,7 @@ def vote(userId, recipientId, type):
 def getToxicity(userId):
 	user = getUser(userId)
 	return getVotes(user, VoteType.Down) - getVotes(user, VoteType.UP)
+
+def generateMatchId():
+	# uuid4 generates a random uuid
+	return uuid.uuid4()
