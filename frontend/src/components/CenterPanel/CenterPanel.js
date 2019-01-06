@@ -31,12 +31,6 @@ class CenterPanel extends Component {
     }
 
     render() {
-        const players = [
-            {
-                name: 'Harry',
-                id: 187314127654354944
-            }
-        ];
         switch(this.state.matchmakingState) {
         case 'loggedin':
             return <MessageBox message={'Select a game and mode on the left.'} />;
@@ -49,7 +43,7 @@ class CenterPanel extends Component {
         case 'matched':
             return <Fragment>
                 <Button href={this.state.search.url}>join your team on discord</Button>
-                {players.map(player => <Rating key={player.id} player={player} />)}
+                {this.props.search.players.map(player => <Rating key={player.userId} player={player} />)}
             </Fragment>;
         }
     }
