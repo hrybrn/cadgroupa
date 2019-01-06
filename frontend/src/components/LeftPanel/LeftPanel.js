@@ -72,11 +72,12 @@ class LeftPanel extends Component {
         return this.state.selectedGame.modes.map(
             (mode) =>
                 <FormControlLabel
+                    key={mode.name}
                     value={mode.name}
                     control={<Radio color="primary" />}
                     label={mode.name}
                     labelPlacement="start"
-                    key={mode.name}
+                    
                 />
         );
     }
