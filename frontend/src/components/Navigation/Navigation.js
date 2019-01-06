@@ -11,7 +11,7 @@ import { get_user_obj } from 'queries/discord';
 
 import LeftPanel from 'components/LeftPanel/LeftPanel';
 import Modal from 'components/Modal/Modal';
-import FriendPanel from 'components/FriendPanel/FriendPanel';
+import RightPanel from 'components/RightPanel/RightPanel';
 
 import matchmakr from 'assets/matchmakr.png';
 
@@ -131,7 +131,7 @@ class Navigation extends Component {
                     variant='permanent'
                 >
                     <div className={toolbar} />
-                    <FriendPanel />
+                    <RightPanel />
                 </Drawer>
                 {modal}
                 <div>
