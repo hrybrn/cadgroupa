@@ -11,11 +11,11 @@ import { get_user_obj } from 'queries/discord';
 
 import LeftPanel from 'components/LeftPanel/LeftPanel';
 import Modal from 'components/Modal/Modal';
-import FriendPanel from 'components/FriendPanel/FriendPanel';
+import RightPanel from 'components/RightPanel/RightPanel';
 
 import matchmakr from 'assets/matchmakr.png';
 
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import Login from 'components/Auth/Login';
 import Auth from 'components/Auth/Auth';
@@ -60,8 +60,7 @@ class Navigation extends Component {
         user: {
             token: '',
             loggedin: 0
-        },
-        errorredirect: false,
+        }
     };
 
     render() {
@@ -72,7 +71,7 @@ class Navigation extends Component {
         const modal = this.renderModal();
         return (
             <Fragment>
-                {this.state.errorredirect && <Redirect to='/error'/>}
+                {this.props.data.error ? (<MessageBox message={this.props.data.error.message}/>) : (<Fragment></Fragment>)}
                 <AppBar className={navigation}>
                     <Toolbar classes={{ root: spreadToolbar }}>
                         <IconButton
@@ -132,14 +131,14 @@ class Navigation extends Component {
                     variant='permanent'
                 >
                     <div className={toolbar} />
-                    <FriendPanel />
+                    <RightPanel />
                 </Drawer>
                 {modal}
                 <div>
                     <div className={toolbar} />
                     <Route path='/auth' component={Auth}/>
                     <Route path='/login' component={Login}/>
-                    <Route path='/error' render={() => <MessageBox message="Something went terribly wrong 😢"/>}/>
+                    <Route path='/error' component={<MessageBox message="Something went terribly wrong 😢" />}/>
                     <Route exact path='/' component={CenterPanel}/>
                 </div>
             </Fragment>

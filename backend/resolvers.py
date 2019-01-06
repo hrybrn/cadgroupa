@@ -29,6 +29,11 @@ def validate(token):
 	userobj = json.loads(discord.getuserobj(token))
 	if(userobj['verified'] == "false"):
 		raise GraphQLError('The user must be verified with Discord in order to use this app!')
+	if not discord.checkuserguild(token, userobj['id']):
+		if not discord.adduserguild(token, userobj['id']):
+			raise GraphQLError('Failed to join voice server!')
+		else:
+			return userobj['id']
 	else:
 		userCache[token] = userobj['id']
 		return userobj['id']
@@ -50,6 +55,8 @@ def entityTest(value, info, **args):
 	return json.dumps(client.get(key))
 
 def user(value, info, **args):
+	if not args['token']:
+		return False
 	id = validate(args['token'])
 	return discord.getuserobj(args['token'])
 
