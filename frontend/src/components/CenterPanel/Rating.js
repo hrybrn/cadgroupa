@@ -21,7 +21,7 @@ class Rating extends Component {
             style={{ minHeight: '100vh' }}
         >
             <Fragment key={player.name}>
-                <FormLabel>{player.name}    </FormLabel>
+                <FormLabel>{player.name}&nbsp;&nbsp;&nbsp;&nbsp;</FormLabel>
                 <Vote class={this} sendFeedback={this.sendFeedback} player={player} rated={false}/>
             </Fragment>
         </Grid>;
@@ -39,9 +39,10 @@ class Vote extends Component{
     render() {
         return (
             this.state.rated ?
-                <FormLabel>    Thanks for rating this player</FormLabel>
+                <FormLabel>Thanks for rating this player</FormLabel>
                 :<Fragment>
                     <ThumbsUp type="button" onClick={this.rate.bind(this, true)}></ThumbsUp>
+                    &nbsp;
                     <ThumbsDown type="button" onClick={this.rate.bind(this, false)}></ThumbsDown>
                 </Fragment>
                 
