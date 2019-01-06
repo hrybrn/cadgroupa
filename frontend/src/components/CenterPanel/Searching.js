@@ -69,9 +69,9 @@ const registerSearch = graphql(gql`query RegisterSearch(
     options: (props) => ({
         variables: {
             gameID: props.search.selectedGame.id,
-            lon: props.lon,
-            lat: props.lat,
-            rank: props.search.rank,
+            lon: props.search.searchOptions.lon,
+            lat: props.search.searchOptions.lat,
+            rank: props.search.searchOptions.rank,
             players: props.search.selectedMode.players,
             token: props.user.token,
             mode: props.search.selectedMode.name

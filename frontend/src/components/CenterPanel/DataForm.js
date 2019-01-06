@@ -80,6 +80,9 @@ class DataForm extends Component {
         if (this.state.lat !== null && this.state.lon !== null) {
             searchInfo.lat = this.state.lat;
             searchInfo.lon = this.state.lon;
+        } else {
+            searchInfo.lat = 27.0;
+            searchInfo.lon = 109.0;
         }
 
         this.setState({ open: false }, this.props.success.bind(this, searchInfo));
