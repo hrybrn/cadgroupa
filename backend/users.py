@@ -28,7 +28,11 @@ def createUser(userId):
 
 def getUser(userId):
 	key = client.key('User', userId)
-	return client.get(key)
+	user = client.get(key)
+	if user is None:
+		return createUser(userId)
+	else:
+		return user
 
 def getRecentPlayers(userId):
 	user = getUser(userId)
