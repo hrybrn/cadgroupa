@@ -5,8 +5,10 @@ import os
 from graphql import GraphQLError
 
 URL_BASE = 'https://discordapp.com/api/'
-BOT_TOKEN = os.environ['DISCORD_BOT_TOKEN']
-GUILD_ID = os.environ['DISCORD_GUILD_ID']
+#BOT_TOKEN = os.environ['DISCORD_BOT_TOKEN']
+BOT_TOKEN = 'NTE5NTI2MDYxODY0Nzc5ODA4.DxOVxg.FgnV-M1j_aI6eLisJ1vaIRz70q4'
+#GUILD_ID = os.environ['DISCORD_GUILD_ID']
+GUILD_ID = '531408802357182484'
 
 # return user Discord object, from given token
 def getuserobj(token):
