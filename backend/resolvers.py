@@ -75,10 +75,7 @@ def pollSearch(value, info, **args):
 	success, players, url = matchmaking.pollQueue(userId)
 	return Struct({
 		"success": success,
-		"players": [Struct({
-			'displayName': player['displayName'],
-			'userId': player['userId']
-		}) for player in players],
+		"players": [Struct(player) for player in players],
 		"url": url,
 	})
 
