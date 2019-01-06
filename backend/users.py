@@ -4,8 +4,8 @@ MAX_RECENT_PLAYERS = 20
 
 client = datastore.Client()
 
-def createUser(token):
-	key = client.key('User', token)
+def createUser(userId):
+	key = client.key('User', userId)
 	request = datastore.Entity(key)
 	request.update({
 		'recentPlayers': [],
@@ -15,13 +15,13 @@ def createUser(token):
 	client.put(request)
 	return request
 
-def getRecentPlayers(token):
-	key = client.key('User', token)
+def getRecentPlayers(userId):
+	key = client.key('User', userId)
 	request = client.get(key)
 	return request['recentPlayers'] if request['recentPlayers'] else []
 
-def addRecentPlayers(token, players):
-	key = client.key('User', token)
+def addRecentPlayers(userId, players):
+	key = client.key('User', userId)
 	request = client.get(key)
 	recentPlayers = request['recentPlayers'] if request['recentPlayers'] else []
 	recentPlayers.extend(players)
@@ -33,8 +33,8 @@ def addRecentPlayers(token, players):
 	})
 	client.put(request)
 
-def changePlayerRating(token, rating_change):
-	key = client.key('User', token)
+def changePlayerRating(userId, rating_change):
+	key = client.key('User', userId)
 	request = client.get(key)
 
 	score = request['toxicity']
@@ -46,8 +46,8 @@ def changePlayerRating(token, rating_change):
 	return True
 
 
-def checkPlayerRating(token):
-	key = client.key('User', token)
+def checkPlayerRating(userId):
+	key = client.key('User', userId)
 	request = client.get(key)
 	score = request['toxicity'] if request['toxicity'] else 0
 	return True if score > 0 else False
