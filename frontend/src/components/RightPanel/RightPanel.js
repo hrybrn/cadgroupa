@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo';
 import { GridList, GridListTile, ListSubheader, withStyles, CircularProgress} from '@material-ui/core';
 import CardTile from 'components/CardTile/CardTile';
 import { mapStatesToProps } from 'react-fluxible'; 
-
+import DiscordIcon from 'assets/discordicon.png';
 const styles = () => ({
     gridList: {
         width: 300,
@@ -35,7 +35,7 @@ class RightPanel extends Component {
     playerTiles(data, classes) {
         if (data.loading || data.recentPlayers === undefined) {
             return (
-                <GridListTile className={classes.titleTile} cols={2}>    
+                <GridListTile className={classes.titleTile} cols={2}>
                     <CircularProgress/>
                 </GridListTile>
             );
@@ -51,7 +51,7 @@ class RightPanel extends Component {
                     key={recent.id}
                     active={false}
                     pressed={this.activated.bind(this, recent.id)}
-                    icon=''
+                    icon={DiscordIcon}
                     {...recent}
                 />
             );
@@ -59,7 +59,7 @@ class RightPanel extends Component {
     }
 
     activated(id) {
-        window.location='https://discordapp.com/users/'.concat(id);
+        window.open('https://discordapp.com/users/'.concat(id));
     }
 
    
