@@ -12,7 +12,7 @@ from graphql import (
 	GraphQLInt,
 	GraphQLFloat
 )
-from resolvers import user, games, helloWorld, entityTest, registerSearch, pollSearch, requestsInSystem, getRecentPlayers, rateUser
+from resolvers import getUser, games, helloWorld, entityTest, registerSearch, pollSearch, requestsInSystem, getRecentPlayers, rateUser
 import matchmaking
 
 # Super useful 
@@ -36,7 +36,7 @@ queryschema = GraphQLObjectType(
 								type=GraphQLString
 							)
 						},
-						resolver=user
+						resolver=getUser
 					)
 				}
 			),
