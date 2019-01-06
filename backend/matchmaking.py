@@ -60,10 +60,10 @@ def pollQueue(userId):
 		players = [request['userId'] for request in requests]
 		url = "http://www.example.com/" if success else ""
 		if success:
+			print(json.dumps(players), sys.stderr)
 			matchId = generateMatchId()
 			requests.append(request)
 			for request in requests:
-				print(json.dumps(players), sys.stderr)
 				request.update({
 					'matchId': matchId
 				})
