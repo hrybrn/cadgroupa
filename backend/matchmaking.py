@@ -72,7 +72,7 @@ def findMatch(request):
 		maxRankDifference = calculateMaxRankDifference(reqTolerance)
 		rankDifference = abs(request['rank'] - req['rank'])
 		maxDistance = min(calculateMaxDistance(reqTolerance), maxDistance)
-		distance = calculateDistance(request['latitude'], request['longitude'], req['lat'], req['long'])
+		distance = calculateDistance(request['latitude'], request['longitude'], req['latitude'], req['longitude'])
 		if (distance < maxDistance and rankDifference < maxRankDifference):
 			players.append(req['userId'])
 			if (len(players) == playersRequired):
