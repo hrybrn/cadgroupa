@@ -50,6 +50,8 @@ def entityTest(value, info, **args):
 	return json.dumps(client.get(key))
 
 def user(value, info, **args):
+	if not args['token']:
+		return True
 	id = validate(args['token'])
 	return discord.getuserobj(args['token'])
 
