@@ -49,3 +49,12 @@ def checkPlayerRating(userId):
 	user = getUser(userId)
 	score = user['toxicity'] if user['toxicity'] else 0
 	return True if score > 0 else False
+
+# upvote/downvote scoring idea
+def calculateUpvoteScore(upvotes, timeSinceLastUpdate) {
+	return upvotes * math.log(2, timeSinceLastUpdate)
+}
+
+def calculateDownvoteScore(downvotes, timeSinceLastUpdate) {
+	return downvotes * math.log(2, timeSinceLastUpdate)
+}
