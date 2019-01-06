@@ -1,4 +1,4 @@
-from google.cloud import datastore
+from google.cloud import datastore, exceptions
 import os
 import json
 import time
@@ -56,19 +56,22 @@ def pollQueue(userId):
 		raise GraphQLError('User did not register for a match')
 	matchId = request['matchId']
 	if matchId == DEFAULT_MATCH_ID:
-		success, requests = findMatch(request)
-		players = [request['userId'] for request in requests]
+		success, players = findMatch(request)
 		url = "http://www.example.com/" if success else ""
 		if success:
-			print(json.dumps(players), sys.stderr)
-			matchId = generateMatchId()
-			requests.append(request)
-			for request in requests:
-				request.update({
-					'matchId': matchId
-				})
-			client.put_multi(requests)
-			#launchMatch(matchId, players)
+			try:
+				with client.transaction():
+					matchId = generateMatchId()
+					keys = [client.key('MatchRequest', userId) for userId in players]
+					requests = client.get_multi(keys)
+					for request in requests:
+						request.update({
+							'matchId': matchId
+						})
+					client.put_multi(requests)
+					#launchMatch(matchId, players)
+			except exceptions.Conflict:
+				return False, [], ''
 		else:
 			request.update({
 				'lastPollTime': time.time()
@@ -77,6 +80,9 @@ def pollQueue(userId):
 		return success, players, url
 	else:
 		return True, ['lol'], "http://www.youvebeenhad.com/"
+
+# def getMatchMembers(matchId):
+
 
 def findMatch(request):
 	currentTime = time.time()
@@ -108,7 +114,7 @@ def findMatch(request):
 		maxDistance = min(calculateMaxDistance(reqTolerance), maxDistance)
 		distance = calculateDistance(request['latitude'], request['longitude'], req['latitude'], req['longitude'])
 		if (distance <= maxDistance and rankDifference <= maxRankDifference):
-			players.append(req)
+			players.append(req["userId"])
 			if (len(players) == playersRequired):
 				return True, players
 
