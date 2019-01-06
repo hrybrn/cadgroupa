@@ -89,7 +89,7 @@ def getRecentPlayers(value, info, **args):
 	userId = validate(args['token'])
 	return users.getRecentPlayers(userId)
 
-def changeUserScore(value, info, **args):
+def rateUser(value, info, **args):
 	userId = validate(args['token'])
-	users.vote(userId, users.VoteType.UP if args['good'] else users.VoteType.DOWN)
-	return Struct({ "success": True })
+	users.vote(userId, args['recipientId'], users.VoteType.UP if args['upvote'] else users.VoteType.DOWN)
+	return True
