@@ -24,8 +24,6 @@ def validate(token):
 	if(userobj['verified'] == "false"):
 		raise GraphQLError('The user must be verified with Discord in order to use this app!')
 	if not discord.checkuserguild(token, userobj['id']):
-		# Add the user to the server
-		print('add the user to the server', sys.stderr)
 		if not discord.adduserguild(token, userobj['id']):
 			raise GraphQLError('Failed to join voice server!')
 		else:
