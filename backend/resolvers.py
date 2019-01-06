@@ -57,10 +57,8 @@ def games(value, info, **args):
 def registerSearch(value, info, **args):
 	validate(args['token'])
 	#token, location, game, mode, players, rank
-	matchmaking.joinQueue(args['token'], args['lat'], args['long'], args['gameID'], args['modeID'],
+	return matchmaking.joinQueue(args['token'], args['lat'], args['long'], args['gameID'], args['modeID'],
 		args['players'], args['rank'])
-	literal = lambda **kw: namedtuple('literal', kw)(**kw)
-	return literal(success=True, game="testGame", mode="testMode", registrationID="testID")
 
 def pollSearch(value, info, **args):
 	playerid = validate(args['token'])

@@ -69,17 +69,7 @@ queryschema = GraphQLObjectType(
 				name="matchmakingQuery",
 				fields={
 					"register": GraphQLField(
-						type=GraphQLObjectType(
-							name="registerResponse",
-							fields={
-								"game": GraphQLField(GraphQLString),
-								"mode": GraphQLField(GraphQLString),
-								"players": GraphQLField(GraphQLInt),
-								"rank": GraphQLField(GraphQLInt),
-								"lat": GraphQLField(GraphQLFloat),
-								"lon": GraphQLField(GraphQLFloat)
-							}
-						),
+						type=GraphQLBoolean,
 						args={
 							"token": GraphQLArgument(GraphQLString),
 							"game": GraphQLArgument(GraphQLString),

@@ -28,7 +28,7 @@ def joinQueue(userId, lat, long, game, mode, players, rank):
 		'longitude': long
 	})
 	client.put(request)
-	return request
+	return True
 
 def pollQueue(userId):
 	key = client.key('MatchRequest', userId)
