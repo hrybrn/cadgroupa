@@ -55,27 +55,27 @@ def games(value, info, **args):
 	return game_list
 
 def registerSearch(value, info, **args):
-	validate(args['token'])
+	userId = validate(args['token'])
 	#token, location, game, mode, players, rank
-	return matchmaking.joinQueue(args['token'], args['lat'], args['long'], args['gameID'], args['modeID'],
+	return matchmaking.joinQueue(userId, args['lat'], args['long'], args['gameID'], args['modeID'],
 		args['players'], args['rank'])
 
 def pollSearch(value, info, **args):
-	playerid = validate(args['token'])
-	matchmaking.pollQueue(args['token'])
+	userId = validate(args['token'])
+	matchmaking.pollQueue(userId)
 	literal = lambda **kw: namedtuple('literal', kw)(**kw)
 	return literal(success=True, registrationID=args["registrationID"], playerDiscordIDs=['Insert', 'A', 'List', 'of', 'playerids'])
 
 # for testing purposes
 def requestsInSystem(value, info, **args):
-	id = validate(args['token'])
+	userId = validate(args['token'])
 	return matchmaking.getMatchRequests(args['gameId'])
 
-def getRecentPlayers( value, info, **args):
-	validate(args['token'])
-	return users.getRecentPlayers(args["token"])
+def getRecentPlayers(value, info, **args):
+	userId = validate(args['token'])
+	return users.getRecentPlayers(userId)
 
 def changeUserScore(value, info, **args):
-	validate(args['token'])
-	users.changePlayerRating(args['token'], args['good'])
+	userId = validate(args['token'])
+	users.vote(userId, users.VoteType.UP if args['good'] else users.VoteType.DOWN)
 	return Struct({ "success": True })
