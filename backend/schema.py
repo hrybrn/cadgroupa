@@ -69,7 +69,7 @@ queryschema = GraphQLObjectType(
 				name="matchmakingQuery",
 				fields={
 					"register": GraphQLField(
-						type=GraphQLBoolean,
+						type=GraphQLInt,
 						args={
 							"token": GraphQLArgument(GraphQLString),
 							"game": GraphQLArgument(GraphQLString),

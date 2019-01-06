@@ -19,13 +19,18 @@ class Struct(object):
 			else:
 				setattr(self, a, Struct(b) if isinstance(b, dict) else b)
 
+userCache = {}
+
 def validate(token):
-	if not token: 
+	if not token:
 		raise GraphQLError('There was an error authenticating!')
+	if userCache[token]:
+		return userCache[token]
 	userobj = json.loads(discord.getuserobj(token))
 	if(userobj['verified'] == "false"):
 		raise GraphQLError('The user must be verified with Discord in order to use this app!')
 	else:
+		userCache[token] = userobj['id']
 		return userobj['id']
 
 with open('games.json') as f:
