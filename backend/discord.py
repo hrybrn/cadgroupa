@@ -1,7 +1,6 @@
 import requests
 import json
 import sys
-import users
 from graphql import GraphQLError
 
 def getuserobj(token):
@@ -10,10 +9,8 @@ def getuserobj(token):
 
 def checkuserguild(token, userid):
 	guildid = '531408802357182484'
-	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format('NTE5NTI2MDYxODY0Nzc5ODA4.DxOVxg.FgnV-M1j_aI6eLisJ1vaIRz70q4')}
+	headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer {0}'.format(token)}
 	response = requests.get('https://discordapp.com/api/guilds/'+guildid + '/members/'+userid, headers=headers)
-	print(response.status_code, sys.stderr)
-	print(response.content, sys.stderr)
 	return (response.status_code == 200)
 
 def adduserguild(token, userid):
@@ -22,32 +19,6 @@ def adduserguild(token, userid):
 	jsontext = {'access_token' : token}
 	response = requests.put('https://discordapp.com/api/guilds/531408802357182484/members/'+userid, headers=headers, json=jsontext)
 	return (response.status_code == 201)
-
-def createguildrole(matchid):
-	guildid = '531408802357182484'
-	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format('NTE5NTI2MDYxODY0Nzc5ODA4.DxOVxg.FgnV-M1j_aI6eLisJ1vaIRz70q4')}
-	jsontext = { 'name' : matchid }
-	response = requests.post('https://discordapp.com/api/guilds/531408802357182484/roles', headers=headers, json=jsontext)
-	if (response.status_code == 200):
-		return True
-	raise GraphQLError('Failed to create server role for new channel.')
-
-def createguildchannnel(matchid):
-	guildid = '531408802357182484'
-	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format('NTE5NTI2MDYxODY0Nzc5ODA4.DxOVxg.FgnV-M1j_aI6eLisJ1vaIRz70q4')}
-	# TODO - Enum
-	jsontext = { 'name' : str(matchid), 'type' : 2, 'permission_overwrites' : [{ 'id' : str(matchid), 'type': 'role'}] }
-	response = requests.post('https://discordapp.com/api/guilds/531408802357182484/channels', headers=headers, json=jsontext)
-	if (response.status_code == 200):
-		return True
-	raise GraphQLError('Failed to create channel.')
-
-
-def addplayertorole(matchid, player):
-	guildid = '531408802357182484'
-	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format('NTE5NTI2MDYxODY0Nzc5ODA4.DxOVxg.FgnV-M1j_aI6eLisJ1vaIRz70q4')}
-	response = requests.put('https://discordapp.com/api/guilds/531408802357182484/members/'+player+'/roles/'+str(matchid), headers=headers)
-	return (response.status_code == 204)
 
 def discord_req(token, uri):
 	api_token = token
