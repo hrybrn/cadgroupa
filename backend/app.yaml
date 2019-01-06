@@ -3,7 +3,8 @@ service: api
 
 env_variables:
   DISCORD_BOT_TOKEN: $DISCORD_BOT_TOKEN
-
+  DISCORD_GUILD_ID: $DISCORD_GUILD_ID
+  
 handlers:
 - url: /.*
   secure: always
