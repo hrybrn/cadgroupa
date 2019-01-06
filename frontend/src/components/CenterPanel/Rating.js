@@ -35,9 +35,9 @@ class Vote extends Component{
             this.state.rated ?
                 <FormLabel>Thanks for rating this player</FormLabel>
                 :<Fragment>
-                    <ThumbsUp type="button" onClick={this.props.sendFeedback.bind(this, true)}></ThumbsUp>
+                    <ThumbsUp type="button" onClick={() => this.props.sendFeedback(true)}></ThumbsUp>
                     &nbsp;
-                    <ThumbsDown type="button" onClick={this.props.sendFeedback.bind(this, false)}></ThumbsDown>
+                    <ThumbsDown type="button" onClick={() => this.props.sendFeedback(false)}></ThumbsDown>
                 </Fragment>
                 
         );
