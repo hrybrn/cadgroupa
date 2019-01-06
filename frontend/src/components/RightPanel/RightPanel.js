@@ -39,7 +39,7 @@ class RightPanel extends Component {
                     <CircularProgress/>
                 </GridListTile>
             );
-        } else if (data.recentPlayers == null) {
+        } else if (data.recentPlayers == []) {
             return (
                 <GridListTile className={classes.titleTile} cols={2}>
                     <ListSubheader component='div'>No Recent Players</ListSubheader>
@@ -48,11 +48,11 @@ class RightPanel extends Component {
         } else {
             return data.recentPlayers.map(recent =>
                 <CardTile
-                    key={recent.id}
+                    key={recent.userId}
                     active={false}
-                    pressed={this.activated.bind(this, recent.id)}
+                    pressed={this.activated.bind(this, recent.userId)}
                     icon={DiscordIcon}
-                    {...recent}
+                    name={recent.displayName}
                 />
             );
         }
@@ -67,8 +67,8 @@ class RightPanel extends Component {
 
 export const recentQuery = graphql(gql`query RecentPlayers($token: String) {
     recentPlayers(token: $token) {
-        id
-        name
+        displayName
+        userId
     }
 }`, {
     options: (props) => ({
