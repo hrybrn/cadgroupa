@@ -1,5 +1,6 @@
 from google.cloud import datastore, exceptions
 from graphql import GraphQLError
+import users
 import os
 import json
 import time
@@ -80,6 +81,7 @@ def pollQueue(userId):
 					'url': url
 				})
 				client.put(urlEntity)
+				users.addRecentPlayers(userId, players)
 				return success, players, url
 			except exceptions.Conflict:
 				print("Something went wrong", sys.stderr)
@@ -95,7 +97,9 @@ def pollQueue(userId):
 		if url == '':
 			return False, [], ''
 		else:
-			return True, getMatchMembers(matchId), url
+			players = getMatchMembers(matchId)
+			users.addRecentPlayers(userId, players)
+			return True, players, url
 
 def getMatchMembers(matchId):
 	query = client.query(kind='MatchRequest')
