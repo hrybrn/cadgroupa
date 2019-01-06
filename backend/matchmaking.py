@@ -39,11 +39,8 @@ def pollQueue(userId):
 	client.put(request)
 	# see if a match can be made
 	success, players = findMatch(request)
-	if (success):
-		#launch match
-		return False
-	else:
-		return True #continue polling
+	url = "http://www.example.com/" if success else ""
+	return success, players, url
 
 def findMatch(request):
 	currentTime = time.clock()

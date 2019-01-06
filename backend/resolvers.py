@@ -67,9 +67,12 @@ def registerSearch(value, info, **args):
 
 def pollSearch(value, info, **args):
 	userId = validate(args['token'])
-	matchmaking.pollQueue(userId)
-	literal = lambda **kw: namedtuple('literal', kw)(**kw)
-	return literal(success=True, registrationID=args["registrationID"], playerDiscordIDs=['Insert', 'A', 'List', 'of', 'playerids'])
+	success, players, url = matchmaking.pollQueue(userId)
+	return Struct({
+		"success": success,
+		"players": players,
+		"url": url,
+	})
 
 # for testing purposes
 def requestsInSystem(value, info, **args):
