@@ -57,7 +57,7 @@ def pollQueue(userId):
 	matchId = request['matchId']
 	if matchId == DEFAULT_MATCH_ID:
 		success, players = findMatch(request)
-		url = "http://www.example.com/" if success else ""
+		url = ""
 		if success:
 			try:
 				players.append({
@@ -73,7 +73,12 @@ def pollQueue(userId):
 							'matchId': matchId
 						})
 					client.put_multi(requests)
-				launchMatch(matchId, [player['userId'] for player in players])
+				url = launchMatch(matchId, [player['userId'] for player in players])
+				urlEntity = datastore.Entity(client.key('MatchUrl', matchId))
+				urlEntity.update({
+					'url': url
+				})
+				client.put(urlEntity)
 			except exceptions.Conflict:
 				print("Something went wrong", sys.stderr)
 				return False, [], ''
@@ -84,13 +89,20 @@ def pollQueue(userId):
 			client.put(request)
 		return success, players, url
 	else:
-		return True, getMatchMembers(matchId), "http://www.youvebeenhad.com/"
+		return True, getMatchMembers(matchId), getMatchUrl(matchId)
 
 def getMatchMembers(matchId):
 	query = client.query(kind='MatchRequest')
 	query.add_filter('matchId', '=', matchId)
 	return list(query.fetch())
 
+def getMatchUrl(matchId):
+	key = client.key('MatchUrl', matchId)
+	result = client.get(key)
+	if result is None:
+		return ""
+	else:
+		return result['url']
 
 def findMatch(request):
 	currentTime = time.time()
