@@ -55,7 +55,7 @@ jobs:
             echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-            gcloud --quiet app deploy backend/app.yaml frontend/app.yaml --project cadgroupa --set-env-vars DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN} DISCORD_GUILD_ID=${DISCORD_GUILD_ID}
+            gcloud --quiet app deploy backend/app.yaml frontend/app.yaml --project cadgroupa 
             
 workflows:
   version: 2
