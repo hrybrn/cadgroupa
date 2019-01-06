@@ -30,7 +30,9 @@ class Searching extends Component {
                 updateStore({
                     search: {
                         ...this.props.search,
-                        state: 'matched'
+                        state: 'matched',
+                        players: data.matchmaking.poll.players,
+                        url: data.matchmaking.poll.url
                     }
                 });
             } else {
