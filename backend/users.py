@@ -1,46 +1,66 @@
 from google.cloud import datastore
+from enum import Enum
+import time
 
 MAX_RECENT_PLAYERS = 20
+SECONDS_IN_DAY = 86400
+
+class VoteType(Enum):
+	DOWN = 'Down'
+	UP = 'Up'
 
 client = datastore.Client()
 
-def createUser(token):
-	key = client.key('User', token)
-	request = datastore.Entity(key)
-	request.update({
+def createUser(userId):
+	key = client.key('User', userId)
+	user = datastore.Entity(key)
+	user.update({
 		'recentPlayers': [],
-		'toxicity': 1000,
+		'votesDown': 0,
+		'votesUp': 0,
+		'lastDownVote': 0,
+		'lastUpVote': 0,
 		'banned': False
 	})
-	client.put(request)
-	return request
+	client.put(user)
+	return user
 
-def getRecentPlayers(token):
-	key = client.key('User', token)
-	request = client.get(key)
-	return request['recentPlayers'] if request['recentPlayers'] else []
+def getUser(userId):
+	key = client.key('User', userId)
+	return client.get(key)
 
-def addRecentPlayers(token, players):
-	key = client.key('User', token)
-	request = client.get(key)
-	recentPlayers = request['recentPlayers'] if request['recentPlayers'] else []
+def getRecentPlayers(userId):
+	user = getUser(userId)
+	return user['recentPlayers'] if user['recentPlayers'] else []
+
+def addRecentPlayers(userId, players):
+	user = getUser(userId)
+	recentPlayers = user['recentPlayers'] if user['recentPlayers'] else []
 	recentPlayers.extend(players)
 	if len(recentPlayers) > MAX_RECENT_PLAYERS:
 		for i in range(0, len(recentPlayers) - MAX_RECENT_PLAYERS):
 			recentPlayers.pop(0)
-	request.update({
+	user.update({
 		'recentPlayers': recentPlayers
 	})
-	client.put(request)
+	client.put(user)
 
-def changePlayerRating(token, rating_change):
-    key = client.key('User', token)
-    request = client.get(key)
+def getVotes(user, type):
+	if user['votes' + type]:
+		elapsedDays = (time.clock() - user['last' + type + 'Vote']) / SECONDS_IN_DAY
+		return user['votes' + type] * math.exp(0.5, elapsedDays)
+	else:
+		return 0
 
-    score = request['toxicity']
-    score = score - 50 if rating_change else score + 50
-    request.update({
-		'toxicity': score,
+def vote(userId, recipientId, type):
+	recipient = getUser(recipientId)
+	votes = getVotes(user, type)
+	recipient.update({
+		'votes' + type: votes + 1,
+		'last' + type + 'Vote': time.clock()
 	})
-    client.put(request)
-    return True
+	client.put(recipient)
+
+def getToxicity(userId):
+	user = getUser(userId)
+	return getVotes(user, VoteType.Down) - getVotes(user, VoteType.UP)

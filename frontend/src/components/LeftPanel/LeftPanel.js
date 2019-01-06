@@ -5,6 +5,8 @@ import CardTile from 'components/CardTile/CardTile';
 import { gameQuery } from 'queries/games'; 
 import { getGameLogo } from 'assets/game-logos';
 
+import { updateStore } from 'fluxible-js';
+
 const styles = () => ({
     gridList: {
         width: 315,
@@ -23,15 +25,9 @@ const styles = () => ({
 
 class LeftPanel extends Component {
     state = {
-        noOfPlayers: 2,
-        modes: [],
-        selectedGame: '',
-        selectedMode: '',
+        selectedGame: null,
+        selectedMode: null,
     };
-
-    handleChange(event) {
-        this.setState({ noOfPlayers: parseInt(event.target.value) });
-    }
 
     gameTiles(data, classes) {
         if (data.loading || data.games === undefined) {
@@ -45,7 +41,7 @@ class LeftPanel extends Component {
                 <CardTile
                     key={game.id}
                     pressed={this.gameSelected.bind(this, game)}
-                    active={this.state.selectedGame === game.name}
+                    active={this.state.selectedGame && this.state.selectedGame.name === game.name}
                     {...game}
                     icon={getGameLogo(game.icon)}
                 />
@@ -54,15 +50,26 @@ class LeftPanel extends Component {
     }
 
     gameSelected(game) {
-        this.setState(prev => prev.selectedGame === game.name ? { selectedMode: '', selectedGame: '', modes: [] } : { selectedMode: '', selectedGame: game.name, modes: game.modes });
+        this.setState(prev => prev.selectedGame && prev.selectedGame.id === game.id ? {
+            selectedMode: null,
+            selectedGame: null
+        } : {
+            selectedMode: null,
+            selectedGame: game
+        });
     }
 
-    modeSelected({ target: { value: value }}) {
-        this.setState({ selectedMode: value });
+    modeSelected({ target: { value: modeName }}) {
+        const selectedMode = this.state.selectedGame.modes.filter(mode => mode.name === modeName)[0];
+        this.setState({ selectedMode });
     }
     
     renderModes() {
-        return this.state.modes.map(
+        if (!this.state.selectedGame) {
+            return [];
+        }
+
+        return this.state.selectedGame.modes.map(
             (mode) =>
                 <FormControlLabel
                     value={mode.name}
@@ -75,7 +82,15 @@ class LeftPanel extends Component {
     }
 
     search() {
-        // TODO: implement search start
+        const { selectedGame, selectedMode } = this.state;
+
+        updateStore({
+            search: {
+                state: 'data',
+                selectedGame,
+                selectedMode
+            }
+        });
     }
 
     render() {
@@ -96,7 +111,7 @@ class LeftPanel extends Component {
                     </GridListTile>
                 </GridList>
                 <GridList className={gridList}>
-                    <RadioGroup value={this.state.selectedMode} onChange={this.modeSelected.bind(this)}>
+                    <RadioGroup value={this.state.selectedMode && this.state.selectedMode.name} onChange={this.modeSelected.bind(this)}>
                         {this.renderModes()}
                     </RadioGroup>
                 </GridList>

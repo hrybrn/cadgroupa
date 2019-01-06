@@ -12,11 +12,12 @@ EARTH_RADIUS = 6371 # radius of the earth in km
 
 client = datastore.Client()
 
-def joinQueue(token, lat, long, game, mode, players, rank):
-	key = client.key('MatchRequest', token)
+def joinQueue(userId, lat, long, game, mode, players, rank):
+	key = client.key('MatchRequest', userId)
 	requestTime = time.clock()
 	request = datastore.Entity(key)
 	request.update({
+		'userId': userId,
 		'initialRequestTime': requestTime,
 		'lastPollTime': requestTime,
 		'rank': rank,
@@ -29,8 +30,8 @@ def joinQueue(token, lat, long, game, mode, players, rank):
 	client.put(request)
 	return request
 
-def pollQueue(token):
-	key = client.key('MatchRequest', token)
+def pollQueue(userId):
+	key = client.key('MatchRequest', userId)
 	request = client.get(key)
 	request.update({
 		'lastPollTime': time.clock()
@@ -65,13 +66,15 @@ def findMatch(request):
 	
 	#interate through requests
 	for req in query.fetch():
+		if req['userId'] == request['userId']:
+			continue
 		reqTolerance = calculateTolerance(currentTime - req['initialRequestTime'])
 		maxRankDifference = calculateMaxRankDifference(reqTolerance)
 		rankDifference = abs(request['rank'] - req['rank'])
 		maxDistance = min(calculateMaxDistance(reqTolerance), maxDistance)
-		distance = calculateDistance(request['latitude'], request['longitude'], req['lat'], req['long'])
+		distance = calculateDistance(request['latitude'], request['longitude'], req['latitude'], req['longitude'])
 		if (distance < maxDistance and rankDifference < maxRankDifference):
-			players.append(req)
+			players.append(req['userId'])
 			if (len(players) == playersRequired):
 				return True, players
 

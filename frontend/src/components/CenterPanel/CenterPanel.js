@@ -1,28 +1,19 @@
 import React, { Component } from 'react';
 
 import { mapStatesToProps } from 'react-fluxible';
-import { withStyles, Typography, Paper, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 import Searching from './Searching';
 import Rating from './Rating';
+import DataForm from './DataForm';
 
-const styles = theme => ({
-    content: {
-        display: 'flex',
-        'justify-content': 'center',
-        'align-items': 'center',
-        'flex-direction': 'column',
-    },
-    root: {
-        ...theme.mixins.gutters(),
-        paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
-    },
-});
+import MessageBox from 'components/MessageBox/MessageBox';
+
+import { updateStore } from 'fluxible-js';
 
 class CenterPanel extends Component {
     state = {
-        matchmakingState: 'searching'
+        matchmakingState: 'logout'
     };
 
     constructor(props) {
@@ -33,33 +24,41 @@ class CenterPanel extends Component {
         }
     }
 
-    render() {
-        switch(this.state.matchmakingState) {
-        case 'loggedin':
-            return this.generateMessageBox('Select a game and mode on the left.');
-        case 'logout':
-            return this.generateMessageBox(<Button href='/login'>Login to use matchma.kr.</Button>);
-        case 'searching':
-            return <Searching />;
-        case 'matched':
-            return <Rating/>;
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.search.state) {
+            this.setState({ matchmakingState: nextProps.search.state });
         }
     }
 
-    generateMessageBox(message) {
-        return (
-            <div  className={this.props.classes.content}>
-                <div id='heightOffset' style={{ height: '100px' }}/>
-                <Paper className={this.props.classes.root}>
-                    <Typography variant='h4'>{message}</Typography>
-                </Paper>
-            </div>
-        );
+    render() {
+        switch(this.state.matchmakingState) {
+        case 'loggedin':
+            return <MessageBox message={'Select a game and mode on the left.'} />;
+        case 'logout':
+            return <MessageBox message={<Button href='/login'>Login to use matchma.kr.</Button>} />;
+        case 'data':
+            return <DataForm success={this.startSearch.bind(this)} />;
+        case 'searching':
+            return <Searching selectedGame={this.props.search.selectedGame} selectedMode={this.props.search.selectedMode} />;
+        case 'matched':
+            return <Rating />;
+        }
+    }
+
+    startSearch(searchOptions) {
+        updateStore({
+            search: {
+                ...this.props.search,
+                searchOptions,
+                state: 'searching'
+            }
+        });
     }
 }
 
-export default mapStatesToProps(withStyles(styles)(CenterPanel), state => {
+export default mapStatesToProps(CenterPanel, state => {
     return {
-        user: state.user
+        user: state.user,
+        search: state.search
     };
 });
