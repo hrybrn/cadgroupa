@@ -74,7 +74,7 @@ class DataForm extends Component {
         }
 
         let searchInfo = {
-            numericalRank: parseInt(this.state.rank)
+            rank: parseInt(this.state.rank)
         };
 
         if (this.state.lat !== null && this.state.lon !== null) {

@@ -6,25 +6,28 @@ import { graphql, compose } from 'react-apollo';
 import { mapStatesToProps } from 'react-fluxible';
 
 class Searching extends Component {
+    state = {
+        defaultSleepTime: 5000
+    }
+
     constructor(props) {
         super(props);
         this.poll();
     }
 
     async poll() {
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        const sleepTime = !this.props.data.loading && this.props.data.matchmaking && this.props.data.matchmaking.register ? this.props.data.matchmaking.register * 1000 : this.state.defaultSleepTime;
+        await new Promise(resolve => setTimeout(resolve, sleepTime));
         this.props.mutate().then(this.continuePolling.bind(this), this.continuePolling.bind(this));
     }
 
     async continuePolling() {
-        if (!this.props.data.matchmaking || !this.props.data.matchmaking.registerSearch.success) {
-            this.poll();
-        }
+        this.poll();
     }
 
     render() {
         const { loading, matchmaking } = this.props.data;
-        if (loading || !matchmaking || !matchmaking.registerSearch.success){
+        if (loading || !matchmaking || !matchmaking.register){
             return(
                 <Fragment>
                     <Grid
@@ -47,7 +50,7 @@ class Searching extends Component {
 }
 
 const registerSearch = graphql(gql`query RegisterSearch(
-    $gameID: String
+    $game: String
     $lon: Float
     $rank: Int
     $players: Int
@@ -55,20 +58,18 @@ const registerSearch = graphql(gql`query RegisterSearch(
     $mode: String
     $lat: Float) {
     matchmaking {
-        register(gameID: $gameID,
+        register(game: $game,
             lon: $lon,
             rank: $rank,
             players: $players,
             token: $token
             mode: $mode
-            lat: $lat) {
-            gameID
-        }
+            lat: $lat)
     }
 }`, {
     options: (props) => ({
         variables: {
-            gameID: props.search.selectedGame.id,
+            game: props.search.selectedGame.name,
             lon: props.search.searchOptions.lon,
             lat: props.search.searchOptions.lat,
             rank: props.search.searchOptions.rank,
