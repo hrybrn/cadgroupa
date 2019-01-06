@@ -2,6 +2,7 @@ from google.cloud import datastore
 from enum import Enum
 import time
 import uuid
+import math
 
 MAX_RECENT_PLAYERS = 20
 SECONDS_IN_DAY = 86400
