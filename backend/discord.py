@@ -41,15 +41,33 @@ def createguildrole(matchid):
 		return True
 	raise GraphQLError('Failed to create server role for new channel.')
 
-def createguildchannnel(matchid):
+def createvoicechannnel(matchid):
 	guildid = '531408802357182484'
 	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format('NTE5NTI2MDYxODY0Nzc5ODA4.DxOVxg.FgnV-M1j_aI6eLisJ1vaIRz70q4')}
 	# TODO - Enum
 	jsontext = { 'name' : str(matchid), 'type' : 2, 'permission_overwrites' : [{ 'id' : str(matchid), 'type': 'role'}] }
 	response = requests.post('https://discordapp.com/api/guilds/531408802357182484/channels', headers=headers, json=jsontext)
 	if (response.status_code == 201):
+		return response.content
+	raise GraphQLError('Failed to create channel.')
+
+def getchannelinvitelink(channelid):
+	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format('NTE5NTI2MDYxODY0Nzc5ODA4.DxOVxg.FgnV-M1j_aI6eLisJ1vaIRz70q4')}
+	json_text = {}
+	response = requests.post('https://discordapp.com/api/channels/' + str(channelid) + '/invites' , headers=headers, json=json_text)
+	return response.content
+
+
+def createtextchannnel(matchid):
+	guildid = '531408802357182484'
+	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format('NTE5NTI2MDYxODY0Nzc5ODA4.DxOVxg.FgnV-M1j_aI6eLisJ1vaIRz70q4')}
+	# TODO - Enum
+	jsontext = { 'name' : str(matchid), 'type' : 0, 'permission_overwrites' : [{ 'id' : str(matchid), 'type': 'role'}] }
+	response = requests.post('https://discordapp.com/api/guilds/531408802357182484/channels', headers=headers, json=jsontext)
+	if (response.status_code == 201):
 		return True
 	raise GraphQLError('Failed to create channel.')
+
 
 
 def addplayertorole(matchid, player):
