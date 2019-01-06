@@ -55,7 +55,7 @@ def getVotes(user, type):
 
 def vote(userId, recipientId, type):
 	recipient = getUser(recipientId)
-	votes = getVotes(user, type)
+	votes = getVotes(recipient, type)
 	recipient.update({
 		'votes' + type: votes + 1,
 		'last' + type + 'Vote': time.clock()
