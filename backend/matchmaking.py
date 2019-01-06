@@ -72,6 +72,7 @@ def pollQueue(userId):
 					client.put_multi(requests)
 					#launchMatch(matchId, players)
 			except exceptions.Conflict:
+				print("Something went wrong", sys.stderr)
 				return False, [], ''
 		else:
 			request.update({
