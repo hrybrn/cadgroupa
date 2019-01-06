@@ -30,6 +30,9 @@ def joinQueue(userId, lat, long, game, mode, players, rank):
 	client.put(request)
 	return POLL_INTERVAL
 
+def launchMatch(players):
+	return
+
 def pollQueue(userId):
 	key = client.key('MatchRequest', userId)
 	request = client.get(key)
@@ -50,7 +53,7 @@ def findMatch(request):
 	maxDistance = calculateMaxDistance(tolerance)
 
 	query = client.query(kind='MatchRequest')
-	query.add_filter('gameId', '=', request['game'])
+	query.add_filter('gameId', '=', request['gameId'])
 	query.add_filter('lastPollTime', '>', currentTime - POLL_INTERVAL_TIMEOUT)
 	query.add_filter('gameSize' '=', request['gameSize'])
 	query.add_filter('rank', '>=', request['rank'] - maxRankDifference)
