@@ -1,6 +1,9 @@
 runtime: python37
 service: api
 
+env_variables:
+  DISCORD_BOT_TOKEN: $DISCORD_BOT_TOKEN
+
 handlers:
 - url: /.*
   secure: always
