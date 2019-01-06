@@ -41,14 +41,14 @@ def getRecentPlayers(userId):
 def addRecentPlayers(userId, players):
 	user = getUser(userId)
 	recentPlayers = user['recentPlayers'] if 'recentPlayers' in user else []
-	recentPlayers.extend(players)
+	recentPlayers.extend([{'userId': player['userId'], 'displayName': player['displayName']} for player in players])
 	if len(recentPlayers) > MAX_RECENT_PLAYERS:
 		for i in range(0, len(recentPlayers) - MAX_RECENT_PLAYERS):
 			recentPlayers.pop(0)
 	user.update({
 		'recentPlayers': recentPlayers
 	})
-	client.put(user)
+	client.put_async(user)
 
 def getVotes(user, voteType):
 	if 'votes' + voteType in user:
