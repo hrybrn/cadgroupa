@@ -38,6 +38,12 @@ class RightPanel extends Component {
                     <CircularProgress/>
                 </GridListTile>
             );
+        } else if (data.recentPlayers == null) {
+            return (
+                <GridListTile className={classes.titleTile} cols={2}>
+                    <ListSubheader component='div'>No Recent Players</ListSubheader>
+                </GridListTile>
+            );
         } else {
             return data.recentPlayers.map(recent =>
                 <CardTile
