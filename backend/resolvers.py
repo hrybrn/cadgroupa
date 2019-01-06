@@ -40,19 +40,6 @@ def validate(token):
 with open('games.json') as f:
 	games_json = json.load(f)
 
-def entityTest(value, info, **args):
-	client = datastore.Client()
-	key = client.key('Test', args['name'])
-	task = datastore.Entity(key)
-	task.update({
-		'category': 'Personal',
-		'done': False,
-		'priority': 4,
-		'description': args['name']
-	})
-	client.put(task)
-	return json.dumps(client.get(key))
-
 def getUser(value, info, **args):
 	if not args['token']:
 		return False

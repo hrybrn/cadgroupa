@@ -12,7 +12,7 @@ from graphql import (
 	GraphQLInt,
 	GraphQLFloat
 )
-from resolvers import getUser, games, helloWorld, entityTest, registerSearch, pollSearch, requestsInSystem, getRecentPlayers, rateUser
+from resolvers import getUser, games, helloWorld, registerSearch, pollSearch, requestsInSystem, getRecentPlayers, rateUser
 import matchmaking
 
 # Super useful 
