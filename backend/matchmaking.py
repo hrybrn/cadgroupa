@@ -15,9 +15,10 @@ client = datastore.Client()
 
 def joinQueue(userId, lat, long, game, mode, players, rank):
 	key = client.key('MatchRequest', userId)
-	requestTime = time.clock()
+	requestTime = time.time()
 	request = datastore.Entity(key)
 	request.update({
+		'displayName': 'Brad',
 		'userId': userId,
 		'initialRequestTime': requestTime,
 		'lastPollTime': requestTime,
@@ -36,7 +37,8 @@ def launchMatch(matchid, players):
 	matchid = '453859438'
 	players = ['531471720230551552', '528999232594509844']
 	discord.createguildrole(matchid)
-	content = discord.createguildchannnel(matchid)
+	discord.createtextchannnel(matchid)
+	content = discord.createvoicechannnel(matchid)
 	content2 = json.loads(content.decode("utf-8"))
 	response = discord.getchannelinvitelink(content2['id'])
 	code = json.loads(response.decode("utf-8"))['code']
@@ -47,17 +49,18 @@ def launchMatch(matchid, players):
 def pollQueue(userId):
 	key = client.key('MatchRequest', userId)
 	request = client.get(key)
-	request.update({
-		'lastPollTime': time.clock()
-	})
-	client.put(request)
+	requestTime = time.time()
 	# see if a match can be made
 	success, players = findMatch(request)
+	request.update({
+		'lastPollTime': requestTime
+	})
+	client.put(request)
 	url = "http://www.example.com/" if success else ""
 	return success, players, url
 
 def findMatch(request):
-	currentTime = time.clock()
+	currentTime = time.time()
 
 	tolerance = calculateTolerance(currentTime - request['initialRequestTime'])
 	maxRankDifference = calculateMaxRankDifference(tolerance)
