@@ -1,0 +1,8 @@
+indexes:
+
+- kind: MatchRequest
+  properties:
+  - name: gameId
+  - name: gameSize
+  - name: matchId
+  - name: initialRequestTime

@@ -19,11 +19,18 @@ class Struct(object):
 			else:
 				setattr(self, a, Struct(b) if isinstance(b, dict) else b)
 
+userCache = {}
+
 def validate(token):
+	if not token:
+		raise GraphQLError('There was an error authenticating!')
+	if token in userCache:
+		return userCache[token]
 	userobj = json.loads(discord.getuserobj(token))
 	if(userobj['verified'] == "false"):
 		raise GraphQLError('The user must be verified with Discord in order to use this app!')
 	else:
+		userCache[token] = userobj['id']
 		return userobj['id']
 
 with open('games.json') as f:
@@ -55,29 +62,30 @@ def games(value, info, **args):
 	return game_list
 
 def registerSearch(value, info, **args):
-	validate(args['token'])
+	userId = validate(args['token'])
 	#token, location, game, mode, players, rank
-	matchmaking.joinQueue(args['token'], args['lat'], args['long'], args['gameID'], args['modeID'],
+	return matchmaking.joinQueue(userId, args['lat'], args['lon'], args['game'], args['mode'],
 		args['players'], args['rank'])
-	literal = lambda **kw: namedtuple('literal', kw)(**kw)
-	return literal(success=True, game="testGame", mode="testMode", registrationID="testID")
 
 def pollSearch(value, info, **args):
-	playerid = validate(args['token'])
-	matchmaking.pollQueue(args['token'])
-	literal = lambda **kw: namedtuple('literal', kw)(**kw)
-	return literal(success=True, registrationID=args["registrationID"], playerDiscordIDs=['Insert', 'A', 'List', 'of', 'playerids'])
+	userId = validate(args['token'])
+	success, players, url = matchmaking.pollQueue(userId)
+	return Struct({
+		"success": success,
+		"players": players,
+		"url": url,
+	})
 
 # for testing purposes
 def requestsInSystem(value, info, **args):
-	id = validate(args['token'])
+	# userId = validate(args['token'])
 	return matchmaking.getMatchRequests(args['gameId'])
 
-def getRecentPlayers( value, info, **args):
-	validate(args['token'])
-	return users.getRecentPlayers(args["token"])
+def getRecentPlayers(value, info, **args):
+	userId = validate(args['token'])
+	return users.getRecentPlayers(userId)
 
 def changeUserScore(value, info, **args):
-	validate(args['token'])
-	users.changePlayerRating(args['token'], args['good'])
+	userId = validate(args['token'])
+	users.vote(userId, users.VoteType.UP if args['good'] else users.VoteType.DOWN)
 	return Struct({ "success": True })

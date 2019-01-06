@@ -69,20 +69,10 @@ queryschema = GraphQLObjectType(
 				name="matchmakingQuery",
 				fields={
 					"register": GraphQLField(
-						type=GraphQLObjectType(
-							name="registerResponse",
-							fields={
-								"gameID": GraphQLField(GraphQLString),
-								"mode": GraphQLField(GraphQLString),
-								"players": GraphQLField(GraphQLInt),
-								"rank": GraphQLField(GraphQLInt),
-								"lat": GraphQLField(GraphQLFloat),
-								"lon": GraphQLField(GraphQLFloat)
-							}
-						),
+						type=GraphQLInt,
 						args={
 							"token": GraphQLArgument(GraphQLString),
-							"gameID": GraphQLArgument(GraphQLString),
+							"game": GraphQLArgument(GraphQLString),
 							"mode": GraphQLArgument(GraphQLString),
 							"players": GraphQLArgument(GraphQLInt),
 							"rank": GraphQLArgument(GraphQLInt),
@@ -158,14 +148,11 @@ mutationschema = GraphQLObjectType(
 						type=GraphQLObjectType(
 							name="pollResponse",
 							fields={
-								"token": GraphQLField(
-									type=GraphQLString
-								),
 								"success": GraphQLField(
 									type=GraphQLBoolean
 								),
-								"playerDiscordIDs": GraphQLField(GraphQLList(GraphQLString)),
-								"groupDMURL": GraphQLField(GraphQLString)
+								"players": GraphQLField(GraphQLList(GraphQLString)),
+								"url": GraphQLField(GraphQLString)
 							},
 						),
 						args={
