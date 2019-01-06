@@ -53,7 +53,7 @@ def addRecentPlayers(userId, players):
 def getVotes(user, voteType):
 	if 'votes' + voteType in user:
 		elapsedDays = (time.clock() - user['last' + voteType + 'Vote']) / SECONDS_IN_DAY
-		return user['votes' + voteType] * math.exp(0.5, elapsedDays)
+		return user['votes' + voteType] * math.pow(0.5, elapsedDays)
 	else:
 		return 0
 
