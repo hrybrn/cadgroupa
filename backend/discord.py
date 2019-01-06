@@ -44,7 +44,7 @@ def createguildrole(matchid):
 # create Discord voice channel with the given role set and with given name (match id) 
 def createvoicechannnel(matchid, roleid):
 	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format(BOT_TOKEN)}
-	jsontext = { 'name' : str(matchid), 'type' : 2, 'permission_overwrites' : [{ 'id' : str(roleid), 'type': 'role'}] }
+	jsontext = { 'name' : str(matchid), 'type' : 2, 'permission_overwrites' : [{ 'id' : str(roleid), 'type': 'role', 'allow': 36785216}] }
 	response = requests.post(URL_BASE + 'guilds/' + GUILD_ID + '/channels', headers=headers, json=jsontext)
 	if (response.status_code == 201):
 		return response.content
@@ -53,7 +53,7 @@ def createvoicechannnel(matchid, roleid):
 # create Discord text channel with the given role set and with given name (match id) 
 def createtextchannnel(matchid, roleid):
 	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format(BOT_TOKEN)}
-	jsontext = { 'name' : str(matchid), 'type' : 0, 'permission_overwrites' : [{ 'id' : str(roleid), 'type': 'role'}] }
+	jsontext = { 'name' : str(matchid), 'type' : 0, 'permission_overwrites' : [{ 'id' : str(roleid), 'type': 'role', 'allow': 36785216}] }
 	response = requests.post(URL_BASE + 'guilds/' + GUILD_ID + '/channels', headers=headers, json=jsontext)
 	if (response.status_code == 201):
 		return True
@@ -68,5 +68,10 @@ def getchannelinvitelink(channelid):
 # assign player a given role
 def addplayertorole(matchid, player):
 	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format(BOT_TOKEN)}
-	response = requests.put(URL_BASE + 'guilds/' + GUILD_ID  + '/members/'+player+'/roles/'+str(matchid), headers=headers)
+	jsondata = {'roles' : [matchid]}
+	response = requests.patch(URL_BASE + 'guilds/' + GUILD_ID  + '/members/'+player+'/roles/'+str(matchid), headers=headers, json=jsondata)
 	return (response.status_code == 204)
+
+def removerolesfromplayer(player):
+	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format(BOT_TOKEN)}
+	response = requests
