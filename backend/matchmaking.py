@@ -1,6 +1,5 @@
 from google.cloud import datastore, exceptions
 from graphql import GraphQLError
-from resolvers import Struct
 import os
 import json
 import time
@@ -50,12 +49,6 @@ def launchMatch(matchid, players):
 		discord.addplayertorole(role_id, player)
 	return invite_link
 
-def createPlayer(res):
-	return Struct({
-		'userId': res['userId'],
-		'displayName': res['displayName']
-	})
-
 def pollQueue(userId):
 	key = client.key('MatchRequest', userId)
 	request = client.get(key)
@@ -63,15 +56,16 @@ def pollQueue(userId):
 		raise GraphQLError('User did not register for a match')
 	matchId = request['matchId']
 	if matchId == DEFAULT_MATCH_ID:
-		success, results = findMatch(request)
-		players = [createPlayer(result) for result in results]
-		players.append(createPlayer(request))
+		success, players = findMatch(request)
 		url = "http://www.example.com/" if success else ""
 		if success:
 			try:
+				players.append({
+					'userId': userId,
+					'displayName': request['displayName']
+				})
 				matchId = generateMatchId()
-				keys = [client.key('MatchRequest', result['userId']) for result in results]
-				keys.append(key)
+				keys = [client.key('MatchRequest', player['userId']) for player in players]
 				with client.transaction():
 					requests = client.get_multi(keys)
 					for request in requests:
@@ -79,25 +73,24 @@ def pollQueue(userId):
 							'matchId': matchId
 						})
 					client.put_multi(requests)
-				userIds = [result['userId'] for result in results]
-				userIds.append(userId)
-				launchMatch(matchId, userIds)
+				launchMatch(matchId, [player['userId'] for player in players])
 			except exceptions.Conflict:
 				print("Something went wrong", sys.stderr)
 				return False, [], ''
+			return True, , url
 		else:
 			request.update({
 				'lastPollTime': time.time()
 			})
 			client.put(request)
-		return success, players, url
+			return False, [], ""
 	else:
 		return True, getMatchMembers(matchId), "http://www.youvebeenhad.com/"
 
 def getMatchMembers(matchId):
 	query = client.query(kind='MatchRequest')
 	query.add_filter('matchId', '=', matchId)
-	return [createPlayer(result) for result in query.fetch()]
+	return list(query.fetch())
 
 
 def findMatch(request):
@@ -130,7 +123,10 @@ def findMatch(request):
 		maxDistance = min(calculateMaxDistance(reqTolerance), maxDistance)
 		distance = calculateDistance(request['latitude'], request['longitude'], req['latitude'], req['longitude'])
 		if (distance <= maxDistance and rankDifference <= maxRankDifference):
-			players.append(req)
+			players.append({
+				'userId': req['userId'],
+				'displayName': req['displayName']
+			})
 			if (len(players) == playersRequired):
 				return True, players
 	return False, players
