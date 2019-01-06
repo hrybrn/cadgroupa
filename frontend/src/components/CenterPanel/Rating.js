@@ -44,7 +44,7 @@ class Vote extends Component{
         );
     }
     rate(rating){
-        this.props.sendFeedback.bind(this.props.class, this.props.player.userId, rating);
+        this.sendFeedback.bind(this.props.class, this.props.player.userId, rating);
         this.setState({rated:true});
     }
 }
