@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import { mapStatesToProps } from 'react-fluxible';
-import { Button } from '@material-ui/core';
+import { Button , FormLabel, Grid} from '@material-ui/core';
 
 import Searching from './Searching';
 import Rating from './Rating';
@@ -41,10 +41,22 @@ class CenterPanel extends Component {
         case 'searching':
             return <Searching selectedGame={this.props.search.selectedGame} selectedMode={this.props.search.selectedMode} />;
         case 'matched':
-            return <Fragment>
-                <Button href={this.state.search.url}>join your team on discord</Button>
-                {this.props.search.players.map(player => <Rating key={player.userId} player={player} />)}
-            </Fragment>;
+            return <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justify="center"
+                style={{ minHeight: '100vh' }}
+            >
+                <Button href={this.state.search.url} >Join your team on discord</Button>
+                <div>
+                    <Grid container>
+                        <FormLabel><br/><br/><br/>Rate your player matches <br/><br/></FormLabel>
+                    </Grid>
+                    {this.props.search.players.map(player => <Rating key={player.userId} player={player} />)}
+                </div>
+            </Grid>;
         }
     }
 

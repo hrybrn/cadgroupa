@@ -13,18 +13,13 @@ class Rating extends Component {
     render() {
         const { player } = this.props;
 
-        return <Grid
-            container
-            spacing={0}
-            alignItems="center"
-            justify="center"
-            style={{ minHeight: '100vh' }}
-        >
-            <Fragment key={player.displayName}>
+        return (
+            <Grid container>
+                <br/>
                 <FormLabel>{player.displayName}&nbsp;&nbsp;&nbsp;&nbsp;</FormLabel>
                 <Vote class={this} sendFeedback={this.sendFeedback} player={player} rated={false}/>
-            </Fragment>
-        </Grid>;
+            </Grid>
+        );
     }
 
     sendFeedback(playerID, good) {
