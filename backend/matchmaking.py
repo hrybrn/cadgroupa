@@ -36,7 +36,9 @@ def launchMatch(matchid, players):
 	matchid = '453859438'
 	players = ['531471720230551552', '528999232594509844']
 	discord.createguildrole(matchid)
-	discord.createguildchannnel(matchid)
+	discord.createvoicechannnel(matchid)
+	discord.createtextchannnel(matchid)
+
 	for player in players:
 		discord.addplayertorole(matchid, player)
 	return True
