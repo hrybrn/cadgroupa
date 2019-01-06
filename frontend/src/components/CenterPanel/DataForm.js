@@ -14,7 +14,7 @@ class DataForm extends Component {
     render() {
         return <Dialog
             open={this.state.open}
-            onClose={this.setState.bind(this, { open: false })}
+            onClose={this.handleClose.bind(this)}
             aria-labelledby="form-dialog-title"
         >
             <DialogTitle id="form-dialog-title">Give us more info to get your match made.</DialogTitle>
@@ -50,6 +50,10 @@ class DataForm extends Component {
         this.setState({
             [name]: event.target.value,
         });
+    }
+
+    handleClose() {
+        this.setState({ open: false });
     }
 
     askForLocation() {
