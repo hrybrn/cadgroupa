@@ -72,7 +72,8 @@ def requestsInSystem(value, info, **args):
 
 def getRecentPlayers(value, info, **args):
 	user = validate(args['token'])
-	return users.getRecentPlayers(user['id'])
+	players = users.getRecentPlayers(user['id'])
+	return [Struct(player) for player in players]
 
 def rateUser(value, info, **args):
 	user = validate(args['token'])
