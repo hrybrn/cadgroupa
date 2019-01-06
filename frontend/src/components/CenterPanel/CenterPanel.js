@@ -5,8 +5,11 @@ import { Button } from '@material-ui/core';
 
 import Searching from './Searching';
 import Rating from './Rating';
+import DataForm from './DataForm';
 
 import MessageBox from 'components/MessageBox/MessageBox';
+
+import { updateStore } from 'fluxible-js';
 
 class CenterPanel extends Component {
     state = {
@@ -22,8 +25,8 @@ class CenterPanel extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.search.inProgress) {
-            this.setState({ matchmakingState: 'searching' });
+        if (nextProps.search.state) {
+            this.setState({ matchmakingState: nextProps.search.state });
         }
     }
 
@@ -33,11 +36,22 @@ class CenterPanel extends Component {
             return <MessageBox message={'Select a game and mode on the left.'} />;
         case 'logout':
             return <MessageBox message={<Button href='/login'>Login to use matchma.kr.</Button>} />;
+        case 'data':
+            return <DataForm success={this.startSearch.bind(this)} />;
         case 'searching':
             return <Searching selectedGame={this.props.search.selectedGame} selectedMode={this.props.search.selectedMode} />;
         case 'matched':
             return <Rating />;
         }
+    }
+
+    startSearch() {
+        updateStore({
+            search: {
+                ...this.props.search,
+                state: 'searching'
+            }
+        });
     }
 }
 

@@ -86,7 +86,7 @@ class LeftPanel extends Component {
 
         updateStore({
             search: {
-                inProgress: true,
+                state: 'data',
                 selectedGame,
                 selectedMode
             }
