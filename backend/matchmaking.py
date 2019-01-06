@@ -55,9 +55,6 @@ def pollQueue(userId):
 		raise GraphQLError('User did not register for a match')
 	matchId = request['matchId']
 	if matchId == DEFAULT_MATCH_ID:
-		request.update({
-			'lastPollTime': time.time()
-		})
 		success, requests = findMatch(request)
 		players = [request['userId'] for request in requests]
 		url = "http://www.example.com/" if success else ""
@@ -71,6 +68,9 @@ def pollQueue(userId):
 			client.put_multi(requests)
 			#launchMatch(matchId, players)
 		else:
+			request.update({
+				'lastPollTime': time.time()
+			})
 			client.put(request)
 		return success, players, url
 	else:
