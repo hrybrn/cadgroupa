@@ -37,7 +37,7 @@ class Auth extends Component {
             client_id: DISCORD_CLIENT,
             client_secret: DISCORD_SECRET,
             code: this.state.qsparsed.code,
-            redirect_uri: 'http://127.0.0.1:3000/auth',
+            redirect_uri: 'https://matchma.kr/auth',
             scope: 'identify connections email guilds guilds.join'
         }),
         {

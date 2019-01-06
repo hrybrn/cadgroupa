@@ -49,7 +49,7 @@ class CenterPanel extends Component {
                 justify="center"
                 style={{ minHeight: '100vh' }}
             >
-                <Button href={this.props.search.url} target='_blank' color='primary'>Join your team on discord</Button>
+                <Button href={this.props.search.url} target='_blank' color='primary' variant='contained'>Join your team on discord</Button>
                 <div>
                     <Grid container>
                         <FormLabel><br/><br/><br/>Rate your player matches<br/><br/></FormLabel>
