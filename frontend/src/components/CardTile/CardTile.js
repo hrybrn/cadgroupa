@@ -18,7 +18,9 @@ const styles = () => ({
     name: {
         'font-size': '0.8em'
     },
-    icon,
+    icon: {
+        visibility: 'hidden'
+    },
     spin: {
         ...icon,
         transform: 'rotate(45deg)',
@@ -41,7 +43,7 @@ class CardTile extends Component {
 
         return (
             <Card key={id} className={classes.card}>
-                <CardActionArea className={classes.tile} onClick={this.props.pressed}>
+                <CardActionArea disableTouchRipple={true} className={classes.tile} onClick={this.props.pressed}>
                     <CardMedia
                         component="img"
                         alt={name}
