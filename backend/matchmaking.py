@@ -15,7 +15,7 @@ client = datastore.Client()
 
 def joinQueue(userId, lat, long, game, mode, players, rank):
 	key = client.key('MatchRequest', userId)
-	requestTime = time.clock()
+	requestTime = time.time()
 	request = datastore.Entity(key)
 	request.update({
 		'userId': userId,
@@ -45,7 +45,7 @@ def pollQueue(userId):
 	key = client.key('MatchRequest', userId)
 	request = client.get(key)
 	request.update({
-		'lastPollTime': time.clock()
+		'lastPollTime': time.time()
 	})
 	client.put(request)
 	# see if a match can be made
@@ -54,7 +54,7 @@ def pollQueue(userId):
 	return success, players, url
 
 def findMatch(request):
-	currentTime = time.clock()
+	currentTime = time.time()
 
 	tolerance = calculateTolerance(currentTime - request['initialRequestTime'])
 	maxRankDifference = calculateMaxRankDifference(tolerance)
