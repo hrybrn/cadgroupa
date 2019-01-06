@@ -48,7 +48,7 @@ def addRecentPlayers(userId, players):
 	user.update({
 		'recentPlayers': recentPlayers
 	})
-	client.put_async(user)
+	client.put(user)
 
 def getVotes(user, voteType):
 	if 'votes' + voteType in user:
