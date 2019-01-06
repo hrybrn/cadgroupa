@@ -1,7 +1,6 @@
 from google.cloud import datastore
 from enum import Enum
 import time
-import uuid
 import math
 
 MAX_RECENT_PLAYERS = 20
@@ -71,7 +70,3 @@ def vote(userId, recipientId, enumType):
 def getToxicity(userId):
 	user = getUser(userId)
 	return getVotes(user, VoteType.DOWN) - getVotes(user, VoteType.UP)
-
-def generateMatchId():
-	# uuid4 generates a random uuid
-	return uuid.uuid4()

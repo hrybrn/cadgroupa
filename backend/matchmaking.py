@@ -4,6 +4,8 @@ import json
 import time
 import math
 import discord
+import uuid
+from graphql import GraphQLError
 
 POLL_INTERVAL = 5
 POLL_INTERVAL_TIMEOUT = 10
@@ -45,15 +47,29 @@ def launchMatch(matchid, players):
 def pollQueue(userId):
 	key = client.key('MatchRequest', userId)
 	request = client.get(key)
-	requestTime = time.time()
-	# see if a match can be made
-	success, players = findMatch(request)
-	request.update({
-		'lastPollTime': requestTime
-	})
-	client.put(request)
-	url = "http://www.example.com/" if success else ""
-	return success, players, url
+	if request is None:
+		raise GraphQLError('User did not register for a match')
+	matchId = request['matchId']
+	if matchId == DEFAULT_MATCH_ID:
+		request.update({
+			'lastPollTime': time.time()
+		})
+		success, players = findMatch(request)
+		url = "http://www.example.com/" if success else ""
+		if success:
+			matchId = generateMatchId()
+			player.append(request)
+			for player in players:
+				player.update({
+					'matchId': matchId
+				})
+			client.put_multi(players)
+			#launchMatch(matchId, players)
+		else:
+			client.put(request)
+		return success, players, url
+	else:
+		return True, ['lol'], "http://www.youvebeenhad.com/"
 
 def findMatch(request):
 	currentTime = time.time()
@@ -112,3 +128,7 @@ def getMatchRequests(gameId):
 	query = client.query(kind='MatchRequest')
 	query.add_filter('gameId', '=', gameId)
 	return json.dumps(list(query.fetch()))
+
+def generateMatchId():
+	# uuid4 generates a random uuid
+	return uuid.uuid4()
