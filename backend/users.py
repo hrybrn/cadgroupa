@@ -2,6 +2,7 @@ from google.cloud import datastore
 from enum import Enum
 import time
 import uuid
+import math
 
 MAX_RECENT_PLAYERS = 20
 SECONDS_IN_DAY = 86400
@@ -28,7 +29,11 @@ def createUser(userId):
 
 def getUser(userId):
 	key = client.key('User', userId)
-	return client.get(key)
+	user = client.get(key)
+	if user is None:
+		return createUser(userId)
+	else:
+		return user
 
 def getRecentPlayers(userId):
 	user = getUser(userId)
@@ -48,8 +53,8 @@ def addRecentPlayers(userId, players):
 
 def getVotes(user, voteType):
 	if 'votes' + voteType in user:
-		elapsedDays = (time.clock() - user['last' + voteType + 'Vote']) / SECONDS_IN_DAY
-		return user['votes' + voteType] * math.exp(0.5, elapsedDays)
+		elapsedDays = (time.time() - user['last' + voteType + 'Vote']) / SECONDS_IN_DAY
+		return user['votes' + voteType] * math.pow(0.5, elapsedDays)
 	else:
 		return 0
 
@@ -59,7 +64,7 @@ def vote(userId, recipientId, enumType):
 	votes = getVotes(recipient, voteType)
 	recipient.update({
 		'votes' + voteType: votes + 1,
-		'last' + voteType + 'Vote': time.clock()
+		'last' + voteType + 'Vote': time.time()
 	})
 	client.put(recipient)
 
