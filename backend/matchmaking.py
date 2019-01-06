@@ -17,6 +17,7 @@ def joinQueue(userId, lat, long, game, mode, players, rank):
 	requestTime = time.clock()
 	request = datastore.Entity(key)
 	request.update({
+		'userId': userId,
 		'initialRequestTime': requestTime,
 		'lastPollTime': requestTime,
 		'rank': rank,
@@ -65,13 +66,15 @@ def findMatch(request):
 	
 	#interate through requests
 	for req in query.fetch():
+		if req['userId'] == request['userId']:
+			continue
 		reqTolerance = calculateTolerance(currentTime - req['initialRequestTime'])
 		maxRankDifference = calculateMaxRankDifference(reqTolerance)
 		rankDifference = abs(request['rank'] - req['rank'])
 		maxDistance = min(calculateMaxDistance(reqTolerance), maxDistance)
 		distance = calculateDistance(request['latitude'], request['longitude'], req['lat'], req['long'])
 		if (distance < maxDistance and rankDifference < maxRankDifference):
-			players.append(req)
+			players.append(req['userId'])
 			if (len(players) == playersRequired):
 				return True, players
 
