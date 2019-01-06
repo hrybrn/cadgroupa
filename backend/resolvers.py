@@ -34,8 +34,8 @@ def validate(token):
 			if not discord.adduserguild(token, userobj['id']):
 				raise GraphQLError('Failed to join voice server!')
 		else:
-			userCache[token] = userobj['id']
-			return userobj['id']
+			userCache[token] = userobj
+			return userobj
 
 with open('games.json') as f:
 	games_json = json.load(f)
@@ -53,11 +53,10 @@ def entityTest(value, info, **args):
 	client.put(task)
 	return json.dumps(client.get(key))
 
-def user(value, info, **args):
+def getUser(value, info, **args):
 	if not args['token']:
 		return False
-	id = validate(args['token'])
-	return discord.getuserobj(args['token'])
+	return validate(args['token'])
 
 def games(value, info, **args):
 	game_list = []
@@ -66,13 +65,13 @@ def games(value, info, **args):
 	return game_list
 
 def registerSearch(value, info, **args):
-	userId = validate(args['token'])
-	return matchmaking.joinQueue(userId, args['lat'], args['lon'], args['game'], args['mode'],
+	user = validate(args['token'])
+	return matchmaking.joinQueue(user, args['lat'], args['lon'], args['game'], args['mode'],
 		args['players'], args['rank'])
 
 def pollSearch(value, info, **args):
-	userId = validate(args['token'])
-	success, players, url = matchmaking.pollQueue(userId)
+	user = validate(args['token'])
+	success, players, url = matchmaking.pollQueue(user['id'])
 	return Struct({
 		"success": success,
 		"players": [Struct(player) for player in players],
@@ -85,10 +84,10 @@ def requestsInSystem(value, info, **args):
 	return matchmaking.getMatchRequests(args['gameId'])
 
 def getRecentPlayers(value, info, **args):
-	userId = validate(args['token'])
-	return users.getRecentPlayers(userId)
+	user = validate(args['token'])
+	return users.getRecentPlayers(user['id'])
 
 def rateUser(value, info, **args):
-	userId = validate(args['token'])
-	users.vote(userId, args['recipientId'], users.VoteType.UP if args['upvote'] else users.VoteType.DOWN)
+	user = validate(args['token'])
+	users.vote(user['id'], args['recipientId'], users.VoteType.UP if args['upvote'] else users.VoteType.DOWN)
 	return True
