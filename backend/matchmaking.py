@@ -37,17 +37,17 @@ def joinQueue(userId, lat, long, game, mode, players, rank):
 
 # def launchMatch(matchid, players):
 def launchMatch(matchid, players):
-	matchid = '453859438'
-	players = ['531471720230551552', '528999232594509844']
-	discord.createguildrole(matchid)
-	discord.createtextchannnel(matchid)
-	content = discord.createvoicechannnel(matchid)
-	content2 = json.loads(content.decode("utf-8"))
-	response = discord.getchannelinvitelink(content2['id'])
-	code = json.loads(response.decode("utf-8"))['code']
+	role_content = discord.createguildrole(matchid)
+	role_id = json.loads(role_content.decode("utf-8"))['id']
+
+	discord.createtextchannnel(matchid, role_id)
+	channel_content = discord.createvoicechannnel(matchid, role_id)
+	channel_id = json.loads(channel_content.decode("utf-8"))['id']
+
+	invite_link = 'https://discord.gg/' + json.loads((discord.getchannelinvitelink(channel_id)).decode("utf-8"))['code']
 	for player in players:
-		discord.addplayertorole(matchid, player)
-	return 'https://discord.gg/'+code
+		discord.addplayertorole(role_id, player)
+	return invite_link
 
 def pollQueue(userId):
 	key = client.key('MatchRequest', userId)
@@ -111,7 +111,6 @@ def findMatch(request):
 			players.append(req)
 			if (len(players) == playersRequired):
 				return True, players
-
 	return False, players
 
 def calculateTolerance(elapsedTime):
