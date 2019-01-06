@@ -30,7 +30,9 @@ class Searching extends Component {
                 updateStore({
                     search: {
                         ...this.props.search,
-                        state: 'matched'
+                        state: 'matched',
+                        players: data.matchmaking.poll.players,
+                        url: data.matchmaking.poll.url
                     }
                 });
             } else {
@@ -49,7 +51,7 @@ class Searching extends Component {
                     justify="center"
                     style={{ minHeight: '100vh' }}
                 >
-                    <FormLabel>Finding other players for {this.props.selectedGame.name}<LinearProgress /></FormLabel>
+                    <FormLabel>Finding other players for {this.props.selectedGame.name} <br/> <br/> <br/> <br/> <LinearProgress /></FormLabel>
                 </Grid>
             </Fragment>
         );
