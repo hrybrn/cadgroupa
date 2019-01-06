@@ -36,10 +36,13 @@ def launchMatch(matchid, players):
 	matchid = '453859438'
 	players = ['531471720230551552', '528999232594509844']
 	discord.createguildrole(matchid)
-	discord.createguildchannnel(matchid)
+	content = discord.createguildchannnel(matchid)
+	content2 = json.loads(content.decode("utf-8"))
+	response = discord.getchannelinvitelink(content2['id'])
+	code = json.loads(response.decode("utf-8"))['code']
 	for player in players:
 		discord.addplayertorole(matchid, player)
-	return True
+	return 'https://discord.gg/'+code
 
 def pollQueue(userId):
 	key = client.key('MatchRequest', userId)

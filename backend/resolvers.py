@@ -26,17 +26,16 @@ def validate(token):
 		raise GraphQLError('There was an error authenticating!')
 	if token in userCache:
 		return userCache[token]
-	userobj = json.loads(discord.getuserobj(token))
-	if(userobj['verified'] == "false"):
-		raise GraphQLError('The user must be verified with Discord in order to use this app!')
-	if not discord.checkuserguild(token, userobj['id']):
-		if not discord.adduserguild(token, userobj['id']):
-			raise GraphQLError('Failed to join voice server!')
-		else:
-			return userobj['id']
 	else:
-		userCache[token] = userobj['id']
-		return userobj['id']
+		userobj = json.loads(discord.getuserobj(token))
+		if(userobj['verified'] == "false"):
+			raise GraphQLError('The user must be verified with Discord in order to use this app!')
+		if not discord.checkuserguild(token, userobj['id']):
+			if not discord.adduserguild(token, userobj['id']):
+				raise GraphQLError('Failed to join voice server!')
+		else:
+			userCache[token] = userobj['id']
+			return userobj['id']
 
 with open('games.json') as f:
 	games_json = json.load(f)
