@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from 'react';
-import { graphql } from 'react-apollo';
 import {GridList, GridListTile,withStyles, ListSubheader, CircularProgress, Radio, RadioGroup, FormControlLabel, Button } from '@material-ui/core';
 import CardTile from 'components/CardTile/CardTile';
 import { gameQuery } from 'queries/games'; 
 import { getGameLogo } from 'assets/game-logos';
 
 import { updateStore } from 'fluxible-js';
+import { mapStatesToProps } from 'react-fluxible';
+
+import { graphql } from 'react-apollo';
 
 const styles = () => ({
     gridList: {
@@ -116,14 +118,19 @@ class LeftPanel extends Component {
                         {this.renderModes()}
                     </RadioGroup>
                 </GridList>
-                <GridList className={gridList}>
-                    <GridListTile key="Subheader" cols={2} style={{ height: 'auto', 'text-align': 'center' }}>
-                        {this.state.selectedGame && this.state.selectedMode && <Button onClick={this.search.bind(this)}>Search</Button>}
-                    </GridListTile>
-                </GridList>
+                {this.props.user.loggedin ?
+                    <GridList className={gridList}>
+                        <GridListTile key="Subheader" cols={2} style={{ height: 'auto', 'text-align': 'center' }}>
+                            {this.state.selectedGame && this.state.selectedMode && <Button onClick={this.search.bind(this)}>Search</Button>}
+                        </GridListTile>
+                    </GridList>:
+                    <Fragment></Fragment>
+                }
             </Fragment>
         );
     }
 }
 
-export default graphql(gameQuery)(withStyles(styles)(LeftPanel));
+export default mapStatesToProps(graphql(gameQuery)(withStyles(styles)(LeftPanel)), state => ({
+    user: state.user
+}));
