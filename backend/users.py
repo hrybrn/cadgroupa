@@ -6,8 +6,8 @@ MAX_RECENT_PLAYERS = 20
 SECONDS_IN_DAY = 86400
 
 class VoteType(Enum)
-	Down = 'Down'
-	Up = 'Up'
+	DOWN = 'Down'
+	UP = 'Up'
 
 client = datastore.Client()
 
@@ -63,4 +63,4 @@ def vote(userId, recipientId, type)
 
 def getToxicity(userId)
 	user = getUser(userId)
-	return getVotes(user, 'Down') - getVotes(user, 'Up')
+	return getVotes(user, VoteType.Down) - getVotes(user, VoteType.UP)
