@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import { GridList, GridListTile, ListSubheader, withStyles, CircularProgress, Card, CardActionArea, CardMedia, CardContent } from '@material-ui/core';
+import { GridList, GridListTile, ListSubheader, withStyles, CircularProgress} from '@material-ui/core';
 import CardTile from 'components/CardTile/CardTile';
 
 const styles = () => ({
