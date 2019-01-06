@@ -107,9 +107,10 @@ class LeftPanel extends Component {
                 </GridList>
                 <GridList className={gridList}>
                     {this.gameTiles(this.props.data, this.props.classes)}
-                </GridList>
+                </GridList>      
                 <GridList className={gridList}>
                     <GridListTile key="Subheader" cols={2} style={{ height: 'auto', 'text-align': 'center' }}>
+                        <hr/>
                         <ListSubheader component="div">Modes</ListSubheader>
                     </GridListTile>
                 </GridList>
