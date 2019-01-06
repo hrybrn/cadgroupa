@@ -59,7 +59,7 @@ def pollQueue(userId):
 			'lastPollTime': time.time()
 		})
 		success, requests = findMatch(request)
-		players = [request.userId for request in requests]
+		players = [request['userId'] for request in requests]
 		url = "http://www.example.com/" if success else ""
 		if success:
 			matchId = generateMatchId()
