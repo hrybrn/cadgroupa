@@ -61,7 +61,6 @@ def games(value, info, **args):
 
 def registerSearch(value, info, **args):
 	userId = validate(args['token'])
-	#token, location, game, mode, players, rank
 	return matchmaking.joinQueue(userId, args['lat'], args['lon'], args['game'], args['mode'],
 		args['players'], args['rank'])
 
