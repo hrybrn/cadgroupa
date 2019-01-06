@@ -30,6 +30,7 @@ function setup(){
     gcloud components install beta
     gcloud components install cloud-datastore-emulator
     gcloud auth application-default login
+    gcloud app deploy index.yaml
     echo "Done!";
     echo "Run `flask run` in the backend directory to get started working locally."
 }
