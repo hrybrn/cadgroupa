@@ -156,7 +156,13 @@ mutationschema = GraphQLObjectType(
 								"success": GraphQLField(
 									type=GraphQLBoolean
 								),
-								"players": GraphQLField(GraphQLList(GraphQLString)),
+								"players": GraphQLField(GraphQLList(GraphQLObjectType(
+									name="TeamMate",
+									fields={
+										"userId": GraphQLField(GraphQLString),
+										"displayName": GraphQLField(GraphQLString),
+									}
+								))),
 								"url": GraphQLField(GraphQLString)
 							},
 						),
