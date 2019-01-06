@@ -41,7 +41,7 @@ class LeftPanel extends Component {
                 <CardTile
                     key={game.id}
                     pressed={this.gameSelected.bind(this, game)}
-                    active={this.state.selectedGame === game.name}
+                    active={this.state.selectedGame && this.state.selectedGame.name === game.name}
                     {...game}
                     icon={getGameLogo(game.icon)}
                 />
