@@ -1,6 +1,8 @@
 from google.cloud import datastore
+import time
 
 MAX_RECENT_PLAYERS = 20
+SECONDS_IN_DAY = 86400
 
 client = datastore.Client()
 
@@ -9,7 +11,10 @@ def createUser(userId):
 	user = datastore.Entity(key)
 	user.update({
 		'recentPlayers': [],
-		'toxicity': 1000,
+		'votesDown': 0,
+		'votesUp': 0,
+		'lastDownVote': 0,
+		'lastUpVote': 0,
 		'banned': False
 	})
 	client.put(user)
@@ -35,17 +40,22 @@ def addRecentPlayers(userId, players):
 	})
 	client.put(user)
 
-def changePlayerRating(userId, recipient, downVote):
-	user = getUser(userId)
-	score = user['toxicity']
-	score = score - 50 if rating_change else score + 50
-	user.update({
-		'toxicity': score,
-	})
-	client.put(user)
-	return True
+def getVotes(user, type)
+	if user['votes' + type]:
+		elapsedDays = (time.clock() - user['last' + type + 'Vote']) / SECONDS_IN_DAY
+		return user['votes' + type] / math.exp(2, elapsedDays)
+	else:
+		return 0
 
-def checkPlayerRating(userId):
+def vote(userId, recipientId, type)
+	recipient = getUser(recipientId)
+	votes = getVotes(user, type)
+	recipient.update({
+		'votes' + type: votes + 1
+		'last' + type + 'Vote': time.clock()
+	})
+	client.put(recipient)
+
+def getToxicity(userId)
 	user = getUser(userId)
-	score = user['toxicity'] if user['toxicity'] else 0
-	return True if score > 0 else False
+	return getVotes(user, 'Down') - getVotes(user, 'Up')
