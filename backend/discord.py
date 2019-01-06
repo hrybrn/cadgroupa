@@ -21,9 +21,8 @@ def getuserobj(token):
 
 # return whether a given user is in the guild (server)
 def checkuserguild(token, userid):
-	guildid = '531408802357182484'
 	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format(BOT_TOKEN)}
-	response = requests.get(URL_BASE + 'guilds/'+guildid + '/members/'+userid, headers=headers)
+	response = requests.get(URL_BASE + 'guilds/'+GUILD_ID + '/members/'+userid, headers=headers)
 	return (response.status_code == 200)
 
 # add a given user to the guild (server), return true for success

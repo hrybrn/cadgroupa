@@ -91,7 +91,11 @@ def pollQueue(userId):
 			client.put(request)
 		return success, players, url
 	else:
-		return True, getMatchMembers(matchId), getMatchUrl(matchId)
+		url = getMatchUrl(matchId)
+		if url == '':
+			return False, [], ''
+		else:
+			return True, getMatchMembers(matchId), url
 
 def getMatchMembers(matchId):
 	query = client.query(kind='MatchRequest')
@@ -102,7 +106,7 @@ def getMatchUrl(matchId):
 	key = client.key('MatchUrl', matchId)
 	result = client.get(key)
 	if result is None:
-		return "No URL available"
+		return ""
 	else:
 		return result['url']
 
