@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, TextField, DialogContentText, CircularProgress, Typography } from '@material-ui/core';
+import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, DialogContentText, CircularProgress, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/MenuSharp';
 import Person from '@material-ui/icons/Person';
 
@@ -15,11 +15,12 @@ import RightPanel from 'components/RightPanel/RightPanel';
 
 import matchmakr from 'assets/matchmakr.png';
 
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import Login from 'components/Auth/Login';
 import Auth from 'components/Auth/Auth';
 import CenterPanel from 'components/CenterPanel/CenterPanel';
+import MessageBox from 'components/MessageBox/MessageBox';
 
 const styles = theme => ({
     logo: {
@@ -56,29 +57,12 @@ class Navigation extends Component {
         },
         //open modal
         modal: '',
-        //field contents
-        fields: {
-            email: '',
-        },
         user: {
             token: '',
             loggedin: 0
         },
-
-        emailLoaded: false
+        errorredirect: false,
     };
-
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if (!this.state.emailLoaded && !nextProps.loading) {
-            this.setState(prev => ({
-                emailLoaded: true,
-                fields: {
-                    ...prev.fields,
-                    email: nextProps.user.loggedin ? JSON.parse(nextProps.data.discord.getuser).email : 'Not found'
-                }
-            }));
-        }
-    }
 
     render() {
         const { logo, navigation, toolbar, spreadToolbar } = this.props.classes;
@@ -88,6 +72,7 @@ class Navigation extends Component {
         const modal = this.renderModal();
         return (
             <Fragment>
+                {this.state.errorredirect && <Redirect to='/error'/>}
                 <AppBar className={navigation}>
                     <Toolbar classes={{ root: spreadToolbar }}>
                         <IconButton
@@ -154,6 +139,7 @@ class Navigation extends Component {
                     <div className={toolbar} />
                     <Route path='/auth' component={Auth}/>
                     <Route path='/login' component={Login}/>
+                    <Route path='/error' render={() => <MessageBox message="Something went terribly wrong 😢"/>}/>
                     <Route exact path='/' component={CenterPanel}/>
                 </div>
             </Fragment>
@@ -234,19 +220,10 @@ class Navigation extends Component {
         if (data.loading || data.discord === undefined) {
             return (<CircularProgress />);
         } else {
+            const email = this.props.user.loggedin && this.props.data ? JSON.parse(this.props.data.discord.getuser).email : 'Not found';
             return (
                 <div>
-                    <TextField
-                        autoFocus
-                        margin='dense'
-                        id='name'
-                        label='Email Address'
-                        type='email'
-                        fullWidth
-                        value={this.state.fields.email}
-                        key='email'
-                        onChange={this.updateField.bind(this, 'email')}
-                    />
+                    <Typography>Email: {email}</Typography>
                     { JSON.parse(data.discord.getuser).verified ? (<Typography value='h2'>User is verified</Typography>) : (<Typography value='h2'>User is not verified!</Typography>)}
                 </div>
             );
@@ -257,7 +234,7 @@ class Navigation extends Component {
         this.showModal('');
         updateStore({
             user: {
-                loggedin: 0,
+                loggedin: false,
                 token: ''
             }
         });
