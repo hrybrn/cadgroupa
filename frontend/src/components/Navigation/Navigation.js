@@ -189,9 +189,11 @@ class Navigation extends Component {
                             Logout
                         </Button>
                     ]}
+                    
                 />
             </Fragment>
         );
+        
     }
 
     usernameData(data) {
@@ -228,6 +230,7 @@ class Navigation extends Component {
                 token: ''
             }
         });
+        window.location.reload();
     }
 
     updateField(field, { target: { value }}) {
