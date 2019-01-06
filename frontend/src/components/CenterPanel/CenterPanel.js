@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import { mapStatesToProps } from 'react-fluxible';
 import { Button } from '@material-ui/core';
@@ -31,6 +31,12 @@ class CenterPanel extends Component {
     }
 
     render() {
+        const players = [
+            {
+                name: 'Harry',
+                id: 187314127654354944
+            }
+        ];
         switch(this.state.matchmakingState) {
         case 'loggedin':
             return <MessageBox message={'Select a game and mode on the left.'} />;
@@ -41,7 +47,10 @@ class CenterPanel extends Component {
         case 'searching':
             return <Searching selectedGame={this.props.search.selectedGame} selectedMode={this.props.search.selectedMode} />;
         case 'matched':
-            return <Rating />;
+            return <Fragment>
+                <Button href={this.state.search.url}>join your team on discord</Button>
+                {players.map(player => <Rating key={player.id} player={player} />)}
+            </Fragment>;
         }
     }
 
