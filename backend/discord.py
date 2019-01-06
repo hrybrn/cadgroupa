@@ -9,7 +9,7 @@ def getuserobj(token):
 
 def checkuserguild(token, userid):
 	guildid = '531408802357182484'
-	headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer {0}'.format(token)}
+	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format('NTE5NTI2MDYxODY0Nzc5ODA4.DxOVxg.FgnV-M1j_aI6eLisJ1vaIRz70q4')}
 	response = requests.get('https://discordapp.com/api/guilds/'+guildid + '/members/'+userid, headers=headers)
 	return (response.status_code == 200)
 
