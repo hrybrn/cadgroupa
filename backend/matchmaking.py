@@ -45,10 +45,11 @@ def launchMatch(matchid, players):
 def pollQueue(userId):
 	key = client.key('MatchRequest', userId)
 	request = client.get(key)
+	requestTime = time.time()
 	# see if a match can be made
 	success, players = findMatch(request)
 	request.update({
-		'lastPollTime': time.time()
+		'lastPollTime': requestTime
 	})
 	client.put(request)
 	url = "http://www.example.com/" if success else ""
