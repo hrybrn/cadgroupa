@@ -65,7 +65,7 @@ def vote(userId, recipientId, enumType):
 
 def getToxicity(userId):
 	user = getUser(userId)
-	return getVotes(user, VoteType.Down) - getVotes(user, VoteType.UP)
+	return getVotes(user, VoteType.DOWN) - getVotes(user, VoteType.UP)
 
 def generateMatchId():
 	# uuid4 generates a random uuid
