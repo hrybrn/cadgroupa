@@ -5,6 +5,7 @@ import time
 import math
 import discord
 import uuid
+import sys
 from graphql import GraphQLError
 
 POLL_INTERVAL = 5
@@ -62,6 +63,7 @@ def pollQueue(userId):
 			matchId = generateMatchId()
 			requests.append(request)
 			for request in requests:
+				print(json.dumps(players), sys.stderr)
 				request.update({
 					'matchId': matchId
 				})
