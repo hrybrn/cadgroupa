@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { graphql } from 'react-apollo';
-import {GridList, GridListTile,withStyles, ListSubheader, CircularProgress, Radio, RadioGroup, FormControlLabel, Button, Tooltip } from '@material-ui/core';
+import {GridList, GridListTile,withStyles, ListSubheader, CircularProgress, Radio, RadioGroup, FormControlLabel, Button } from '@material-ui/core';
 import CardTile from 'components/CardTile/CardTile';
 import { gameQuery } from 'queries/games'; 
 import { getGameLogo } from 'assets/game-logos';
@@ -71,15 +71,14 @@ class LeftPanel extends Component {
 
         return this.state.selectedGame.modes.map(
             (mode) =>
-                <Tooltip title={'No. of players: '+ mode.players} key={mode.name}>
-                    <FormControlLabel
-                        value={mode.name}
-                        control={<Radio color="primary" />}
-                        label={mode.name}
-                        labelPlacement="start"
-                        
-                    />
-                </Tooltip>
+                <FormControlLabel
+                    key={mode.name}
+                    value={mode.name}
+                    control={<Radio color="primary" />}
+                    label={mode.name}
+                    labelPlacement="start"
+                    
+                />
         );
     }
 
