@@ -72,7 +72,7 @@ queryschema = GraphQLObjectType(
 						type=GraphQLObjectType(
 							name="registerResponse",
 							fields={
-								"gameID": GraphQLField(GraphQLString),
+								"game": GraphQLField(GraphQLString),
 								"mode": GraphQLField(GraphQLString),
 								"players": GraphQLField(GraphQLInt),
 								"rank": GraphQLField(GraphQLInt),
@@ -82,7 +82,7 @@ queryschema = GraphQLObjectType(
 						),
 						args={
 							"token": GraphQLArgument(GraphQLString),
-							"gameID": GraphQLArgument(GraphQLString),
+							"game": GraphQLArgument(GraphQLString),
 							"mode": GraphQLArgument(GraphQLString),
 							"players": GraphQLArgument(GraphQLInt),
 							"rank": GraphQLArgument(GraphQLInt),
