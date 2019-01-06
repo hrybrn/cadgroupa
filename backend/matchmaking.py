@@ -136,4 +136,4 @@ def getMatchRequests(gameId):
 
 def generateMatchId():
 	# uuid4 generates a random uuid
-	return uuid.uuid4()
+	return str(uuid.uuid4())
