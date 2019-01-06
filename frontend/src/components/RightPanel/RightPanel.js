@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { GridList, GridListTile, ListSubheader, withStyles, CircularProgress} from '@material-ui/core';
 import CardTile from 'components/CardTile/CardTile';
+import { mapStatesToProps } from 'react-fluxible'; 
 
 const styles = () => ({
     gridList: {
@@ -64,11 +65,21 @@ class RightPanel extends Component {
    
 }
 
-export const recentQuery = gql`query RecentPlayers($token: String) {
+export const recentQuery = graphql(gql`query RecentPlayers($token: String) {
     recentPlayers(token: $token) {
         id
         name
     }
-}`;
+}`, {
+    options: (props) => ({
+        variables: {
+            token: props.user.token
+        }
+    })
+});
 
-export default graphql(recentQuery)(withStyles(styles)(RightPanel));
+export default mapStatesToProps(recentQuery(withStyles(styles)(RightPanel)), state => {
+    return {
+        user: state.user
+    };
+});
