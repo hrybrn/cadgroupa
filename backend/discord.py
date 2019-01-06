@@ -68,5 +68,10 @@ def getchannelinvitelink(channelid):
 # assign player a given role
 def addplayertorole(matchid, player):
 	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format(BOT_TOKEN)}
-	response = requests.put(URL_BASE + 'guilds/' + GUILD_ID  + '/members/'+player+'/roles/'+str(matchid), headers=headers)
+	jsondata = {'roles' : [matchid]}
+	response = requests.patch(URL_BASE + 'guilds/' + GUILD_ID  + '/members/'+player+'/roles/'+str(matchid), headers=headers, json=jsondata)
 	return (response.status_code == 204)
+
+def removerolesfromplayer(player):
+	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format(BOT_TOKEN)}
+	response = requests
