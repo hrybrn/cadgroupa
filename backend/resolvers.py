@@ -20,8 +20,6 @@ class Struct(object):
 				setattr(self, a, Struct(b) if isinstance(b, dict) else b)
 
 def validate(token):
-	if not token: 
-		raise GraphQLError('There was an error authenticating!')
 	userobj = json.loads(discord.getuserobj(token))
 	if(userobj['verified'] == "false"):
 		raise GraphQLError('The user must be verified with Discord in order to use this app!')
@@ -45,6 +43,8 @@ def entityTest(value, info, **args):
 	return json.dumps(client.get(key))
 
 def user(value, info, **args):
+	if not args['token']:
+		return True
 	id = validate(args['token'])
 	return discord.getuserobj(args['token'])
 
