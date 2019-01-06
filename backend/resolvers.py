@@ -21,8 +21,6 @@ class Struct(object):
 def validate(args):
 	if not args['token'] or not discord.getuserobj(args["token"]): 
 		raise GraphQLError('There was an error authenticating!')
-	elif not users.checkPlayerRating(args['token']): 
-		raise GraphQLError('You have been temporarily banned!')
 	else:
 		return True
 
