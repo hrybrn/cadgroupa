@@ -20,7 +20,7 @@ class CenterPanel extends Component {
         super(props);
 
         if (this.props.user.loggedin) {
-            this.state.matchmakingState = 'matched';
+            this.state.matchmakingState = 'loggedin';
         }
     }
 
@@ -56,12 +56,12 @@ class CenterPanel extends Component {
                 justify="center"
                 style={{ minHeight: '100vh' }}
             >
-                <Button href={'this.state.search.url'} >Join your team on discord</Button>
+                <Button href={this.state.search.url} >Join your team on discord</Button>
                 <div>
                     <Grid container>
                         <FormLabel><br/><br/><br/>Rate your player matches <br/><br/></FormLabel>
                     </Grid>
-                    {players.map(player => <Rating key={player.userId} player={player} />)}
+                    {this.props.search.players.map(player => <Rating key={player.userId} player={player} />)}
                 </div>
             </Grid>;
         }
