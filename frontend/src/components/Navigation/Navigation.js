@@ -89,7 +89,7 @@ class Navigation extends Component {
         const modal = this.renderModal();
         return (
             <Fragment>
-                {this.state.errorredirect ? (<Redirect to='/error'/>) : (<Fragment></Fragment>)}
+                {this.state.errorredirect && <Redirect to='/error'/>}
                 <AppBar className={navigation}>
                     <Toolbar classes={{ root: spreadToolbar }}>
                         <IconButton
@@ -234,12 +234,6 @@ class Navigation extends Component {
             return (<Typography value='h2'>Not logged in!</Typography>);
         }
 
-        if(data.error){
-            this.setState({
-                errorredirect: true
-            });
-        }
-
         if (data.loading || data.discord === undefined) {
             return (<CircularProgress />);
         } else {
@@ -266,7 +260,7 @@ class Navigation extends Component {
         this.showModal('');
         updateStore({
             user: {
-                loggedin: 0,
+                loggedin: false,
                 token: ''
             }
         });
