@@ -94,7 +94,10 @@ const pollQuery = graphql(gql`mutation PollQuery($token: String) {
         poll(token: $token) {
             url
             success
-            players
+            players {
+                userId
+                displayName
+            }
         }
     }
 }`, {
