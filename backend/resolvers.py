@@ -56,7 +56,7 @@ def entityTest(value, info, **args):
 def getUser(value, info, **args):
 	if not args['token']:
 		return False
-	return validate(args['token'])
+	return json.dumps(validate(args['token']))
 
 def games(value, info, **args):
 	game_list = []
