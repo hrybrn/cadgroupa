@@ -68,7 +68,6 @@ def games(value, info, **args):
 
 def registerSearch(value, info, **args):
 	userId = validate(args['token'])
-	#token, location, game, mode, players, rank
 	return matchmaking.joinQueue(userId, args['lat'], args['lon'], args['game'], args['mode'],
 		args['players'], args['rank'])
 
@@ -90,7 +89,7 @@ def getRecentPlayers(value, info, **args):
 	userId = validate(args['token'])
 	return users.getRecentPlayers(userId)
 
-def changeUserScore(value, info, **args):
+def rateUser(value, info, **args):
 	userId = validate(args['token'])
-	users.vote(userId, users.VoteType.UP if args['good'] else users.VoteType.DOWN)
-	return Struct({ "success": True })
+	users.vote(userId, args['recipientId'], users.VoteType.UP if args['upvote'] else users.VoteType.DOWN)
+	return True

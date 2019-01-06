@@ -12,7 +12,7 @@ from graphql import (
 	GraphQLInt,
 	GraphQLFloat
 )
-from resolvers import user, games, helloWorld, entityTest, registerSearch, pollSearch, requestsInSystem, getRecentPlayers, changeUserScore
+from resolvers import user, games, helloWorld, entityTest, registerSearch, pollSearch, requestsInSystem, getRecentPlayers, rateUser
 
 
 # Super useful 
@@ -136,19 +136,14 @@ mutationschema = GraphQLObjectType(
 			type=GraphQLObjectType(
 				name="matchmakingMutations",
 				fields={
-					"rating":GraphQLField(
-						type=GraphQLObjectType(
-							name="ratingResponse",
-							fields={
-								"success":GraphQLField(GraphQLBoolean)
-							}
-						),
+					"rate":GraphQLField(
+						type=GraphQLBoolean,
 						args={
-							"playerID":GraphQLArgument(GraphQLString),
-							"good":GraphQLArgument(GraphQLBoolean),
+							"recipientId":GraphQLArgument(GraphQLString),
+							"upvote":GraphQLArgument(GraphQLBoolean),
 							"token":GraphQLArgument(GraphQLString)
 						},
-						resolver=changeUserScore
+						resolver=rateUser
 					),
 					"poll": GraphQLField(
 						type=GraphQLObjectType(
