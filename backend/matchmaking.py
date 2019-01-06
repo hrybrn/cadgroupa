@@ -56,8 +56,6 @@ def findMatch(request):
 	query.add_filter('gameId', '=', request['gameId'])
 	query.add_filter('lastPollTime', '>', currentTime - POLL_INTERVAL_TIMEOUT)
 	query.add_filter('gameSize', '=', request['gameSize'])
-	query.add_filter('rank', '>=', request['rank'] - maxRankDifference)
-	query.add_filter('rank', '<=', request['rank'] + maxRankDifference)
 	query.add_filter('matchId', '=', DEFAULT_MATCH_ID)
 	query.order = ['initialRequestTime']
 
@@ -69,7 +67,7 @@ def findMatch(request):
 		if req['userId'] == request['userId']:
 			continue
 		reqTolerance = calculateTolerance(currentTime - req['initialRequestTime'])
-		maxRankDifference = calculateMaxRankDifference(reqTolerance)
+		maxRankDifference = min(calculateMaxRankDifference(reqTolerance), maxRankDifference)
 		rankDifference = abs(request['rank'] - req['rank'])
 		maxDistance = min(calculateMaxDistance(reqTolerance), maxDistance)
 		distance = calculateDistance(request['latitude'], request['longitude'], req['latitude'], req['longitude'])
