@@ -11,7 +11,7 @@ initializeStore({
             loggedin: 0
         },
         search: {
-            inProgress: false,
+            state: '',
             selectedGameID: '',
             selectedMode: ''
         }
