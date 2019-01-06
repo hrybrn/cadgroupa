@@ -77,13 +77,12 @@ def pollQueue(userId):
 			except exceptions.Conflict:
 				print("Something went wrong", sys.stderr)
 				return False, [], ''
-			return True, , url
 		else:
 			request.update({
 				'lastPollTime': time.time()
 			})
 			client.put(request)
-			return False, [], ""
+		return success, players, ""
 	else:
 		return True, getMatchMembers(matchId), "http://www.youvebeenhad.com/"
 
