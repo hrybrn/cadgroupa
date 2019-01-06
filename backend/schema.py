@@ -54,8 +54,8 @@ queryschema = GraphQLObjectType(
 			type=GraphQLList(GraphQLObjectType(
 				name='RecentPlayer',
 				fields={
-					"id": GraphQLField(GraphQLString),
-					"name": GraphQLField(GraphQLString)
+					"userId": GraphQLField(GraphQLString),
+					"displayName": GraphQLField(GraphQLString)
 				}
 			)),
 			args={
