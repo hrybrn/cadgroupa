@@ -1,4 +1,5 @@
 from google.cloud import datastore
+import time
 
 MAX_RECENT_PLAYERS = 20
 
@@ -51,10 +52,12 @@ def checkPlayerRating(userId):
 	return True if score > 0 else False
 
 # upvote/downvote scoring idea
-def calculateUpvoteScore(upvotes, timeSinceLastUpdate) {
+def calculateUpvoteScore(upvotes, timeSinceLastUpdate):
 	return upvotes * math.log(2, timeSinceLastUpdate)
-}
 
-def calculateDownvoteScore(downvotes, timeSinceLastUpdate) {
+def calculateDownvoteScore(downvotes, timeSinceLastUpdate):
 	return downvotes * math.log(2, timeSinceLastUpdate)
-}
+
+def daysSinceLastDownvote(timestamp):
+	secondsSince = time.clock() - timestamp 
+	return (secondsSince/60/60/24)
