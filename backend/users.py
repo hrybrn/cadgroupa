@@ -5,7 +5,7 @@ MAX_RECENT_PLAYERS = 20
 client = datastore.Client()
 
 def createUser(userId):
-	key = getUserKey(userId)
+	key = client.key('User', userId)
 	user = datastore.Entity(key)
 	user.update({
 		'recentPlayers': [],
