@@ -24,7 +24,7 @@ userCache = {}
 def validate(token):
 	if not token:
 		raise GraphQLError('There was an error authenticating!')
-	if userCache[token]:
+	if token in userCache:
 		return userCache[token]
 	userobj = json.loads(discord.getuserobj(token))
 	if(userobj['verified'] == "false"):
