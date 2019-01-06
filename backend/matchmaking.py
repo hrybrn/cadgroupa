@@ -18,7 +18,7 @@ def joinQueue(userId, lat, long, game, mode, players, rank):
 	requestTime = time.time()
 	request = datastore.Entity(key)
 	request.update({
-		'displayName': 'Brad' 
+		'displayName': 'Brad',
 		'userId': userId,
 		'initialRequestTime': requestTime,
 		'lastPollTime': requestTime,
