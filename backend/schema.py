@@ -51,7 +51,13 @@ queryschema = GraphQLObjectType(
 			resolver=helloWorld
 		),
 		"recentPlayers": GraphQLField(
-			type=GraphQLList(GraphQLString),
+			type=GraphQLList(GraphQLObjectType(
+				name='RecentPlayer',
+				fields={
+					"id": GraphQLField(GraphQLString),
+					"name": GraphQLField(GraphQLString)
+				}
+			)),
 			args={
 				"token": GraphQLArgument(GraphQLString)
 			},

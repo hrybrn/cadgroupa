@@ -64,12 +64,10 @@ class RightPanel extends Component {
    
 }
 
-export const recentQuery = gql`{
-    data {
-        recentPlayers($token: "token") {
-            id
-            name
-        }
+export const recentQuery = gql`query RecentPlayers($token: String) {
+    recentPlayers(token: $token) {
+        id
+        name
     }
 }`;
 
