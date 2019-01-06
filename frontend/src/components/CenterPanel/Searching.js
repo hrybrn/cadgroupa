@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { graphql, compose } from 'react-apollo';
 
 import { mapStatesToProps } from 'react-fluxible';
+import { updateStore } from 'fluxible-js';
 
 class Searching extends Component {
     state = {
@@ -21,31 +22,37 @@ class Searching extends Component {
         this.props.mutate().then(this.continuePolling.bind(this), this.continuePolling.bind(this));
     }
 
-    async continuePolling() {
-        this.poll();
+    async continuePolling({ error, data }) {
+        if (error) {
+            console.log(error);
+        } else {
+            if (data.matchmaking.poll.success) {
+                updateStore({
+                    search: {
+                        ...this.props.search,
+                        state: 'matched'
+                    }
+                });
+            } else {
+                this.poll();
+            }
+        }
     }
 
     render() {
-        const { loading, matchmaking } = this.props.data;
-        if (loading || !matchmaking || !matchmaking.register){
-            return(
-                <Fragment>
-                    <Grid
-                        container
-                        spacing={0}
-                        alignItems="center"
-                        justify="center"
-                        style={{ minHeight: '100vh' }}
-                    >
-                        <FormLabel>Finding other players for {this.props.selectedGame.name}<LinearProgress /></FormLabel>
-                    </Grid>
-                </Fragment>
-            );
-        } else {
-            return(
-                <button>make me better button</button>
-            );
-        }
+        return(
+            <Fragment>
+                <Grid
+                    container
+                    spacing={0}
+                    alignItems="center"
+                    justify="center"
+                    style={{ minHeight: '100vh' }}
+                >
+                    <FormLabel>Finding other players for {this.props.selectedGame.name}<LinearProgress /></FormLabel>
+                </Grid>
+            </Fragment>
+        );
     }        
 }
 
@@ -80,20 +87,18 @@ const registerSearch = graphql(gql`query RegisterSearch(
     })
 });
 
-const pollQuery = graphql(gql`mutation PollQuery($token: String!) {
-    data {
-        matchmaking {
-            poll {
-                success
-                playerDiscordIDs
-                groupDMURL
-            }
+const pollQuery = graphql(gql`mutation PollQuery($token: String) {
+    matchmaking {
+        poll(token: $token) {
+            url
+            success
+            players
         }
     }
 }`, {
     options: (props) => ({
         variables: {
-            token: props.user
+            token: props.user.token
         }
     })
 });
