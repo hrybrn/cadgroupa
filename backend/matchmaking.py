@@ -4,6 +4,9 @@ import json
 import time
 import math
 import discord
+import uuid
+import sys
+from graphql import GraphQLError
 
 POLL_INTERVAL = 5
 POLL_INTERVAL_TIMEOUT = 10
@@ -49,15 +52,31 @@ def launchMatch(matchid, players):
 def pollQueue(userId):
 	key = client.key('MatchRequest', userId)
 	request = client.get(key)
-	requestTime = time.time()
-	# see if a match can be made
-	success, players = findMatch(request)
-	request.update({
-		'lastPollTime': requestTime
-	})
-	client.put(request)
-	url = "http://www.example.com/" if success else ""
-	return success, players, url
+	if request is None:
+		raise GraphQLError('User did not register for a match')
+	matchId = request['matchId']
+	if matchId == DEFAULT_MATCH_ID:
+		success, requests = findMatch(request)
+		players = [request['userId'] for request in requests]
+		url = "http://www.example.com/" if success else ""
+		if success:
+			print(json.dumps(players), sys.stderr)
+			matchId = generateMatchId()
+			requests.append(request)
+			for request in requests:
+				request.update({
+					'matchId': matchId
+				})
+			client.put_multi(requests)
+			#launchMatch(matchId, players)
+		else:
+			request.update({
+				'lastPollTime': time.time()
+			})
+			client.put(request)
+		return success, players, url
+	else:
+		return True, ['lol'], "http://www.youvebeenhad.com/"
 
 def findMatch(request):
 	currentTime = time.time()
@@ -89,7 +108,7 @@ def findMatch(request):
 		maxDistance = min(calculateMaxDistance(reqTolerance), maxDistance)
 		distance = calculateDistance(request['latitude'], request['longitude'], req['latitude'], req['longitude'])
 		if (distance <= maxDistance and rankDifference <= maxRankDifference):
-			players.append(req['userId'])
+			players.append(req)
 			if (len(players) == playersRequired):
 				return True, players
 	return False, players
@@ -115,3 +134,7 @@ def getMatchRequests(gameId):
 	query = client.query(kind='MatchRequest')
 	query.add_filter('gameId', '=', gameId)
 	return json.dumps(list(query.fetch()))
+
+def generateMatchId():
+	# uuid4 generates a random uuid
+	return str(uuid.uuid4())
