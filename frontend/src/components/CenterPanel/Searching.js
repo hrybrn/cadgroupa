@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { LinearProgress , FormLabel, Grid} from '@material-ui/core';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
+
+import { mapStatesToProps } from 'react-fluxible';
 
 class Searching extends Component {
     constructor(props) {
@@ -44,14 +46,60 @@ class Searching extends Component {
     }        
 }
 
-export const searchQuery = gql`{
+const registerSearch = graphql(gql`query RegisterSearch(
+    $gameID: String
+    $lon: Float
+    $rank: Int
+    $players: Int
+    $token: String
+    $mode: String
+    $lat: Float) {
+    matchmaking {
+        register(gameID: $gameID,
+            lon: $lon,
+            rank: $rank,
+            players: $players,
+            token: $token
+            mode: $mode
+            lat: $lat) {
+            gameID
+        }
+    }
+}`, {
+    options: (props) => ({
+        variables: {
+            gameID: props.search.selectedGame.id,
+            lon: props.lon,
+            lat: props.lat,
+            rank: props.search.rank,
+            players: props.search.selectedMode.players,
+            token: props.user.token,
+            mode: props.search.selectedMode.name
+        }
+    })
+});
+
+const pollQuery = graphql(gql`mutation PollQuery($token: String!) {
     data {
         matchmaking {
-            registerSearch{
+            poll {
                 success
+                playerDiscordIDs
+                groupDMURL
             }
         }
     }
-}`;
+}`, {
+    options: (props) => ({
+        variables: {
+            token: props.user
+        }
+    })
+});
 
-export default graphql(searchQuery)(Searching);
+export default mapStatesToProps(compose(pollQuery, registerSearch)(Searching), state => {
+    return {
+        user: state.user,
+        search: state.search
+    };
+});
