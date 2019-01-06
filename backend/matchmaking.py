@@ -55,10 +55,10 @@ def findMatch(request):
 	query = client.query(kind='MatchRequest')
 	query.add_filter('gameId', '=', request['gameId'])
 	query.add_filter('lastPollTime', '>', currentTime - POLL_INTERVAL_TIMEOUT)
-	query.add_filter('gameSize' '=', request['gameSize'])
+	query.add_filter('gameSize', '=', request['gameSize'])
 	query.add_filter('rank', '>=', request['rank'] - maxRankDifference)
 	query.add_filter('rank', '<=', request['rank'] + maxRankDifference)
-	query.add_filter('matchId' '=', DEFAULT_MATCH_ID)
+	query.add_filter('matchId', '=', DEFAULT_MATCH_ID)
 	query.order = ['initialRequestTime']
 
 	playersRequired = request['gameSize'] - 1
