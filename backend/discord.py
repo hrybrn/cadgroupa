@@ -52,7 +52,7 @@ def createvoicechannnel(matchid, roleid):
 
 # create Discord text channel with the given role set and with given name (match id) 
 def createtextchannnel(matchid, roleid):
-	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format(GUILD_ID)}
+	headers = {'Content-Type': 'application/json', 'Authorization': 'Bot {0}'.format(BOT_TOKEN)}
 	jsontext = { 'name' : str(matchid), 'type' : 0, 'permission_overwrites' : [{ 'id' : str(roleid), 'type': 'role'}] }
 	response = requests.post(URL_BASE + 'guilds/' + GUILD_ID + '/channels', headers=headers, json=jsontext)
 	if (response.status_code == 201):
