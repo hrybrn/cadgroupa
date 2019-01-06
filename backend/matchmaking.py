@@ -18,6 +18,7 @@ def joinQueue(userId, lat, long, game, mode, players, rank):
 	requestTime = time.time()
 	request = datastore.Entity(key)
 	request.update({
+		'displayName': 'Brad' 
 		'userId': userId,
 		'initialRequestTime': requestTime,
 		'lastPollTime': requestTime,
@@ -44,12 +45,12 @@ def launchMatch(matchid, players):
 def pollQueue(userId):
 	key = client.key('MatchRequest', userId)
 	request = client.get(key)
+	# see if a match can be made
+	success, players = findMatch(request)
 	request.update({
 		'lastPollTime': time.time()
 	})
 	client.put(request)
-	# see if a match can be made
-	success, players = findMatch(request)
 	url = "http://www.example.com/" if success else ""
 	return success, players, url
 
