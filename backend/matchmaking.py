@@ -80,6 +80,7 @@ def pollQueue(userId):
 					'url': url
 				})
 				client.put(urlEntity)
+				return success, players, url
 			except exceptions.Conflict:
 				print("Something went wrong", sys.stderr)
 				return False, [], ''
@@ -101,7 +102,7 @@ def getMatchUrl(matchId):
 	key = client.key('MatchUrl', matchId)
 	result = client.get(key)
 	if result is None:
-		return ""
+		return "No URL available"
 	else:
 		return result['url']
 
