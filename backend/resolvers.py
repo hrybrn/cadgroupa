@@ -57,7 +57,7 @@ def games(value, info, **args):
 def registerSearch(value, info, **args):
 	userId = validate(args['token'])
 	#token, location, game, mode, players, rank
-	return matchmaking.joinQueue(userId, args['lat'], args['long'], args['gameID'], args['modeID'],
+	return matchmaking.joinQueue(userId, args['lat'], args['lon'], args['game'], args['mode'],
 		args['players'], args['rank'])
 
 def pollSearch(value, info, **args):
@@ -68,7 +68,7 @@ def pollSearch(value, info, **args):
 
 # for testing purposes
 def requestsInSystem(value, info, **args):
-	userId = validate(args['token'])
+	# userId = validate(args['token'])
 	return matchmaking.getMatchRequests(args['gameId'])
 
 def getRecentPlayers(value, info, **args):
