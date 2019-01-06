@@ -12,8 +12,8 @@ EARTH_RADIUS = 6371 # radius of the earth in km
 
 client = datastore.Client()
 
-def joinQueue(token, lat, long, game, mode, players, rank):
-	key = client.key('MatchRequest', token)
+def joinQueue(userId, lat, long, game, mode, players, rank):
+	key = client.key('MatchRequest', userId)
 	requestTime = time.clock()
 	request = datastore.Entity(key)
 	request.update({
@@ -29,8 +29,8 @@ def joinQueue(token, lat, long, game, mode, players, rank):
 	client.put(request)
 	return request
 
-def pollQueue(token):
-	key = client.key('MatchRequest', token)
+def pollQueue(userId):
+	key = client.key('MatchRequest', userId)
 	request = client.get(key)
 	request.update({
 		'lastPollTime': time.clock()
