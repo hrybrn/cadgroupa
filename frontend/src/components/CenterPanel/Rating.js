@@ -17,7 +17,7 @@ class Rating extends Component {
             <Grid container>
                 <br/>
                 <FormLabel>{player.displayName}&nbsp;&nbsp;&nbsp;&nbsp;</FormLabel>
-                <Vote class={this} sendFeedback={this.sendFeedback} player={player} rated={false}/>
+                <Vote player={player} rated={false}/>
             </Grid>
         );
     }
@@ -44,7 +44,7 @@ class Vote extends Component{
         );
     }
     rate(rating){
-        this.sendFeedback.bind(this.props.class, this.props.player.userId, rating);
+        this.sendFeedback.bind(this, this.props.player.userId, rating);
         this.setState({rated:true});
     }
 }
