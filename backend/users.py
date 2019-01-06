@@ -5,7 +5,7 @@ import time
 MAX_RECENT_PLAYERS = 20
 SECONDS_IN_DAY = 86400
 
-class VoteType(Enum)
+class VoteType(Enum):
 	DOWN = 'Down'
 	UP = 'Up'
 
@@ -45,22 +45,22 @@ def addRecentPlayers(userId, players):
 	})
 	client.put(user)
 
-def getVotes(user, type)
+def getVotes(user, type):
 	if user['votes' + type]:
 		elapsedDays = (time.clock() - user['last' + type + 'Vote']) / SECONDS_IN_DAY
 		return user['votes' + type] * math.exp(0.5, elapsedDays)
 	else:
 		return 0
 
-def vote(userId, recipientId, type)
+def vote(userId, recipientId, type):
 	recipient = getUser(recipientId)
 	votes = getVotes(user, type)
 	recipient.update({
-		'votes' + type: votes + 1
+		'votes' + type: votes + 1,
 		'last' + type + 'Vote': time.clock()
 	})
 	client.put(recipient)
 
-def getToxicity(userId)
+def getToxicity(userId):
 	user = getUser(userId)
 	return getVotes(user, VoteType.Down) - getVotes(user, VoteType.UP)
