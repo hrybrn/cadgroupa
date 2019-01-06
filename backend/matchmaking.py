@@ -82,7 +82,7 @@ def pollQueue(userId):
 				'lastPollTime': time.time()
 			})
 			client.put(request)
-		return success, players, ""
+		return success, players, url
 	else:
 		return True, getMatchMembers(matchId), "http://www.youvebeenhad.com/"
 
