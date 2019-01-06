@@ -39,11 +39,12 @@ class Vote extends Component{
     render() {
         return (
             this.state.rated ?
-                <Fragment>
+                <FormLabel>Thanks for rating this player</FormLabel>
+                :<Fragment>
                     <ThumbsUp type="button" onClick={this.rate.bind(this, true)}></ThumbsUp>
                     <ThumbsDown type="button" onClick={this.rate.bind(this, false)}></ThumbsDown>
                 </Fragment>
-                : <FormLabel>Thanks for rating this player</FormLabel>
+                
         );
     }
     rate(rating){
