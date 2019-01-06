@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { Drawer, AppBar, IconButton, Menu, MenuItem, Toolbar, withStyles, Button, DialogContentText, CircularProgress, Typography } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/MenuSharp';
 import Person from '@material-ui/icons/Person';
 
 import { mapStatesToProps } from 'react-fluxible';
@@ -52,7 +51,7 @@ class Navigation extends Component {
         anchorEl: null,
         //drawers shown
         drawers: {
-            left: false,
+            left: true,
             right: true,
         },
         //open modal
@@ -74,14 +73,6 @@ class Navigation extends Component {
                 {this.props.data.error ? (<MessageBox message={this.props.data.error.message}/>) : (<Fragment></Fragment>)}
                 <AppBar className={navigation}>
                     <Toolbar classes={{ root: spreadToolbar }}>
-                        <IconButton
-                            color='inherit'
-                            aria-label='Menu'
-                            onClick={this.toggleDrawer.bind(this)}
-                            className='drawerButton'
-                        >
-                            <MenuIcon />
-                        </IconButton>
                         <img
                             href='/'
                             src={matchmakr}
