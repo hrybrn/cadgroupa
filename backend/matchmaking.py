@@ -63,6 +63,7 @@ def pollQueue(userId):
 				with client.transaction():
 					matchId = generateMatchId()
 					keys = [client.key('MatchRequest', userId) for userId in players]
+					keys.append(key)
 					requests = client.get_multi(keys)
 					for request in requests:
 						request.update({
