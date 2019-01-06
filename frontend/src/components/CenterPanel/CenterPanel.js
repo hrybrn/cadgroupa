@@ -45,10 +45,11 @@ class CenterPanel extends Component {
         }
     }
 
-    startSearch() {
+    startSearch(searchOptions) {
         updateStore({
             search: {
                 ...this.props.search,
+                searchOptions,
                 state: 'searching'
             }
         });
