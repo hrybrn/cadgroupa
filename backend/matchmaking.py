@@ -62,7 +62,7 @@ def pollQueue(userId):
 		url = "http://www.example.com/" if success else ""
 		if success:
 			matchId = generateMatchId()
-			player.append(request)
+			players.append(request)
 			for player in players:
 				player.update({
 					'matchId': matchId
