@@ -22,8 +22,7 @@ class Rating extends Component {
         >
             <Fragment key={player.name}>
                 <FormLabel>{player.name}</FormLabel>
-                <ThumbsUp type="button" onClick={this.sendFeedback.bind(this, player.id, true)}></ThumbsUp>
-                <ThumbsDown type="button" onClick={this.sendFeedback.bind(this, player.id, false)}></ThumbsDown>
+                <Vote class={this} sendFeedback={this.sendFeedback} player={player} rated={false}/>
             </Fragment>
         </Grid>;
     }
@@ -31,8 +30,27 @@ class Rating extends Component {
     sendFeedback(playerID, good) {
         this.props.mutate({ variables: { playerID, good, token: this.props.user.token }});
     }
+    
 }
-
+class Vote extends Component{
+    state = {
+        rated:this.props.rated
+    };
+    render() {
+        return (
+            this.state.rated ?
+                <Fragment>
+                    <ThumbsUp type="button" onClick={this.rate.bind(this, true)}></ThumbsUp>
+                    <ThumbsDown type="button" onClick={this.rate.bind(this, false)}></ThumbsDown>
+                </Fragment>
+                : <FormLabel>Thanks for rating this player</FormLabel>
+        );
+    }
+    rate(rating){
+        this.props.sendFeedback.bind(this.props.class, this.props.player.id, rating);
+        this.setState({rated:true});
+    }
+}
 const RatePlayer = gql`mutation RatePlayer($playerID: String, $good: Boolean, $token: String){
     matchmaking {
         rate(recipientId: $playerID, upvote: $good, token: $token)
