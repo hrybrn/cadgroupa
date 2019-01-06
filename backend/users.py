@@ -1,8 +1,13 @@
 from google.cloud import datastore
+from enum import Enum
 import time
 
 MAX_RECENT_PLAYERS = 20
 SECONDS_IN_DAY = 86400
+
+class VoteType(Enum)
+	Down = 'Down'
+	Up = 'Up'
 
 client = datastore.Client()
 
