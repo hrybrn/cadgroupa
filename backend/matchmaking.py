@@ -20,6 +20,9 @@ client = datastore.Client()
 def joinQueue(user, lat, long, game, mode, players, rank):
 	userId = user['id']
 	toxicity = users.getToxicity(userId)
+	if toxicity > 20:
+		#is that a ban?
+		raise GraphQLError("Due to a large number of negative reports against your account, you are temporarily banned from our service. Try again soon.")
 	key = client.key('MatchRequest', userId)
 	requestTime = time.time()
 	request = datastore.Entity(key)
