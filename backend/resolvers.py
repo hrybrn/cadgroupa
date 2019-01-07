@@ -28,7 +28,7 @@ def validate(token):
 		return userCache[token]
 	else:
 		userobj = json.loads(discord.getuserobj(token))
-		if(userobj['verified'] == "false"):
+		if(userobj['verified'] == False):
 			raise GraphQLError('The user must be verified with Discord in order to use this app!')
 		if not discord.checkuserguild(token, userobj['id']):
 			if not discord.adduserguild(token, userobj['id']):
