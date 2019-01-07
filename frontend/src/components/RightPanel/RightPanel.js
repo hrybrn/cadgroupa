@@ -1,24 +1,28 @@
 import React, { Component, Fragment } from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import { GridList, GridListTile, ListSubheader, withStyles, CircularProgress} from '@material-ui/core';
+import { Button, GridList, GridListTile, ListSubheader, withStyles, CircularProgress} from '@material-ui/core';
 import CardTile from 'components/CardTile/CardTile';
 import { mapStatesToProps } from 'react-fluxible'; 
 import DiscordIcon from 'assets/discordicon.png';
+import { updateStore } from 'fluxible-js';
+
 const styles = () => ({
     gridList: {
-        width: 300,
+        width: 310,
+        margin: '0 !important'
     },
     titleTile: {
         height: '50px !important',
         'text-align': 'center',
-        margin: '0 auto',
     }
 });
 
 class RightPanel extends Component {
     render() {
         const { gridList, titleTile } = this.props.classes;
+
+        const nextTheme = this.props.theme === 'light' ? 'dark' : 'light';
 
         return (
             <Fragment>
@@ -28,6 +32,7 @@ class RightPanel extends Component {
                     </GridListTile>
                     {this.playerTiles(this.props.data, this.props.classes)}
                 </GridList>
+                <Button style={{ marginTop: 'auto', marginBottom: 15 }} onClick={this.switchTheme.bind(this, nextTheme)}>Change to {nextTheme} theme</Button>
             </Fragment>
         );
     }
@@ -62,7 +67,11 @@ class RightPanel extends Component {
         window.open('https://discordapp.com/users/'.concat(id));
     }
 
-   
+    switchTheme(theme) {
+        updateStore({
+            theme
+        });
+    }
 }
 
 export const recentQuery = graphql(gql`query RecentPlayers($token: String) {
@@ -80,6 +89,7 @@ export const recentQuery = graphql(gql`query RecentPlayers($token: String) {
 
 export default mapStatesToProps(recentQuery(withStyles(styles)(RightPanel)), state => {
     return {
-        user: state.user
+        user: state.user,
+        theme: state.theme
     };
 });

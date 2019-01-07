@@ -43,6 +43,11 @@ const styles = theme => ({
     },
 
     toolbar: theme.mixins.toolbar,
+
+    background: {
+        background: theme.palette.background.default,
+        height: '100vh'
+    }
 });
 
 class Navigation extends Component {
@@ -58,12 +63,12 @@ class Navigation extends Component {
     };
 
     render() {
-        const { logo, navigation, toolbar, spreadToolbar } = this.props.classes;
+        const { logo, navigation, toolbar, spreadToolbar, background } = this.props.classes;
         const accountMenuOpen = Boolean(this.state.anchorEl);
 
         const modal = this.renderModal();
         return (
-            <Fragment>
+            <div className={background}>
                 {this.props.data.error ? (<MessageBox message={this.props.data.error.message}/>) : (<Fragment></Fragment>)}
                 <AppBar className={navigation}>
                     <Toolbar classes={{ root: spreadToolbar }}>
@@ -103,8 +108,8 @@ class Navigation extends Component {
                 </AppBar>
                 <Drawer
                     anchor='left'
-                    open={true}
-                    variant='permanent'
+                    open={this.props.user.loggedin}
+                    variant='persistent'
                 >
                     <div className={toolbar} />
                     <LeftPanel />
@@ -125,7 +130,7 @@ class Navigation extends Component {
                     <Route path='/error' component={<MessageBox message="Something went terribly wrong 😢" />}/>
                     <Route exact path='/' component={CenterPanel}/>
                 </div>
-            </Fragment>
+            </div>
         );
     }
 
