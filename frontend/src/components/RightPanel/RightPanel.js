@@ -9,7 +9,7 @@ import { updateStore } from 'fluxible-js';
 
 const styles = () => ({
     gridList: {
-        width: 310,
+        width: 318,
         margin: '0 !important'
     },
     titleTile: {

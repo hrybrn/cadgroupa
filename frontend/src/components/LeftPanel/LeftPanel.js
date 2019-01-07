@@ -11,7 +11,7 @@ import { graphql } from 'react-apollo';
 
 const styles = () => ({
     gridList: {
-        width: 315,
+        width: 318,
         maxHeight: 500
     },
     titleTile: {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import indigo from '@material-ui/core/colors/indigo';
 import { initializeStore } from 'fluxible-js';
 import { mapStatesToProps } from 'react-fluxible';
 
@@ -17,7 +16,7 @@ initializeStore({
             selectedGameID: '',
             selectedMode: ''
         },
-        theme: 'dark'
+        theme: 'light'
     },   
     persist: {
         useJSON: false,
@@ -36,14 +35,18 @@ const themes = {
         primary: {
             main: '#303f9f',
         },
-        secondary: indigo
+        secondary: {
+            main: '#303f9f',
+        }
     },
     dark: {
         type: 'dark',
         primary: {
-            main: '#303f9f',
+            main: '#00e3f7',
         },
-        secondary: indigo
+        secondary: {
+            main: '#303f9f',
+        }
     }
 };
 
