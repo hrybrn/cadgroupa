@@ -18,6 +18,8 @@ EARTH_RADIUS = 6371 # radius of the earth in km
 client = datastore.Client()
 
 def joinQueue(user, lat, long, game, mode, players, rank):
+	if players <= 1:
+		raise GraphQLError("Invalid number of players")
 	userId = user['id']
 	toxicity = users.getToxicity(userId)
 	if toxicity > 20:
