@@ -8,6 +8,7 @@ import Navigation from 'components/Navigation/Navigation';
 initializeStore({
     initialStore: {
         user: {
+            id: '',
             token: '',
             loggedin: false
         },
