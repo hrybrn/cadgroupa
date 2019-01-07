@@ -21,9 +21,6 @@ def joinQueue(user, lat, long, game, mode, players, rank):
 	if players <= 1:
 		raise GraphQLError("Invalid number of players")
 	userId = user['id']
-	avatar = ''
-	if 'avatar' in user:
-		avatar = f'https://cdn.discordapp.com/avatars/{userId}/{user['avatar']}.png?size=256'
 	toxicity = users.getToxicity(userId)
 	if toxicity > 20:
 		#is that a ban?
@@ -33,7 +30,7 @@ def joinQueue(user, lat, long, game, mode, players, rank):
 	request = datastore.Entity(key)
 	request.update({
 		'displayName': user['username'],
-		'avatar': avatar,
+		'avatar': user['avatar'],
 		'userId': userId,
 		'initialRequestTime': requestTime,
 		'lastPollTime': requestTime,
