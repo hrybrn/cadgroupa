@@ -60,9 +60,10 @@ def getVotes(user, voteEnum):
 	else:
 		return 0
 
-def vote(userId, recipientId, voteType):
+def vote(userId, recipientId, voteEnum):
+	voteType = voteEnum.value
 	recipient = getUser(recipientId)
-	votes = getVotes(recipient, voteType)
+	votes = getVotes(recipient, voteEnum)
 	recipient.update({
 		'votes' + voteType: votes + 1,
 		'last' + voteType + 'Vote': time.time()
