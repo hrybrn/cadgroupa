@@ -14,7 +14,7 @@ import RightPanel from 'components/RightPanel/RightPanel';
 
 import matchmakr from 'assets/logo_light.png';
 
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import Login from 'components/Auth/Login';
 import Auth from 'components/Auth/Auth';
@@ -129,6 +129,7 @@ class Navigation extends Component {
                     <Route path='/login' component={Login}/>
                     <Route path='/error' component={<MessageBox message="Something went terribly wrong 😢" />}/>
                     <Route exact path='/' component={CenterPanel}/>
+                    <Route path='*' exact={true} render={() => (<Redirect to="/"></Redirect>)} />
                 </div>
             </div>
         );
