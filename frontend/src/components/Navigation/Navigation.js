@@ -104,7 +104,7 @@ class Navigation extends Component {
                 <Drawer
                     anchor='left'
                     open={true}
-                    variant='persistent'
+                    variant='permanent'
                 >
                     <div className={toolbar} />
                     <LeftPanel />
@@ -112,7 +112,7 @@ class Navigation extends Component {
                 <Drawer
                     anchor='right'
                     open={this.props.user.loggedin}
-                    variant='permanent'
+                    variant='persistent'
                 >
                     <div className={toolbar} />
                     <RightPanel />
