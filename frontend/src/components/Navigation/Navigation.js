@@ -127,8 +127,8 @@ class Navigation extends Component {
                     <div className={toolbar} />
                     <Route path='/auth' component={Auth}/>
                     <Route path='/login' component={Login}/>
-                    <Route path='/error' component={<MessageBox message="Something went terribly wrong 😢" />}/>
-                    <Route exact path='/' component={CenterPanel}/>
+                    <Route path='/error' render={() => <MessageBox message="Something went terribly wrong 😢" />}/>
+                    <Route exact path='/' render={() => <CenterPanel loggedin={this.props.user.loggedin} />}/>
                 </div>
             </div>
         );

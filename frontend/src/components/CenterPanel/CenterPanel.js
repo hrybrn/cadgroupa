@@ -33,7 +33,11 @@ class CenterPanel extends Component {
     render() {
         switch(this.state.matchmakingState) {
         case 'loggedin':
-            return <MessageBox message={'Select a game and mode on the left.'} />;
+            if (this.props.loggedin) {
+                return <MessageBox message={'Select a game and mode on the left.'} />;
+            } else {
+                return <MessageBox message={<Button href='/login'>Login to use matchma.kr.</Button>} />;
+            }
         case 'logout':
             return <MessageBox message={<Button href='/login'>Login to use matchma.kr.</Button>} />;
         case 'data':
