@@ -22,8 +22,8 @@ class Rating extends Component {
         );
     }
 
-    sendFeedback(playerID, good) {
-        this.props.mutate({ variables: { playerID, good, token: this.props.user.token }});
+    sendFeedback(recipientID, good) {
+        this.props.mutate({ variables: { recipientID, good, token: this.props.user.token }});
     }
 }
 class Vote extends Component{
@@ -43,9 +43,9 @@ class Vote extends Component{
         );
     }
 }
-const RatePlayer = gql`mutation RatePlayer($playerID: String, $good: Boolean, $token: String){
+const RatePlayer = gql`mutation RatePlayer($recipientID: String, $good: Boolean, $token: String){
     matchmaking {
-        rate(recipientId: $playerID, upvote: $good, token: $token)
+        rate(recipientId: $recipientID, upvote: $good, token: $token)
     }
 }`;
 
