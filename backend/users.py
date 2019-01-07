@@ -36,7 +36,12 @@ def getUser(userId):
 
 def getRecentPlayers(userId):
 	user = getUser(userId)
-	return user['recentPlayers'] if 'recentPlayers' in user else []
+	players = user['recentPlayers']
+	if players is None:
+		return []
+	else:
+		players.reverse()
+		return players
 
 def addRecentPlayers(userId, players):
 	user = getUser(userId)
