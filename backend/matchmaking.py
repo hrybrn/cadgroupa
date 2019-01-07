@@ -19,6 +19,7 @@ client = datastore.Client()
 
 def joinQueue(user, lat, long, game, mode, players, rank):
 	userId = user['id']
+	toxicity = users.getToxicity(userId)
 	key = client.key('MatchRequest', userId)
 	requestTime = time.time()
 	request = datastore.Entity(key)
