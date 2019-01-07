@@ -37,7 +37,7 @@ class CenterPanel extends Component {
         case 'logout':
             return <MessageBox message={<Button href='/login'>Login to use matchma.kr.</Button>} />;
         case 'data':
-            return <DataForm success={this.startSearch.bind(this)} />;
+            return <DataForm success={this.startSearch.bind(this)} onClose={this.stopSearch.bind(this)}/>;
         case 'searching':
             return <Searching selectedGame={this.props.search.selectedGame} selectedMode={this.props.search.selectedMode} />;
         case 'matched':
@@ -66,6 +66,15 @@ class CenterPanel extends Component {
                 ...this.props.search,
                 searchOptions,
                 state: 'searching'
+            }
+        });
+    }
+
+    stopSearch() {
+        updateStore({
+            search: {
+                ...this.props.search,
+                state: this.props.user.loggedin ? 'loggedin' : 'logout'
             }
         });
     }
