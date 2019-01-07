@@ -18,7 +18,13 @@ EARTH_RADIUS = 6371 # radius of the earth in km
 client = datastore.Client()
 
 def joinQueue(user, lat, long, game, mode, players, rank):
+	if players <= 1:
+		raise GraphQLError("Invalid number of players")
 	userId = user['id']
+	toxicity = users.getToxicity(userId)
+	if toxicity > 20:
+		#is that a ban?
+		raise GraphQLError("Due to a large number of negative reports against your account, you are temporarily banned from our service. Try again soon.")
 	key = client.key('MatchRequest', userId)
 	requestTime = time.time()
 	request = datastore.Entity(key)
@@ -37,13 +43,12 @@ def joinQueue(user, lat, long, game, mode, players, rank):
 	client.put(request)
 	return POLL_INTERVAL
 
-# def launchMatch(matchid, players):
-def launchMatch(matchid, players):
-	role_content = discord.createguildrole(matchid)
+def launchMatch(matchId, players):
+	role_content = discord.createguildrole(matchId)
 	role_id = json.loads(role_content.decode("utf-8"))['id']
 
-	discord.createtextchannnel(matchid, role_id)
-	channel_content = discord.createvoicechannnel(matchid, role_id)
+	discord.createtextchannnel(matchId, role_id)
+	channel_content = discord.createvoicechannnel(matchId, role_id)
 	channel_id = json.loads(channel_content.decode("utf-8"))['id']
 
 	invite_link = 'https://discord.gg/' + json.loads((discord.getchannelinvitelink(channel_id)).decode("utf-8"))['code']
@@ -76,11 +81,12 @@ def pollQueue(userId):
 						})
 					client.put_multi(requests)
 				url = launchMatch(matchId, [player['userId'] for player in players])
-				urlEntity = datastore.Entity(client.key('MatchUrl', matchId))
-				urlEntity.update({
-					'url': url
+				match = datastore.Entity(client.key('Match', matchId))
+				match.update({
+					'url': url,
+					'players': players
 				})
-				client.put(urlEntity)
+				client.put(match)
 				users.addRecentPlayers(userId, players)
 				return success, players, url
 			except exceptions.Conflict:
@@ -93,26 +99,18 @@ def pollQueue(userId):
 			client.put(request)
 		return success, players, url
 	else:
-		url = getMatchUrl(matchId)
-		if url == '':
+		match = getExistingMatch(matchId)
+		if match is None:
 			return False, [], ''
 		else:
-			players = getMatchMembers(matchId)
+			players = match['players']
 			users.addRecentPlayers(userId, players)
-			return True, players, url
+			return True, players, match['url']
 
-def getMatchMembers(matchId):
-	query = client.query(kind='MatchRequest')
-	query.add_filter('matchId', '=', matchId)
-	return list(query.fetch())
-
-def getMatchUrl(matchId):
-	key = client.key('MatchUrl', matchId)
-	result = client.get(key)
-	if result is None:
-		return ""
-	else:
-		return result['url']
+def getExistingMatch(matchId):
+	key = client.key('Match', matchId)
+	match = client.get(key)
+	return match
 
 def findMatch(request):
 	currentTime = time.time()
