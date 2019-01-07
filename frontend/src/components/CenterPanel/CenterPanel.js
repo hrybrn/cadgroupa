@@ -54,7 +54,7 @@ class CenterPanel extends Component {
                     <Grid container>
                         <FormLabel><br/><br/><br/>Rate your player matches<br/><br/></FormLabel>
                     </Grid>
-                    {this.props.search.players.map(player => player.userId === this.props.user.userId ? <Fragment/> : <Rating key={player.userId} player={player} /> )}
+                    {this.props.search.players.map(player => player.userId === this.props.user.userId ? <Fragment/> : <Fragment><br/><br/><Rating key={player.userId} player={player} /></Fragment>  )}
                 </div>
             </Grid>;
         }
