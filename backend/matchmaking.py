@@ -80,11 +80,12 @@ def pollQueue(userId):
 						})
 					client.put_multi(requests)
 				url = launchMatch(matchId, [player['userId'] for player in players])
-				urlEntity = datastore.Entity(client.key('MatchUrl', matchId))
-				urlEntity.update({
-					'url': url
+				match = datastore.Entity(client.key('Match', matchId))
+				match.update({
+					'url': url,
+					'players': players
 				})
-				client.put(urlEntity)
+				client.put(match)
 				users.addRecentPlayers(userId, players)
 				return success, players, url
 			except exceptions.Conflict:
@@ -97,26 +98,18 @@ def pollQueue(userId):
 			client.put(request)
 		return success, players, url
 	else:
-		url = getMatchUrl(matchId)
-		if url == '':
+		match = getExistingMatch(matchId)
+		if match is None:
 			return False, [], ''
 		else:
-			players = getMatchMembers(matchId)
+			players = match['players']
 			users.addRecentPlayers(userId, players)
-			return True, players, url
+			return True, players, match['url']
 
-def getMatchMembers(matchId):
-	query = client.query(kind='MatchRequest')
-	query.add_filter('matchId', '=', matchId)
-	return list(query.fetch())
-
-def getMatchUrl(matchId):
-	key = client.key('MatchUrl', matchId)
-	result = client.get(key)
-	if result is None:
-		return ""
-	else:
-		return result['url']
+def getExistingMatch(matchId):
+	key = client.key('Match', matchId)
+	match = client.get(key)
+	return match
 
 def findMatch(request):
 	currentTime = time.time()
