@@ -55,7 +55,8 @@ queryschema = GraphQLObjectType(
 				name='RecentPlayer',
 				fields={
 					"userId": GraphQLField(GraphQLString),
-					"displayName": GraphQLField(GraphQLString)
+					"displayName": GraphQLField(GraphQLString),
+					"avatar": GraphQLField(GraphQLString)
 				}
 			)),
 			args={
@@ -161,6 +162,7 @@ mutationschema = GraphQLObjectType(
 									fields={
 										"userId": GraphQLField(GraphQLString),
 										"displayName": GraphQLField(GraphQLString),
+										"avatar": GraphQLField(GraphQLString)
 									}
 								))),
 								"url": GraphQLField(GraphQLString)

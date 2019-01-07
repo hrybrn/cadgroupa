@@ -43,7 +43,7 @@ def addRecentPlayers(userId, players):
 	recentPlayers = user['recentPlayers'] if 'recentPlayers' in user else []
 	for player in players:
 		if player['userId'] != userId:
-			recentPlayers.append({'userId': player['userId'], 'displayName': player['displayName']})
+			recentPlayers.append({'userId': player['userId'], 'displayName': player['displayName'], 'avatar': player['avatar']})
 	if len(recentPlayers) > MAX_RECENT_PLAYERS:
 		for i in range(0, len(recentPlayers) - MAX_RECENT_PLAYERS):
 			recentPlayers.pop(0)
