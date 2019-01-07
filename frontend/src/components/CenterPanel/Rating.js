@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { FormLabel, Grid } from '@material-ui/core';
+import { Chip, FormLabel } from '@material-ui/core';
 
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
@@ -14,33 +14,39 @@ class Rating extends Component {
         const { player } = this.props;
 
         return (
-            <Grid container>
-                <br/>
-                <FormLabel>{player.displayName}&nbsp;&nbsp;&nbsp;&nbsp;</FormLabel>
-                <Vote player={player} rated={false} sendFeedback={this.sendFeedback.bind(this, player.userId)}/>
-            </Grid>
+            
+            <Chip onDelete={this.nothing} label={<FormLabel>{player.displayName}</FormLabel>} deleteIcon={<Vote player={player} rated={false} sendFeedback={this.sendFeedback.bind(this, player.userId)}/>}/>
         );
     }
-
+    nothing(){}
     sendFeedback(recipientID, good) {
         this.props.mutate({ variables: { recipientID, good, token: this.props.user.token }});
     }
 }
 class Vote extends Component{
     state = {
-        rated:this.props.rated
+        rated:this.props.rated,
+        thumb: ''
     };
     render() {
         return (
             this.state.rated ?
-                <FormLabel>Thanks for rating this player</FormLabel>
+                <Fragment>{this.state.thumb === 'up' ? <ThumbsUp /> : <ThumbsDown/>} &nbsp;<FormLabel>Sent!</FormLabel> &nbsp;&nbsp; </Fragment>
+                
                 :<Fragment>
-                    <ThumbsUp type="button" onClick={() => this.props.sendFeedback(true)}></ThumbsUp>
+                    <ThumbsUp type="button" onClick={() => this.sendFeedback(true)}></ThumbsUp>
                     &nbsp;
-                    <ThumbsDown type="button" onClick={() => this.props.sendFeedback(false)}></ThumbsDown>
+                    <ThumbsDown type="button" onClick={() => this.sendFeedback(false)}></ThumbsDown>
+                    &nbsp;
+                    &nbsp;
                 </Fragment>
                 
         );
+    }
+    sendFeedback(rating){
+        this.props.sendFeedback(rating);
+        this.setState({rated:true});
+        rating ? this.setState({thumb:'up'}) : this.setState({thumb:'down'});
     }
 }
 const RatePlayer = gql`mutation RatePlayer($recipientID: String, $good: Boolean, $token: String){
