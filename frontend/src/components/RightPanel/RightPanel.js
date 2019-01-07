@@ -56,7 +56,7 @@ class RightPanel extends Component {
                     key={recent.userId}
                     active={false}
                     pressed={this.activated.bind(this, recent.userId)}
-                    icon={DiscordIcon}
+                    icon={recent.avatar ? `https://cdn.discordapp.com/avatars/${recent.userId}/${recent.avatar}.png?size=256` : DiscordIcon}
                     name={recent.displayName}
                 />
             );
@@ -78,6 +78,7 @@ export const recentQuery = graphql(gql`query RecentPlayers($token: String) {
     recentPlayers(token: $token) {
         displayName
         userId
+        avatar
     }
 }`, {
     options: (props) => ({
