@@ -49,11 +49,6 @@ class Navigation extends Component {
     state = {
         //menu anchor element
         anchorEl: null,
-        //drawers shown
-        drawers: {
-            left: true,
-            right: true,
-        },
         //open modal
         modal: '',
         user: {
@@ -64,8 +59,7 @@ class Navigation extends Component {
 
     render() {
         const { logo, navigation, toolbar, spreadToolbar } = this.props.classes;
-        const { anchorEl, drawers } = this.state;
-        const accountMenuOpen = Boolean(anchorEl);
+        const accountMenuOpen = Boolean(this.state.anchorEl);
 
         const modal = this.renderModal();
         return (
@@ -74,7 +68,6 @@ class Navigation extends Component {
                 <AppBar className={navigation}>
                     <Toolbar classes={{ root: spreadToolbar }}>
                         <img
-                            href='/'
                             src={matchmakr}
                             className={logo}
                             alt='matchma.kr logo'
@@ -94,7 +87,7 @@ class Navigation extends Component {
                                     </IconButton>
                                     <Menu
                                         id='menu-appbar'
-                                        anchorEl={anchorEl}
+                                        anchorEl={this.state.anchorEl}
                                         open={accountMenuOpen}
                                         onClose={this.handleClose.bind(this)}
                                     >
@@ -110,7 +103,7 @@ class Navigation extends Component {
                 </AppBar>
                 <Drawer
                     anchor='left'
-                    open={drawers.left}
+                    open={true}
                     variant='persistent'
                 >
                     <div className={toolbar} />
@@ -118,7 +111,7 @@ class Navigation extends Component {
                 </Drawer>
                 <Drawer
                     anchor='right'
-                    open={drawers.right}
+                    open={this.props.user.loggedin}
                     variant='permanent'
                 >
                     <div className={toolbar} />
@@ -142,10 +135,6 @@ class Navigation extends Component {
 
     handleClose(){
         this.setState({ anchorEl: null });
-    }
-
-    toggleDrawer(){
-        this.setState(prev => ({ drawers: { ...prev.drawers, left: !prev.drawers.left} }));
     }
 
     showModal(modal) {
@@ -227,7 +216,7 @@ class Navigation extends Component {
                 token: ''
             }
         });
-        window.location.reload();
+        //window.location.reload();
     }
 
     updateField(field, { target: { value }}) {

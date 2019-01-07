@@ -8,7 +8,7 @@ initializeStore({
     initialStore: {
         user: {
             token: '',
-            loggedin: 0
+            loggedin: false
         },
         search: {
             state: '',
