@@ -52,7 +52,7 @@ class Auth extends Component {
             updateStore({
                 user: {
                     token: json['access_token'],
-                    loggedin: 1
+                    loggedin: true
                 }
             });
             this.setState({redirect: true});
