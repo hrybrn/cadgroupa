@@ -70,7 +70,7 @@ class Navigation extends Component {
         return (
             <div className={background}>
                 {this.props.data.error ? (<MessageBox message={this.props.data.error.message}/>) : (<Fragment></Fragment>)}
-                <AppBar className={navigation}>
+                <AppBar className={navigation} color="secondary">
                     <Toolbar classes={{ root: spreadToolbar }}>
                         <img
                             src={matchmakr}
