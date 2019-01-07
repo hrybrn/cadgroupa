@@ -39,7 +39,7 @@ const styles = theme => ({
     
     spreadToolbar: {
         display: 'flex',
-        'justify-content': 'space-between'
+        'justify-content': 'flex-end'
     },
 
     toolbar: theme.mixins.toolbar,
