@@ -12,7 +12,7 @@ import LeftPanel from 'components/LeftPanel/LeftPanel';
 import Modal from 'components/Modal/Modal';
 import RightPanel from 'components/RightPanel/RightPanel';
 
-import matchmakr from 'assets/matchmakr.png';
+import matchmakr from 'assets/logo_light.png';
 
 import { Route } from 'react-router-dom';
 
