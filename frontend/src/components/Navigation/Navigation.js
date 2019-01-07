@@ -166,11 +166,8 @@ class Navigation extends Component {
                         this.emailData(this.props.data),
                     ]}
                     buttons={[
-                        <Button onClick={hideModal} color='primary' key='cancel'>
-                            Cancel
-                        </Button>,
-                        <Button onClick={this.saveChanges.bind(this)} color='primary' key='subscribe' >
-                            Save Changes
+                        <Button onClick={hideModal} color='primary' key='close'>
+                            Close
                         </Button>
                     ]}
                 />
