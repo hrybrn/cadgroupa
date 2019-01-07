@@ -17,7 +17,7 @@ initializeStore({
             selectedGameID: '',
             selectedMode: ''
         },
-        theme: 'dark'
+        theme: 'light'
     },   
     persist: {
         useJSON: false,
