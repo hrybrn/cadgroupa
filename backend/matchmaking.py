@@ -43,15 +43,16 @@ def joinQueue(user, lat, long, game, mode, players, rank):
 	client.put(request)
 	return POLL_INTERVAL
 
-def launchMatch(matchId, players):
+def launchMatch(matchId, players, request):
 	role_content = discord.createguildrole(matchId)
 	role_id = json.loads(role_content.decode("utf-8"))['id']
 
-	discord.createtextchannnel(matchId, role_id)
-	channel_content = discord.createvoicechannnel(matchId, role_id)
-	channel_id = json.loads(channel_content.decode("utf-8"))['id']
+	text_channel_content = discord.createtextchannnel(matchId, role_id)
+	voice_channel_content = discord.createvoicechannnel(matchId, role_id)
+	text_channel_id = json.loads(text_channel_content.decode("utf-8"))['id']
+	voice_channel_id = json.loads(voice_channel_content.decode("utf-8"))['id']
 
-	invite_link = 'https://discord.gg/' + json.loads((discord.getchannelinvitelink(channel_id)).decode("utf-8"))['code']
+	invite_link = 'https://discord.gg/' + json.loads((discord.getchannelinvitelink(voice_channel_id)).decode("utf-8"))['code']
 	for player in players:
 		discord.addplayertorole(role_id, player)
 	return invite_link
@@ -80,7 +81,7 @@ def pollQueue(userId):
 							'matchId': matchId
 						})
 					client.put_multi(requests)
-				url = launchMatch(matchId, [player['userId'] for player in players])
+				url = launchMatch(matchId, [player['userId'] for player in players], request)
 				match = datastore.Entity(client.key('Match', matchId))
 				match.update({
 					'url': url,
