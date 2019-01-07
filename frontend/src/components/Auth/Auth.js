@@ -52,7 +52,8 @@ class Auth extends Component {
             updateStore({
                 user: {
                     token: json['access_token'],
-                    loggedin: true
+                    loggedin: true,
+                    id: json['id']
                 }
             });
             this.setState({redirect: true});
